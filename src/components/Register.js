@@ -20,28 +20,57 @@ const Register = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Register</h2>
-      <form onSubmit={handleRegister} className="form">
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          autoComplete="off"
-          name="register-username"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="off"
-          name="register-password"
-        />
-        <button type="submit">Register</button>
-      </form>
-      <p>{message}</p>
+    <div className="h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+          Register
+        </h2>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-600">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              autoComplete="new-username"
+              name="username"
+              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+              name="password"
+              className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+          >
+            Register
+          </button>
+        </form>
+        {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-500 hover:underline">
+            Login here
+          </a>
+        </p>
+      </div>
     </div>
   );
 };
