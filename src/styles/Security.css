@@ -1,0 +1,90 @@
+/* Parallax Section */
+.security-parallax {
+    background-image: url("https://via.placeholder.com/1920x1080"); /* Replace with actual image */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 60vh; /* Adjust height for better visual */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff; /* White text */
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+  
+  .security-parallax::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay for better contrast */
+    z-index: 1;
+  }
+  
+  .security-parallax h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    position: relative;
+  }
+  
+  .security-parallax p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    position: relative;
+  }
+  
+  /* Content Section */
+  .security-content {
+    background: #f1f8f5; /* Soft green background */
+    padding: 4rem 2rem;
+  }
+  
+  .security-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  
+  .security-section.reverse {
+    flex-direction: row-reverse;
+  }
+  
+  .security-text {
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  .security-text h2 {
+    font-size: 2rem;
+    color: #007a5e; /* Deep green */
+    margin-bottom: 1rem;
+  }
+  
+  .security-text p {
+    font-size: 1rem;
+    color: #4b5563; /* Cool gray */
+    line-height: 1.6;
+  }
+  
+  .security-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .security-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }

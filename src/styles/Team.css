@@ -1,0 +1,123 @@
+/* Team Container */
+.team-container {
+    padding: 4rem 2rem;
+    background: #f1f8f5; /* Light green */
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+  }
+  
+  /* Header */
+  .team-header h1 {
+    font-size: 2.5rem;
+    color: #007a5e; /* Deep green */
+    margin-bottom: 1rem;
+  }
+  
+  .team-header p {
+    font-size: 1.2rem;
+    color: #4b5563; /* Gray */
+    max-width: 800px;
+    margin: 0 auto 2rem;
+  }
+  
+  /* Profile Section */
+  .team-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .team-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .team-info h3 {
+    font-size: 1.8rem;
+    color: #007a5e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-info .team-role {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4b5563;
+    margin-bottom: 1rem;
+  }
+  
+  .team-info .team-bio {
+    font-size: 1rem;
+    color: #6b7280; /* Gray */
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  
+  /* Mission Section */
+  .team-mission {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .team-mission h2 {
+    font-size: 2rem;
+    color: #007a5e;
+    margin-bottom: 1rem;
+  }
+  
+  .team-mission p {
+    font-size: 1.1rem;
+    color: #4b5563;
+    line-height: 1.8;
+  }
+  
+  /* What I’m Learning Section */
+  .team-values {
+    margin-top: 3rem;
+  }
+  
+  .team-values h2 {
+    font-size: 2rem;
+    color: #007a5e;
+    margin-bottom: 1.5rem;
+  }
+  
+  .values-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .value-item {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .value-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .value-item h3 {
+    font-size: 1.5rem;
+    color: #007a5e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .value-item p {
+    font-size: 1rem;
+    color: #6b7280;
+    line-height: 1.6;
+  }

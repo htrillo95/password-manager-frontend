@@ -18,7 +18,7 @@ const Navbar = () => {
       name: "About",
       path: "/about",
       subLinks: [
-        { name: "Our Team", path: "/about/team" },
+        { name: "Team", path: "/about/team" },
         { name: "Vision", path: "/about/vision" },
       ],
     },

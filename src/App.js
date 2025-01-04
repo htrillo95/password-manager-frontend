@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/Navbar";
+import Security from "./pages/Security";
+import Performance from "./pages/Performance";
+import Team from "./pages/Team";
+import Vision from "./pages/Vision";
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
+import ScrollToTop from "./components/ScrollToTop";
+import { AnimatePresence, motion } from "framer-motion";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
 
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
@@ -31,62 +33,174 @@ function App() {
   const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem("loggedInUser");
-    navigate("/"); // Redirect to Landing Page
   };
 
-  const SecurityPage = () => (
-    <div>
-      <h1>Security Features</h1>
-      <p>Learn about RiverLock's advanced security features.</p>
-    </div>
-  );
-
-  const PerformancePage = () => (
-    <div>
-      <h1>Performance Features</h1>
-      <p>Discover how RiverLock ensures optimal performance.</p>
-    </div>
-  );
-
-  const TeamPage = () => (
-    <div>
-      <h1>Our Team</h1>
-      <p>Meet the people behind RiverLock.</p>
-    </div>
-  );
-
-  const VisionPage = () => (
-    <div>
-      <h1>Our Vision</h1>
-      <p>Learn about RiverLock's mission and long-term goals.</p>
-    </div>
-  );
+  const pageVariants = {
+    initial: { opacity: 0, y: 50 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -50 },
+  };
 
   return (
     <>
+      <ScrollToTop />
       <Navbar />
-      <Routes>
-        {!loggedInUser ? (
-          <>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/features/security" element={<SecurityPage />} />
-            <Route path="/features/performance" element={<PerformancePage />} />
-            <Route path="/about/team" element={<TeamPage />} />
-            <Route path="/about/vision" element={<VisionPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </>
-        ) : (
-          <>
-            <Route
-              path="/dashboard"
-              element={<Dashboard username={loggedInUser} onLogout={handleLogout} />}
-            />
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </>
-        )}
-      </Routes>
+      <AnimatePresence mode="wait" initial={false}>
+        <Routes key={location.pathname} location={location}>
+          {!loggedInUser ? (
+            <>
+              <Route
+                path="/"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <LandingPage />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Register />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Login onLogin={handleLogin} />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/features/security"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Security />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/features/performance"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Performance />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/about/team"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Team />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/about/vision"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Vision />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/faq"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <FAQ />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/contact"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Contact />
+                  </motion.div>
+                }
+              />
+              <Route path="*" element={<Navigate to="/" />} />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/dashboard"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Dashboard
+                      username={loggedInUser}
+                      onLogout={handleLogout}
+                    />
+                  </motion.div>
+                }
+              />
+              <Route path="*" element={<Navigate to="/dashboard" />} />
+            </>
+          )}
+        </Routes>
+      </AnimatePresence>
     </>
   );
 }

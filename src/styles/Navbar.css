@@ -1,95 +1,109 @@
+/* Navbar Container */
 .navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: #ffffff; /* White */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .logo a {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00a676; /* Green */
-    text-decoration: none;
-  }
-  
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff; /* White */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  flex: 1;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00a676; /* Green */
+  text-decoration: none;
+}
+
+/* Nav Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  flex: 2;
+  justify-content: center; /* Center the nav links */
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #2c2c2c; /* Dark gray */
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #00a676; /* Green */
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: absolute;
+  top: 100%; /* Align dropdown below the parent */
+  left: 0;
+  background: #ffffff; /* White background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 8px; /* Rounded corners */
+  padding: 0.5rem 0;
+  z-index: 1001;
+  display: none; /* Hidden by default */
+  min-width: 150px; /* Minimum width for consistency */
+}
+
+.nav-item:hover .dropdown {
+  display: block; /* Show dropdown on hover */
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #2c2c2c; /* Dark gray */
+  font-size: 0.9rem; /* Slightly smaller font */
+  transition: background 0.3s ease, color 0.3s ease;
+  display: block;
+}
+
+.dropdown-item:hover {
+  background: #f1f5f9; /* Light gray background on hover */
+  color: #00a676; /* Green text on hover */
+}
+
+/* CTA Button */
+.cta-button {
+  flex: 1;
+  text-align: right; /* Align button to the right */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #00a676;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #008655;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
+    display: none; /* Hide desktop nav links */
   }
-  
-  .nav-item {
-    position: relative;
-  }
-  
-  .nav-link {
-    text-decoration: none;
-    font-size: 1rem;
-    color: #2c2c2c; /* Dark gray */
-    transition: color 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    color: #00a676; /* Green */
-  }
-  
-  .dropdown {
-    position: absolute;
-    top: 100%; /* Align dropdown below the parent */
-    left: 0;
-    background: #ffffff; /* White background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    border-radius: 8px; /* Rounded corners */
-    padding: 0.5rem 0;
-    z-index: 1001;
-    display: none; /* Hidden by default */
-    min-width: 150px; /* Minimum width for consistency */
-  }
-  
-  .nav-item:hover .dropdown {
-    display: block; /* Show dropdown on hover */
-  }
-  
-  .dropdown-item {
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    color: #2c2c2c; /* Dark gray */
-    font-size: 0.9rem; /* Slightly smaller font */
-    transition: background 0.3s ease, color 0.3s ease;
-    display: block;
-  }
-  
-  .dropdown-item:hover {
-    background: #f1f5f9; /* Light gray background on hover */
-    color: #00a676; /* Green text on hover */
-  }
-  
-  /* CTA Button */
-  .cta-button {
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    background: #00a676;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background 0.3s ease;
-  }
-  
-  .cta-button:hover {
-    background: #008655;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .nav-links {
-      display: none;
-    }
-  }
+
+  /* Add styles for mobile navbar menu here if needed */
+}
