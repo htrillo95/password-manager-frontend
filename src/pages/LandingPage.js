@@ -70,11 +70,9 @@ const LandingPage = () => {
               key={idx}
               className="feature-card"
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.2 }}
-              viewport={{ once: true }}
             >
               <div className="icon-wrapper">
                 <i className={feature.icon}></i>
@@ -98,26 +96,18 @@ const LandingPage = () => {
           {[
             {
               question: "What is a password manager?",
-              answer:
-                "A password manager securely stores your passwords, making it easier and safer to use the internet.",
+              answer: "A password manager securely stores your passwords.",
             },
             {
               question: "Is RiverLock secure?",
-              answer:
-                "Absolutely. We use AES-256 encryption to ensure your data remains inaccessible to others.",
+              answer: "Absolutely. We use AES-256 encryption to secure your data.",
             },
             {
               question: "Can I access RiverLock on multiple devices?",
-              answer:
-                "Yes! RiverLock syncs seamlessly across all your devices.",
+              answer: "Yes! RiverLock syncs seamlessly across devices.",
             },
           ].map((faq, idx) => (
-            <motion.div
-              key={idx}
-              className="faq-item"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.div key={idx} className="faq-item">
               <h3>{faq.question}</h3>
               <p>{faq.answer}</p>
             </motion.div>
@@ -125,54 +115,9 @@ const LandingPage = () => {
         </motion.div>
       </section>
 
-      {/* Call-to-Action Section */}
-      <section className="cta">
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          Ready to <span className="highlight">Secure Your World?</span>
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          Start using RiverLock today and elevate your digital safety with ease.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <Link to="/register" className="btn btn-primary btn-large">
-            Get Started
-          </Link>
-        </motion.div>
-      </section>
-
       {/* Footer */}
       <footer>
-        <div className="footer-top">
-          <p>&copy; 2025 RiverLock. Your security, redefined.</p>
-        </div>
-        <div className="footer-links">
-          {["Privacy Policy", "Terms of Service", "Contact Support"].map(
-            (link, idx) => (
-              <a key={idx} href="#">
-                {link}
-              </a>
-            )
-          )}
-        </div>
-        <div className="social-links">
-          {["Facebook", "Twitter", "LinkedIn"].map((social, idx) => (
-            <a key={idx} href="#" className="social-icon">
-              {social}
-            </a>
-          ))}
-        </div>
+        <p>&copy; 2025 RiverLock. All rights reserved.</p>
       </footer>
     </div>
   );
