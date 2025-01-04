@@ -4,6 +4,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import LandingPage from "./pages/LandingPage";
+import Navbar from "./components/Navbar"; // Import the Navbar
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -28,24 +29,27 @@ function App() {
   };
 
   return (
-    <Routes>
-      {!loggedInUser ? (
-        <>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </>
-      ) : (
-        <>
-          <Route
-            path="/dashboard"
-            element={<Dashboard username={loggedInUser} onLogout={handleLogout} />}
-          />
-          <Route path="*" element={<Navigate to="/dashboard" />} />
-        </>
-      )}
-    </Routes>
+    <>
+      <Navbar /> {/* Navbar displays on every page */}
+      <Routes>
+        {!loggedInUser ? (
+          <>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        ) : (
+          <>
+            <Route
+              path="/dashboard"
+              element={<Dashboard username={loggedInUser} onLogout={handleLogout} />}
+            />
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </>
+        )}
+      </Routes>
+    </>
   );
 }
 
