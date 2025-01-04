@@ -1,11 +1,10 @@
 /* General App Styling */
 .App {
   text-align: center;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
   min-height: 100vh;
 }
 
+/* Forms */
 .form-container {
   max-width: 400px;
   margin: 2rem auto;
@@ -36,6 +35,7 @@
   background-color: #0056b3;
 }
 
+/* Buttons */
 .btn {
   margin: 0.5rem;
   padding: 0.5rem 1rem;
@@ -49,6 +49,7 @@
   background-color: #0056b3;
 }
 
+/* Dashboard */
 .dashboard ul {
   list-style-type: none;
   padding: 0;
