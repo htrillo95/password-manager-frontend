@@ -1,0 +1,83 @@
+/* FAQ Page Styling */
+.faq-page {
+    padding: 3rem 2rem;
+    background: #f9f5f1;
+    text-align: center;
+  }
+  
+  .faq-header {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00a676;
+    margin-bottom: 2rem;
+  }
+  
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .faq-item {
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .faq-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #007a5e;
+  }
+  
+  .faq-arrow {
+    font-size: 1.5rem;
+    color: #007a5e;
+    transition: transform 0.3s ease;
+  }
+  
+  /* When the question is expanded, the arrow rotates */
+  .faq-arrow.open {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    font-size: 1rem;
+    color: #4b5563;
+    margin-top: 1rem;
+    padding: 0 1rem;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  /* When the question is expanded, allow the answer to slide down */
+  .faq-answer.open {
+    max-height: 200px; /* Adjust for longer content */
+  }
+  
+  /* Adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .faq-header {
+      font-size: 1.8rem;
+    }
+  
+    .faq-item {
+      padding: 0.8rem;
+    }
+  
+    .faq-answer {
+      font-size: 0.95rem;
+    }
+  }

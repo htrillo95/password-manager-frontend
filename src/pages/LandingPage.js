@@ -20,7 +20,8 @@ const LandingPage = () => {
             Your Digital Fortress.
           </h1>
           <p>
-            Experience the next level of password management. Simple, secure, and stress-free.
+            Experience the next level of password management. Simple, secure,
+            and stress-free.
           </p>
           <div className="btn-container">
             <Link to="/login" className="btn btn-primary">
@@ -84,35 +85,66 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="faq">
-        <h2>Frequently Asked Questions</h2>
-        <motion.div
-          className="faq-items"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
+      {/* Stats Section */}
+      <section className="stats">
+        <h2>Our Impact</h2>
+        <div className="stats-container">
           {[
-            {
-              question: "What is a password manager?",
-              answer: "A password manager securely stores your passwords.",
-            },
-            {
-              question: "Is RiverLock secure?",
-              answer: "Absolutely. We use AES-256 encryption to secure your data.",
-            },
-            {
-              question: "Can I access RiverLock on multiple devices?",
-              answer: "Yes! RiverLock syncs seamlessly across devices.",
-            },
-          ].map((faq, idx) => (
-            <motion.div key={idx} className="faq-item">
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
+            { number: "10K+", label: "Passwords Secured" },
+            { number: "5K+", label: "Trusted Users" },
+            { number: "100%", label: "Satisfaction Rate" },
+          ].map((stat, idx) => (
+            <motion.div
+              key={idx}
+              className="stat-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.2 }}
+            >
+              <h3>{stat.number}</h3>
+              <p>{stat.label}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="how-it-works">
+        <h2>How It Works</h2>
+        <div className="steps">
+          {[
+            {
+              title: "Sign Up",
+              description: "Create an account to get started.",
+            },
+            {
+              title: "Secure Your Vault",
+              description: "Store your passwords in one secure place.",
+            },
+            {
+              title: "Access Anywhere",
+              description: "Enjoy seamless access across devices.",
+            },
+          ].map((step, idx) => (
+            <motion.div
+              key={idx}
+              className="step-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.2 }}
+            >
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="faq">
+        <p>
+          Have questions? We've got answers. <Link to="/faq">Learn more here.</Link>
+        </p>
       </section>
 
       {/* Footer */}
