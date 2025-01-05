@@ -1,73 +1,73 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styles/FAQ.css";
+import { motion } from "framer-motion";
 
 const FAQ = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
-
   const faqs = [
     {
       question: "What is RiverLock?",
-      answer: "RiverLock is a fictional password manager demo for portfolio purposes.",
+      answer: "RiverLock is a fictional password manager demo for portfolio purposes. It's here to show off some great features, but don't try to store your personal passwords just yet.",
     },
     {
       question: "How secure is RiverLock?",
-      answer: "This app uses industry-standard AES-256 encryption, ensuring data security.",
+      answer:
+        "This app uses industry-standard AES-256 encryption, ensuring data security. AES-256 encrypts your passwords with a 256-bit key, making them virtually impossible to decrypt without the correct key.",
     },
     {
       question: "Can I use this app in production?",
       answer:
-        "No, this is a demonstration project. It's not meant for real-world use without further development.",
+        "Nope. This is a demo project, not ready for production.",
     },
     {
-      question: "How do I generate strong passwords?",
-      answer: "RiverLock generates complex, unbreakable passwords with a single click.",
-    },
-    {
-      question: "How can I access my vault across devices?",
+      question: "Is there a mobile app for RiverLock?",
       answer:
-        "With RiverLock, your data syncs seamlessly across devices using our cloud backup system.",
+        "Currently, RiverLock is a web-based platform, but a mobile app may be developed in the future. We'll let you know if that happens—just keep an eye out.",
     },
     {
-      question: "How do I keep my data safe?",
+      question: "How do I change my password?",
       answer:
-        "Your data is kept safe with AES-256 encryption and multi-factor authentication.",
+        "To change your password, go to settings and select 'Change Password.' It's that simple. No magic required.",
     },
     {
-      question: "Why is RiverLock called RiverLock?",
+      question: "Can I integrate RiverLock with other services?",
       answer:
-        "It's a metaphor for a secure digital vault. The 'River' represents flow, and the 'Lock' represents security. It's simple, yet effective!",
+        "Currently, RiverLock does not support integration with third-party services. But who knows, in the future, maybe we'll be friends with other apps too.",
     },
     {
-      question: "Can RiverLock keep my snacks safe too?",
-      answer:
-        "Unfortunately, RiverLock specializes in digital security, not snack management. But hey, maybe we’ll add snack protection in the future!",
+        question: "What happens if I forget my master password?",
+        answer: "You’ll have to call in a psychic, because once it’s gone, it’s gone. We don’t store it, for your safety. So, please remember it! 😉",
     },
   ];
 
-  const handleToggle = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
   return (
-    <div className="faq-page">
-      <h1 className="faq-header">Frequently Asked Questions</h1>
+    <div className="faq-container">
+      <motion.h1
+        className="faq-title"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Frequently Asked Questions
+      </motion.h1>
 
-      <div className="faq-container">
+      <div className="faq-items">
         {faqs.map((faq, index) => (
-          <div key={index} className="faq-item">
-            <div
+          <motion.div
+            key={index}
+            className="faq-item"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+          >
+            <motion.h3
               className="faq-question"
-              onClick={() => handleToggle(index)}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
             >
-              <h3>{faq.question}</h3>
-              <span className={`faq-arrow ${activeIndex === index ? 'open' : ''}`}>
-                {activeIndex === index ? "▲" : "▼"}
-              </span>
-            </div>
-            <div className={`faq-answer ${activeIndex === index ? 'open' : ''}`}>
-              <p>{faq.answer}</p>
-            </div>
-          </div>
+              <i className="fas fa-question-circle"></i> {faq.question}
+            </motion.h3>
+            <motion.p className="faq-answer">{faq.answer}</motion.p>
+          </motion.div>
         ))}
       </div>
     </div>
