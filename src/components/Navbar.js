@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // For other links like Get Started
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -8,7 +8,7 @@ const Navbar = () => {
   const links = [
     {
       name: "Features",
-      path: "/features",
+      path: "#", // No routing for Features
       subLinks: [
         { name: "Security", path: "/features/security" },
         { name: "Performance", path: "/features/performance" },
@@ -16,7 +16,7 @@ const Navbar = () => {
     },
     {
       name: "About",
-      path: "/about",
+      path: "#", // No routing for About
       subLinks: [
         { name: "Team", path: "/about/team" },
         { name: "Vision", path: "/about/vision" },
@@ -47,9 +47,10 @@ const Navbar = () => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
-            <Link to={link.path} className="nav-link">
+            {/* Clicking on Features/ About will no longer route anywhere */}
+            <button className="nav-link" onClick={(e) => e.preventDefault()}>
               {link.name}
-            </Link>
+            </button>
             {link.subLinks && dropdownIndex === index && (
               <ul className="dropdown">
                 {link.subLinks.map((subLink, subIndex) => (

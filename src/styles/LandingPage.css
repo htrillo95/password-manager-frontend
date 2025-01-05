@@ -14,6 +14,7 @@ body {
 /* Hero Section */
 .hero {
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
   align-items: center;
   justify-content: space-between;
   padding: 4rem 2rem;
@@ -24,6 +25,8 @@ body {
 .hero-content {
   max-width: 600px;
   text-align: left;
+  margin-bottom: 2rem; /* Add margin for spacing on smaller screens */
+  flex: 1; /* Allow flex growth/shrink */
 }
 
 .hero h1 {
@@ -43,6 +46,11 @@ body {
 
 .btn-container {
   margin-top: 2rem;
+  display: flex;
+  gap: 1rem; /* Space between buttons */
+  justify-content: flex-start; /* Align buttons to the left */
+  margin-left: 8.9rem; /* Adjust offset for desktop */
+  flex-wrap: wrap; /* Wrap buttons if space is limited */
 }
 
 .btn {
@@ -75,9 +83,22 @@ body {
   color: #FFFFFF;
 }
 
+.hero-image {
+  flex: 1; /* Allow flex growth/shrink */
+  display: flex;
+  justify-content: flex-end; /* Align the image to the right */
+  margin-left: 3rem; /* Push the image slightly more to the right */
+}
+
+.illustration {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Features Section */
 .features {
   padding: 4rem 2rem;
+  background: #FFFFFF; /* Ensure consistent background color */
 }
 
 .features h2 {
@@ -90,6 +111,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .feature-card {
@@ -115,7 +137,7 @@ body {
 /* Stats Section */
 .stats {
   padding: 4rem 2rem;
-  background: #ffffff;
+  background: #FFFFFF;
   text-align: center;
 }
 
@@ -127,7 +149,8 @@ body {
 
 .stats-container {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap; /* Enable wrapping for smaller screens */
+  justify-content: center; /* Center items */
   gap: 2rem;
 }
 
@@ -191,23 +214,19 @@ body {
   color: #5a5a5a;
 }
 
-/* CTA Section */
-.cta {
-  padding: 3rem 2rem;
-  background: #F9F5F1;
-  text-align: center;
-}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero {
+    justify-content: center; /* Center content for smaller screens */
+  }
 
-.cta h2 {
-  font-size: 2.5rem;
-  color: #00A676;
-}
+  .btn-container {
+    margin-left: 0; /* Remove offset for mobile */
+    justify-content: flex-start; /* Align buttons to the left */
+  }
 
-.cta p {
-  color: #5A5A5A;
-}
-
-.cta .btn-large {
-  font-size: 1.2rem;
-  padding: 1rem 2rem;
+  .hero-image {
+    justify-content: center; /* Center image */
+    margin-left: 0; /* Remove additional margin */
+  }
 }

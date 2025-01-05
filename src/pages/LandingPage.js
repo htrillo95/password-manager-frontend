@@ -38,8 +38,9 @@ const LandingPage = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
+          {/* Updated to reference the new Hero.svg image */}
           <img
-            src="/path/to/illustration.svg"
+            src={`${process.env.PUBLIC_URL}/images/Hero.svg`}
             alt="Hero Illustration"
             className="illustration"
           />

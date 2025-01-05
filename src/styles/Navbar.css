@@ -26,7 +26,7 @@
 
 /* Nav Links */
 .nav-links {
-  list-style: none;
+  list-style: none; /* Remove bullets */
   display: flex;
   gap: 2rem;
   margin: 0;
@@ -39,10 +39,13 @@
   position: relative;
 }
 
+/* Non-clickable buttons for "Features" and "About" */
 .nav-link {
-  text-decoration: none;
   font-size: 1rem;
   color: #2c2c2c; /* Dark gray */
+  cursor: pointer;
+  background: none;
+  border: none;
   transition: color 0.3s ease;
 }
 
@@ -52,6 +55,7 @@
 
 /* Dropdown Menu */
 .dropdown {
+  list-style: none; /* Remove bullets */
   position: absolute;
   top: 100%; /* Align dropdown below the parent */
   left: 0;
