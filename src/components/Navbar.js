@@ -47,20 +47,32 @@ const Navbar = () => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
-            {/* Clicking on Features/ About will no longer route anywhere */}
-            <button className="nav-link" onClick={(e) => e.preventDefault()}>
-              {link.name}
-            </button>
-            {link.subLinks && dropdownIndex === index && (
-              <ul className="dropdown">
-                {link.subLinks.map((subLink, subIndex) => (
-                  <li key={subIndex}>
-                    <Link to={subLink.path} className="dropdown-item">
-                      {subLink.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            {link.subLinks ? (
+              <>
+                {/* Disable routing for Features and About */}
+                <button
+                  className="nav-link"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  {link.name}
+                </button>
+                {dropdownIndex === index && (
+                  <ul className="dropdown">
+                    {link.subLinks.map((subLink, subIndex) => (
+                      <li key={subIndex}>
+                        <Link to={subLink.path} className="dropdown-item">
+                          {subLink.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            ) : (
+              // Enable routing for FAQ and Contact
+              <Link to={link.path} className="nav-link">
+                {link.name}
+              </Link>
             )}
           </li>
         ))}

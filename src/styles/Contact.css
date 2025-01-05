@@ -1,0 +1,155 @@
+/* General Page Styling */
+.contact-page {
+    min-height: 100vh;
+    padding: 2rem;
+    background: #f4f4f9; /* Light Gray */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  /* Header Section */
+.contact-header {
+    text-align: center;
+    max-width: 700px;
+    margin-bottom: 2rem;
+    margin-top: 4rem; /* Added consistent spacing from the navbar */
+  }
+  
+  .contact-header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50; /* Dark Blue */
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-header p {
+    font-size: 1.2rem;
+    color: #7f8c8d; /* Medium Gray */
+  }
+  
+  /* Main Contact Section */
+  .contact-container {
+    display: flex;
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    flex-wrap: wrap; /* Wrap for mobile */
+  }
+  
+  /* Contact Form Section */
+  .contact-form-section {
+    flex: 1;
+    padding: 3rem;
+  }
+  
+  .contact-heading {
+    font-size: 2rem;
+    color: #2c3e50; /* Dark Blue */
+    margin-bottom: 1rem;
+  }
+  
+  .contact-description {
+    font-size: 1rem;
+    color: #7f8c8d; /* Medium Gray */
+    margin-bottom: 2rem;
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    color: #2c3e50; /* Dark Blue */
+  }
+  
+  textarea {
+    height: 100px;
+    resize: none;
+  }
+  
+  .contact-submit {
+    background: #2c3e50; /* Dark Blue */
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .contact-submit:hover {
+    background: #1a252f; /* Even Darker Blue */
+    transform: scale(1.05);
+  }
+  
+  /* Info Section */
+  .contact-info-section {
+    flex: 1;
+    background: #f8f9fa; /* Slight Gray */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .info-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-card h2 {
+    font-size: 1.5rem;
+    color: #2c3e50; /* Dark Blue */
+    margin-bottom: 0.5rem;
+  }
+  
+  .info-card p,
+  .info-card ul {
+    font-size: 1rem;
+    color: #7f8c8d; /* Medium Gray */
+    text-align: left;
+  }
+  
+  ul {
+    padding-left: 1.5rem;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .contact-container {
+      flex-direction: column; /* Stack vertically */
+      gap: 1rem;
+    }
+  
+    .contact-form-section,
+    .contact-info-section {
+      padding: 2rem 1rem;
+    }
+  }

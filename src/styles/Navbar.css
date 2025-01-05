@@ -103,6 +103,14 @@
   background: #008655;
 }
 
+.nav-item a {
+  text-decoration: none; /* Remove underline for all links by default */
+}
+
+.nav-item a:hover {
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .nav-links {
