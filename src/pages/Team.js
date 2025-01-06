@@ -18,13 +18,13 @@ const Team = () => {
       {/* Profile Section */}
       <div className="team-profile">
         <img
-          src="https://via.placeholder.com/150"
+          src={`${process.env.PUBLIC_URL}/images/Penguin.jpg`} 
           alt="Hector Trillo"
           className="team-image"
         />
         <div className="team-info">
           <h3>Hector Trillo</h3>
-          <p className="team-role">Aspiring Web Developer</p>
+          <p className="team-role">Aspiring Web | Full-Stack Dev</p>
           <p className="team-bio">
             I’m Hector, a self-taught web developer currently learning the
             fundamentals of building user-friendly and secure web applications.

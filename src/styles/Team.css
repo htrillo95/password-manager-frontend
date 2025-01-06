@@ -1,117 +1,137 @@
 .team-container {
     padding: 4rem 2rem;
-    background: #f5f7fa; /* Light blue to match the theme */
+    background: #f5f7fa; /* Light Blue Background */
     font-family: 'Inter', sans-serif;
     text-align: center;
-  }
-  
-  /* Header */
-  .team-header h1 {
-    font-size: 2.5rem;
-    color: #1d3557; /* Dark Blue */
-  }
-  
-  .team-header p {
+}
+
+/* Header Section */
+.team-header {
+    margin-top: 4rem; /* Consistent spacing from the navbar */
+    margin-bottom: 2.5rem; /* Increased spacing for separation */
+}
+
+.team-header h1 {
+    font-size: 2.8rem; /* Larger for emphasis */
+    color: #2c3e50; /* Dark Blue */
+    margin-bottom: 1rem; /* Add spacing below the title */
+}
+
+.team-header p {
     font-size: 1.2rem;
-    color: #5a5a5a; /* Neutral Gray */
+    color: #4b5563; /* Neutral gray */
     max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  /* Profile Section */
-  .team-profile {
+    margin: 0 auto 2rem;
+    line-height: 1.8; /* Improved readability */
+}
+
+/* Profile Section */
+.team-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     margin-bottom: 3rem;
-  }
-  
-  .team-image {
-    width: 150px;
-    height: 150px;
+}
+
+.team-image {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .team-info h3 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 1.5rem; /* Add spacing between image and text */
+}
+
+.team-image:hover {
+    transform: scale(1.1); /* Slight zoom */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Pronounced shadow */
+}
+
+.team-info h3 {
     font-size: 1.8rem;
     color: #1d3557; /* Dark Blue */
+    font-weight: 800;
     margin-bottom: 0.5rem;
-  }
-  
-  .team-info .team-role {
+}
+
+.team-info .team-role {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #457b9d; /* Subtle Blue-Green */
+    color: #457b9d; /* Subtle Blue */
     margin-bottom: 1rem;
-  }
-  
-  .team-info .team-bio {
+}
+
+.team-info .team-bio {
     font-size: 1rem;
-    color: #6b7280; /* Cool Gray */
+    line-height: 1.8;
+    color: #6b7280; /* Neutral gray */
     max-width: 700px;
-    line-height: 1.6;
-  }
-  
-  /* Mission Section */
-  .team-mission {
-    margin-top: 2rem;
+    margin: 0 auto;
+}
+
+/* Mission Section */
+.team-mission {
+    margin-top: 4rem; /* Add more space above this section */
     padding: 2rem;
-    background: #ffffff; /* White background for simplicity */
+    background: #ffffff; /* Clean White Background */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .team-mission h2 {
+}
+
+.team-mission h2 {
     font-size: 2rem;
     color: #1d3557; /* Dark Blue */
     margin-bottom: 1rem;
-  }
-  
-  .team-mission p {
+}
+
+.team-mission p {
     font-size: 1.1rem;
-    color: #4b5563; /* Neutral Gray */
+    color: #4b5563;
     line-height: 1.8;
-  }
-  
-  /* Values Section */
-  .team-values h2 {
+}
+
+/* Values Section */
+.team-values {
+    margin-top: 3rem;
+}
+
+.team-values h2 {
     font-size: 2rem;
     color: #1d3557; /* Dark Blue */
     margin-bottom: 1.5rem;
-  }
-  
-  .values-list {
+}
+
+.values-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
-  }
-  
-  .value-item {
-    background: #ffffff; /* White to match the rest */
+}
+
+.value-item {
+    background: #ffffff; /* Clean White Card */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     max-width: 300px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .value-item:hover {
+}
+
+.value-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .value-item h3 {
+}
+
+.value-item h3 {
     font-size: 1.5rem;
-    color: #457b9d; /* Subtle Blue */
+    color: #1d3557; /* Dark Blue */
     margin-bottom: 0.5rem;
-  }
-  
-  .value-item p {
+}
+
+.value-item p {
     font-size: 1rem;
-    color: #6b7280; /* Cool Gray */
+    color: #6b7280; /* Neutral Gray */
     line-height: 1.6;
-  }
+}
