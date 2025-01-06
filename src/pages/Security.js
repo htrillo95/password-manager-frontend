@@ -18,10 +18,7 @@ const Security = () => {
             <h2>AES-256 Encryption</h2>
             <p>
               Trusted by governments and organizations worldwide, AES-256
-              encryption ensures your data is always protected. Lorem ipsum
-              dolor sit amet, consectetur adipiscing elit. Nullam at nisi eget
-              lorem ultricies vulputate. Phasellus vitae nisi nec ipsum posuere
-              consequat.
+              encryption ensures your data is always protected.
             </p>
           </div>
           <div className="security-image">
@@ -38,9 +35,7 @@ const Security = () => {
             <h2>Multi-Factor Authentication</h2>
             <p>
               Add an extra layer of protection. Even if your password is
-              compromised, unauthorized access is prevented. Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit. Duis eu lorem id dolor
-              vehicula tincidunt.
+              compromised, unauthorized access is prevented.
             </p>
           </div>
           <div className="security-image">
@@ -57,9 +52,7 @@ const Security = () => {
             <h2>Secure Data Backups</h2>
             <p>
               Your data is always protected with redundant, encrypted backups,
-              ensuring accessibility even in unforeseen circumstances. Lorem
-              ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec
-              risus eget nulla vehicula sollicitudin.
+              ensuring accessibility even in unforeseen circumstances.
             </p>
           </div>
           <div className="security-image">

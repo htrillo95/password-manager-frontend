@@ -4,6 +4,7 @@ import "../styles/Team.css";
 const Team = () => {
   return (
     <div className="team-container">
+      {/* Header Section */}
       <div className="team-header">
         <h1>About the Creator</h1>
         <p>
@@ -14,6 +15,7 @@ const Team = () => {
         </p>
       </div>
 
+      {/* Profile Section */}
       <div className="team-profile">
         <img
           src="https://via.placeholder.com/150"
@@ -33,6 +35,7 @@ const Team = () => {
         </div>
       </div>
 
+      {/* Mission Section */}
       <div className="team-mission">
         <h2>About RiverLock</h2>
         <p>
@@ -47,6 +50,7 @@ const Team = () => {
         </p>
       </div>
 
+      {/* Values Section */}
       <div className="team-values">
         <h2>What I’m Learning</h2>
         <div className="values-list">

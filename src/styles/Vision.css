@@ -1,77 +1,79 @@
 .vision-container {
-    padding: 4rem 2rem; /* Maintain consistent spacing */
+    padding: 4rem 2rem;
     line-height: 1.8;
-    background: #f1f8f5; /* Soft green background */
+    background: linear-gradient(to bottom, #e3f2fd, #ffffff); /* Soft blue gradient */
     font-family: 'Inter', sans-serif;
     color: #2c2c2c; /* Neutral dark gray */
 }
 
 .vision-header {
     text-align: center;
-    margin-bottom: 2.5rem; /* Slightly increased bottom margin for spacing */
-    margin-top: 4rem; /* Added consistent spacing from the navbar */
+    margin-bottom: 2.5rem;
+    margin-top: 4rem;
 }
 
 .vision-header h1 {
-    font-size: 2.8rem; /* Increased font size for emphasis */
-    color: #2c3e50; /* Dark Blue */
+    font-size: 2.8rem;
+    color: #1d3557; /* Dark Blue */
 }
 
 .vision-header p {
     font-size: 1.2rem;
     color: #4b5563; /* Cool gray */
     max-width: 800px;
-    margin: 1rem auto; /* Added margin-top for spacing */
+    margin: 1rem auto;
 }
 
 .vision-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 3rem; /* Slightly increased spacing above the content */
+    margin-top: 3rem;
 }
 
-/* No changes made to other sections */
-  
-  .vision-section {
+.vision-section {
     background: #ffffff; /* White card */
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .vision-section:hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vision-section:hover {
     transform: translateY(-5px);
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .vision-section h2 {
+}
+
+.vision-section h2 {
     font-size: 1.8rem;
-    color: #007a5e;
+    color: #1d3557; /* Dark Blue */
     margin-bottom: 1rem;
-  }
-  
-  .vision-section p {
+}
+
+.vision-section p {
     color: #4b5563; /* Cool gray */
     font-size: 1rem;
-  }
-  
-  .vision-footer {
+}
+
+.vision-footer {
     text-align: center;
-    margin-top: 4rem; /* Increased spacing above the footer */
-  }
-  
-  .vision-footer h2 {
-    font-size: 2.2rem; /* Slightly increased font size for emphasis */
-    color: #007a5e;
-    margin-bottom: 1.2rem;
-  }
-  
-  .vision-footer p {
+    margin-top: 4rem;
+    padding: 3rem 2rem; /* Add padding for spacing */
+    background: #1d3557; /* Dark Blue */
+    color: #e3f2fd; /* Light Blue for better contrast */
+}
+
+.vision-footer h2 {
+    font-size: 2.2rem;
+    font-weight: 700; /* Increased font weight */
+    color: #ffffff; /* Pure white for strong contrast */
+    margin-bottom: 1.5rem;
+}
+
+.vision-footer p {
     font-size: 1.2rem;
-    color: #4b5563;
-    max-width: 700px;
+    color: #d0e6f7; /* Slightly muted light blue for paragraph text */
+    max-width: 800px;
     margin: 0 auto;
     line-height: 1.6;
-  }
+}

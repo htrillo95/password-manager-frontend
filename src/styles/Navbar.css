@@ -4,24 +4,21 @@
   top: 0;
   width: 100%;
   background: #ffffff; /* White */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   z-index: 1000;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem; /* Slightly smaller padding */
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  transition: background 0.3s ease; /* Smooth background transition */
 }
 
 /* Logo */
-.logo {
-  margin-right: auto; /* Push the logo to the left */
-}
-
 .logo a {
-  font-size: 1.5rem;
+  font-size: 1.3rem; /* Adjusted to slightly smaller */
   font-weight: 700;
-  color: #00a676; /* Green */
+  color: #457b9d; /* Subtle Blue */
   text-decoration: none;
 }
 
@@ -29,7 +26,7 @@
 .nav-links {
   list-style: none; /* Remove bullets */
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem; /* Reduced gap for spacing */
   margin: 0;
   padding: 0;
   justify-content: center; /* Center the nav links */
@@ -42,56 +39,54 @@
 }
 
 .nav-link {
-  font-size: 1rem;
-  color: #2c2c2c; /* Dark gray */
+  font-size: 1rem; /* Back to smaller size */
+  color: #1d3557; /* Dark Blue */
   cursor: pointer;
   background: none;
   border: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
   text-decoration: none;
 }
 
 .nav-link:hover {
-  color: #00a676; /* Green */
+  color: #457b9d; /* Subtle Blue on hover */
 }
 
 /* Dropdown Menu */
 .dropdown {
   list-style: none; /* Remove bullets */
   position: absolute;
-  top: calc(100% + 10px); /* Drop down slightly below the nav link */
-  left: 50%;
-  transform: translateX(-50%); /* Center-align dropdown under the respective button */
+  top: calc(100%); /* Align directly below the nav link */
+  left: 0;
   background: #ffffff; /* White background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   border-radius: 8px; /* Rounded corners */
-  padding: 0.5rem 0;
+  padding: 0; /* No padding for smoother height animation */
   z-index: 1001;
-  display: none; /* Hidden by default */
-  min-width: 150px; /* Minimum width for consistency */
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth animation */
+  overflow: hidden; /* Required for height animation */
+  max-height: 0; /* Start collapsed */
+  transition: max-height 0.3s ease, padding 0.3s ease; /* Smooth animation */
 }
 
 /* Show Dropdown */
 .nav-item:hover .dropdown {
-  display: block;
-  opacity: 1; /* Fade in */
-  transform: translateX(-50%) translateY(0); /* Smooth drop down */
+  max-height: 180px; /* Adjusted dropdown height */
+  padding: 0.5rem 0; /* Slightly reduced padding */
 }
 
+/* Dropdown Items */
 .dropdown-item {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem; /* Slightly smaller padding */
   text-decoration: none;
-  color: #2c2c2c; /* Dark gray */
+  color: #1d3557; /* Dark Blue */
   font-size: 0.9rem; /* Slightly smaller font */
   transition: background 0.3s ease, color 0.3s ease;
   display: block;
 }
 
 .dropdown-item:hover {
-  background: #f1f5f9; /* Light gray background on hover */
-  color: #00a676; /* Green text on hover */
+  background: #e3f2fd; /* Light Blue background on hover */
+  color: #457b9d; /* Subtle Blue text on hover */
 }
 
 /* Remove Bullet Points */
@@ -102,19 +97,18 @@
 
 /* CTA Button */
 .cta-button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.65rem 1.25rem; /* Slightly reduced padding */
   border-radius: 8px;
-  background: #00a676; /* Green */
+  background: #457b9d; /* Subtle Blue */
   color: #ffffff;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1rem; /* Slightly smaller font */
   font-weight: 600;
   transition: background 0.3s ease, transform 0.3s ease;
-  margin-left: auto; /* Push the button to the far right */
 }
 
 .cta-button:hover {
-  background: #008655;
+  background: #1d3557; /* Dark Blue on hover */
   transform: scale(1.05); /* Slight hover effect */
 }
 
@@ -126,8 +120,8 @@
 
   .mobile-nav-icon {
     display: block; /* Show hamburger menu icon */
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Adjusted size */
     cursor: pointer;
-    color: #2c2c2c;
+    color: #1d3557; /* Dark Blue */
   }
 }

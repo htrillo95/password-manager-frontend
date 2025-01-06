@@ -38,7 +38,6 @@ const LandingPage = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          {/* Updated to reference the new Hero.svg image */}
           <img
             src={`${process.env.PUBLIC_URL}/images/Hero.svg`}
             alt="Hero Illustration"
@@ -46,6 +45,9 @@ const LandingPage = () => {
           />
         </motion.div>
       </header>
+
+      {/* Wave Divider */}
+      <div className="wave-divider"></div>
 
       {/* Features Section */}
       <section className="features">
@@ -86,6 +88,9 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Wave Divider */}
+      <div className="wave-divider flip"></div>
+
       {/* Stats Section */}
       <section className="stats">
         <h2>Our Impact</h2>
@@ -108,6 +113,9 @@ const LandingPage = () => {
           ))}
         </div>
       </section>
+
+      {/* Wave Divider */}
+      <div className="wave-divider"></div>
 
       {/* How It Works Section */}
       <section className="how-it-works">
@@ -139,13 +147,6 @@ const LandingPage = () => {
             </motion.div>
           ))}
         </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="faq">
-        <p>
-          Have questions? We've got answers. <Link to="/faq">Learn more here.</Link>
-        </p>
       </section>
 
       {/* Footer */}

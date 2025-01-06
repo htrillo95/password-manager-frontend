@@ -16,7 +16,7 @@ const Performance = () => {
           <h2>Blazing Fast Speeds</h2>
           <p>
             With cutting-edge optimization, RiverLock ensures that every operation is carried out
-            with lightning-fast precision. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            with lightning-fast precision.
           </p>
         </div>
         <div className="performance-image">
@@ -29,8 +29,8 @@ const Performance = () => {
         <div className="performance-content">
           <h2>Unmatched Reliability</h2>
           <p>
-            Enjoy a seamless experience with 99.99% uptime and redundancy. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Suspendisse eget urna vitae libero laoreet hendrerit.
+            Enjoy a seamless experience with 99.99% uptime and redundancy. Your data will always be
+            accessible whenever you need it.
           </p>
         </div>
         <div className="performance-image">
@@ -44,8 +44,7 @@ const Performance = () => {
           <h2>Engineered for Scalability</h2>
           <p>
             From startups to enterprises, RiverLock’s infrastructure scales effortlessly as your
-            needs grow. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel
-            egestas augue.
+            needs grow. Experience the perfect balance of performance and scalability.
           </p>
         </div>
       </div>

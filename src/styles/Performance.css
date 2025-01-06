@@ -1,6 +1,6 @@
 /* Hero Section */
 .performance-hero {
-    background: linear-gradient(135deg, #007a5e, #00a676);
+    background: linear-gradient(135deg, #1d3557, #457b9d); /* Stronger blue gradient */
     color: #ffffff;
     text-align: center;
     padding: 6rem 2rem;
@@ -34,12 +34,12 @@
   
   .performance-content h2 {
     font-size: 2rem;
-    color: #007a5e;
+    color: #1d3557; /* Dark Blue */
   }
   
   .performance-content p {
     font-size: 1.1rem;
-    color: #4b5563;
+    color: #4b5563; /* Neutral Gray */
   }
   
   .performance-image {
@@ -73,7 +73,7 @@
   
   /* Footer */
   .performance-footer {
-    background: #004f75;
+    background: #1d3557; /* Dark Blue */
     color: #ffffff;
     text-align: center;
     padding: 2rem;

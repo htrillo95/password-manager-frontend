@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // For other links like Get Started
+import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -8,7 +8,7 @@ const Navbar = () => {
   const links = [
     {
       name: "Features",
-      path: "#", // No routing for Features
+      path: "#",
       subLinks: [
         { name: "Security", path: "/features/security" },
         { name: "Performance", path: "/features/performance" },
@@ -16,7 +16,7 @@ const Navbar = () => {
     },
     {
       name: "About",
-      path: "#", // No routing for About
+      path: "#",
       subLinks: [
         { name: "Team", path: "/about/team" },
         { name: "Vision", path: "/about/vision" },
@@ -30,8 +30,10 @@ const Navbar = () => {
     setDropdownIndex(index);
   };
 
-  const handleMouseLeave = () => {
-    setDropdownIndex(null);
+  const handleMouseLeave = (index) => {
+    if (dropdownIndex === index) {
+      setDropdownIndex(null);
+    }
   };
 
   return (
@@ -45,19 +47,19 @@ const Navbar = () => {
             key={index}
             className="nav-item"
             onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
+            onMouseLeave={() => handleMouseLeave(index)}
           >
             {link.subLinks ? (
               <>
-                {/* Disable routing for Features and About */}
-                <button
-                  className="nav-link"
-                  onClick={(e) => e.preventDefault()}
-                >
+                <button className="nav-link" onClick={(e) => e.preventDefault()}>
                   {link.name}
                 </button>
                 {dropdownIndex === index && (
-                  <ul className="dropdown">
+                  <ul
+                    className="dropdown"
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={() => handleMouseLeave(index)}
+                  >
                     {link.subLinks.map((subLink, subIndex) => (
                       <li key={subIndex}>
                         <Link to={subLink.path} className="dropdown-item">
@@ -69,7 +71,6 @@ const Navbar = () => {
                 )}
               </>
             ) : (
-              // Enable routing for FAQ and Contact
               <Link to={link.path} className="nav-link">
                 {link.name}
               </Link>
@@ -77,7 +78,7 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-      <Link to="/get-started" className="cta-button">
+      <Link to="/register" className="cta-button">
         Get Started
       </Link>
     </nav>

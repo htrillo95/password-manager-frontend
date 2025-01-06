@@ -1,8 +1,8 @@
 /* General Page Styling */
 .contact-page {
     min-height: 100vh;
-    padding: 2rem;
-    background: #f4f4f9; /* Light Gray */
+    padding: 3rem 2rem;
+    background: linear-gradient(to bottom, #e3f2fd, #ffffff); /* Subtle gradient */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,22 +10,22 @@
   }
   
   /* Header Section */
-.contact-header {
+  .contact-header {
     text-align: center;
-    max-width: 700px;
+    max-width: 800px;
     margin-bottom: 2rem;
     margin-top: 4rem; /* Added consistent spacing from the navbar */
   }
   
   .contact-header h1 {
     font-size: 2.5rem;
-    color: #2c3e50; /* Dark Blue */
+    color: #1d3557; /* Dark Blue */
     margin-bottom: 0.5rem;
   }
   
   .contact-header p {
     font-size: 1.2rem;
-    color: #7f8c8d; /* Medium Gray */
+    color: #5a5a5a; /* Medium Gray */
   }
   
   /* Main Contact Section */
@@ -49,13 +49,13 @@
   
   .contact-heading {
     font-size: 2rem;
-    color: #2c3e50; /* Dark Blue */
+    color: #1d3557; /* Dark Blue */
     margin-bottom: 1rem;
   }
   
   .contact-description {
     font-size: 1rem;
-    color: #7f8c8d; /* Medium Gray */
+    color: #5a5a5a; /* Medium Gray */
     margin-bottom: 2rem;
   }
   
@@ -79,7 +79,7 @@
     outline: none;
     background: transparent;
     font-size: 1rem;
-    color: #2c3e50; /* Dark Blue */
+    color: #1d3557; /* Dark Blue */
   }
   
   textarea {
@@ -88,7 +88,7 @@
   }
   
   .contact-submit {
-    background: #2c3e50; /* Dark Blue */
+    background: #457b9d; /* Subtle Blue */
     color: #ffffff;
     padding: 1rem 2rem;
     border: none;
@@ -100,14 +100,14 @@
   }
   
   .contact-submit:hover {
-    background: #1a252f; /* Even Darker Blue */
+    background: #1d3557; /* Darker Blue */
     transform: scale(1.05);
   }
   
   /* Info Section */
   .contact-info-section {
     flex: 1;
-    background: #f8f9fa; /* Slight Gray */
+    background: #f5f7fa; /* Light Blue */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -126,14 +126,14 @@
   
   .info-card h2 {
     font-size: 1.5rem;
-    color: #2c3e50; /* Dark Blue */
+    color: #1d3557; /* Dark Blue */
     margin-bottom: 0.5rem;
   }
   
   .info-card p,
   .info-card ul {
     font-size: 1rem;
-    color: #7f8c8d; /* Medium Gray */
+    color: #5a5a5a; /* Medium Gray */
     text-align: left;
   }
   
