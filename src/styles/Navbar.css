@@ -10,11 +10,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 /* Logo */
 .logo {
-  flex: 1;
+  margin-right: auto; /* Push the logo to the left */
 }
 
 .logo a {
@@ -31,15 +32,15 @@
   gap: 2rem;
   margin: 0;
   padding: 0;
-  flex: 2;
   justify-content: center; /* Center the nav links */
+  flex: 1; /* Take up remaining space */
 }
 
+/* Nav Item */
 .nav-item {
   position: relative;
 }
 
-/* Non-clickable buttons for "Features" and "About" */
 .nav-link {
   font-size: 1rem;
   color: #2c2c2c; /* Dark gray */
@@ -47,6 +48,7 @@
   background: none;
   border: none;
   transition: color 0.3s ease;
+  text-decoration: none;
 }
 
 .nav-link:hover {
@@ -57,8 +59,9 @@
 .dropdown {
   list-style: none; /* Remove bullets */
   position: absolute;
-  top: 100%; /* Align dropdown below the parent */
-  left: 0;
+  top: calc(100% + 10px); /* Drop down slightly below the nav link */
+  left: 50%;
+  transform: translateX(-50%); /* Center-align dropdown under the respective button */
   background: #ffffff; /* White background */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   border-radius: 8px; /* Rounded corners */
@@ -66,10 +69,15 @@
   z-index: 1001;
   display: none; /* Hidden by default */
   min-width: 150px; /* Minimum width for consistency */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth animation */
 }
 
+/* Show Dropdown */
 .nav-item:hover .dropdown {
-  display: block; /* Show dropdown on hover */
+  display: block;
+  opacity: 1; /* Fade in */
+  transform: translateX(-50%) translateY(0); /* Smooth drop down */
 }
 
 .dropdown-item {
@@ -86,29 +94,28 @@
   color: #00a676; /* Green text on hover */
 }
 
+/* Remove Bullet Points */
+.nav-item ul {
+  margin: 0;
+  padding: 0;
+}
+
 /* CTA Button */
 .cta-button {
-  flex: 1;
-  text-align: right; /* Align button to the right */
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  background: #00a676;
+  background: #00a676; /* Green */
   color: #ffffff;
   text-decoration: none;
+  font-size: 1rem;
   font-weight: 600;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-left: auto; /* Push the button to the far right */
 }
 
 .cta-button:hover {
   background: #008655;
-}
-
-.nav-item a {
-  text-decoration: none; /* Remove underline for all links by default */
-}
-
-.nav-item a:hover {
-  text-decoration: none; /* Ensure no underline on hover */
+  transform: scale(1.05); /* Slight hover effect */
 }
 
 /* Responsive Design */
@@ -117,5 +124,10 @@
     display: none; /* Hide desktop nav links */
   }
 
-  /* Add styles for mobile navbar menu here if needed */
+  .mobile-nav-icon {
+    display: block; /* Show hamburger menu icon */
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #2c2c2c;
+  }
 }
