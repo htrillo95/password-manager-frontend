@@ -47,7 +47,7 @@ const Dashboard = ({ username, onLogout }) => {
     try {
       const response = await axios.post("http://127.0.0.1:5000/passwords", {
         username,
-        account: newAccount,
+        account_name: newAccount,
         password: newPassword,
       });
 
