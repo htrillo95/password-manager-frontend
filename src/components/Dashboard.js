@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "../styles/Dashboard.css"; // Custom CSS file
 
 const Dashboard = ({ username, onLogout }) => {
   const [accounts, setAccounts] = useState([]); // All stored accounts
@@ -7,7 +8,6 @@ const Dashboard = ({ username, onLogout }) => {
   const [searchQuery, setSearchQuery] = useState(""); // Search input value
   const [newAccount, setNewAccount] = useState(""); // New account input
   const [newPassword, setNewPassword] = useState(""); // New password input
-  const [selectedAccount, setSelectedAccount] = useState(null); // Selected account for modal
   const [message, setMessage] = useState(""); // Feedback message
   const [loading, setLoading] = useState(false); // Loading state
 
@@ -18,10 +18,17 @@ const Dashboard = ({ username, onLogout }) => {
         const response = await axios.get("http://127.0.0.1:5000/accounts", {
           params: { username },
         });
-        setAccounts(response.data.accounts || []);
-        setFilteredAccounts(response.data.accounts || []);
+
+        if (response.data.success) {
+          const accountsData = response.data.accounts || [];
+          setAccounts(accountsData); // Accounts are an array
+          setFilteredAccounts(accountsData); // Same data for filtering
+        } else {
+          setMessage("No accounts found.");
+        }
       } catch (error) {
         console.error("Error fetching accounts:", error);
+        setMessage("Failed to load accounts.");
       }
     };
 
@@ -43,36 +50,20 @@ const Dashboard = ({ username, onLogout }) => {
         account: newAccount,
         password: newPassword,
       });
-      const newEntry = { name: newAccount, password: newPassword };
-      setAccounts((prev) => [...prev, newEntry]);
-      setFilteredAccounts((prev) => [...prev, newEntry]);
-      setNewAccount("");
-      setNewPassword("");
-      setMessage("Account added successfully!");
+
+      if (response.data.success) {
+        const newEntry = { name: newAccount, password: newPassword };
+        setAccounts((prev) => [...prev, newEntry]);
+        setFilteredAccounts((prev) => [...prev, newEntry]);
+        setNewAccount("");
+        setNewPassword("");
+        setMessage("Account added successfully!");
+      } else {
+        setMessage(response.data.message);
+      }
     } catch (error) {
       console.error("Error adding account:", error);
       setMessage("Failed to add account.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Delete an account
-  const handleDeleteAccount = async (accountName) => {
-    setLoading(true);
-    try {
-      await axios.delete(`http://127.0.0.1:5000/accounts/${accountName}`, {
-        params: { username },
-      });
-      setAccounts(accounts.filter((account) => account.name !== accountName));
-      setFilteredAccounts(
-        filteredAccounts.filter((account) => account.name !== accountName)
-      );
-      setSelectedAccount(null);
-      setMessage(`Account "${accountName}" deleted successfully.`);
-    } catch (error) {
-      console.error("Error deleting account:", error);
-      setMessage("Failed to delete account.");
     } finally {
       setLoading(false);
     }
@@ -87,11 +78,6 @@ const Dashboard = ({ username, onLogout }) => {
         account.name.toLowerCase().includes(query)
       )
     );
-  };
-
-  // Display modal for selected account
-  const handleAccountClick = (account) => {
-    setSelectedAccount(account);
   };
 
   return (
@@ -135,11 +121,8 @@ const Dashboard = ({ username, onLogout }) => {
         <form
           onSubmit={handleAddAccount}
           className="mb-6 bg-white shadow-md rounded-lg p-4"
-          autoComplete="off" // Disabling autofill
+          autoComplete="off"
         >
-          {/* Hidden fields to trick browsers */}
-          <input type="text" style={{ display: "none" }} autoComplete="off" />
-          <input type="password" style={{ display: "none" }} autoComplete="off" />
           <h2 className="text-lg font-semibold mb-4">Add New Account</h2>
           <div className="flex space-x-4">
             <input
@@ -149,8 +132,6 @@ const Dashboard = ({ username, onLogout }) => {
               value={newAccount}
               onChange={(e) => setNewAccount(e.target.value)}
               className="flex-1 px-4 py-2 border rounded"
-              autoComplete="new-account" // Custom autocomplete to prevent autofill
-              name="newAccount"
             />
             <input
               id="new-account-password"
@@ -159,8 +140,6 @@ const Dashboard = ({ username, onLogout }) => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               className="flex-1 px-4 py-2 border rounded"
-              autoComplete="new-password" // Custom autocomplete to prevent autofill
-              name="newPassword"
             />
             <button
               type="submit"
@@ -196,55 +175,31 @@ const Dashboard = ({ username, onLogout }) => {
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm">
-                {filteredAccounts.map((account, index) => (
-                  <tr
-                    key={index}
-                    className="border-b hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleAccountClick(account)}
-                  >
-                    <td className="py-3 px-6">{account.name}</td>
-                    <td className="py-3 px-6 text-center">
-                      <button className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600">
-                        View
-                      </button>
+                {Array.isArray(filteredAccounts) && filteredAccounts.length > 0 ? (
+                  filteredAccounts.map((account, index) => (
+                    <tr
+                      key={index}
+                      className="border-b hover:bg-gray-100 cursor-pointer"
+                    >
+                      <td className="py-3 px-6">{account.name}</td>
+                      <td className="py-3 px-6 text-center">
+                        <button className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600">
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="2" className="py-3 px-6 text-center">
+                      No accounts available.
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
         </section>
-
-        {/* Account Details Modal */}
-        {selectedAccount && (
-          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg shadow-md w-1/3">
-              <h2 className="text-xl font-semibold mb-4">
-                {selectedAccount.name}
-              </h2>
-              <p>
-                <strong>Username:</strong> {username}
-              </p>
-              <p>
-                <strong>Password:</strong> {selectedAccount.password || "*****"}
-              </p>
-              <div className="flex space-x-4 mt-6">
-                <button
-                  onClick={() => setSelectedAccount(null)}
-                  className="bg-gray-400 text-white py-2 px-4 rounded hover:bg-gray-500"
-                >
-                  Close
-                </button>
-                <button
-                  onClick={() => handleDeleteAccount(selectedAccount.name)}
-                  className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );

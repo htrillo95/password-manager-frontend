@@ -1,9 +1,8 @@
-/* Global Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
 body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  padding: 0;
-  overflow-y: scroll; /* Ensures consistent vertical scrollbar */
-  background: #ffffff; /* Default background color */
-  color: #2c2c2c; /* Default text color */
+  @apply bg-gray-100 text-gray-800 font-sans;
 }

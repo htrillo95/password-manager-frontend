@@ -21,6 +21,7 @@ function App() {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
+    console.log("Stored User:", storedUser); // Log to check if the value is set
     if (storedUser) {
       setLoggedInUser(storedUser);
     }
