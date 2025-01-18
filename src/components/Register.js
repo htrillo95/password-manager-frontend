@@ -14,9 +14,9 @@ const Register = () => {
         username,
         password,
       });
-      setMessage(response.data.message);
+      setMessage(response.data.message);  // Set the message returned from the server
     } catch (error) {
-      setMessage(error.response?.data?.message || "An error occurred");
+      setMessage(error.response?.data?.message || "An error occurred while registering");
     }
   };
 
@@ -26,33 +26,33 @@ const Register = () => {
         <h2>Register</h2>
         <form onSubmit={handleRegister}>
           <div>
-          <label htmlFor="username" className="form-label">
-      Username
-    </label>
-    <input
-      id="username"
-      type="text"
-      placeholder="Enter your username"
-      value={username}
-      onChange={(e) => setUsername(e.target.value)}
-      name="username"
-      className="form-input"
-      autoComplete="off"  // Disable auto-fill for this field
-    />
-  </div>
-  <div>
-    <label htmlFor="password" className="form-label">
-      Password
-    </label>
-    <input
-      id="password"
-      type="password"
-      placeholder="Enter your password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      name="password"
-      className="form-input"
-      autoComplete="off"  // Disable auto-fill for this field
+            <label htmlFor="username" className="form-label">
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              className="form-input"
+              autoComplete="off"
+            />
+          </div>
+          <div>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              className="form-input"
+              autoComplete="off"
             />
           </div>
           <button type="submit">Register</button>
