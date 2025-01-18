@@ -12,6 +12,7 @@ const Dashboard = ({ username, onLogout }) => {
   const [editingPassword, setEditingPassword] = useState(""); // New password for editing
   const [message, setMessage] = useState(""); // Feedback message
   const [loading, setLoading] = useState(false); // Loading state
+  const [passwordVisibility, setPasswordVisibility] = useState({}); // Password visibility for stored accounts
 
   // Fetch accounts on component load
   useEffect(() => {
@@ -25,6 +26,13 @@ const Dashboard = ({ username, onLogout }) => {
           const accountsData = response.data.accounts || [];
           setAccounts(accountsData); // Accounts are an array
           setFilteredAccounts(accountsData); // Same data for filtering
+
+          // Initialize password visibility for all accounts
+          const visibilityState = accountsData.reduce((acc, account) => {
+            acc[account.name] = false; // Default to hidden
+            return acc;
+          }, {});
+          setPasswordVisibility(visibilityState);
         } else {
           setMessage("No accounts found.");
         }
@@ -59,6 +67,10 @@ const Dashboard = ({ username, onLogout }) => {
         setFilteredAccounts((prev) =>
           Array.isArray(prev) ? [...prev, newEntry] : [newEntry]
         );
+        setPasswordVisibility((prev) => ({
+          ...prev,
+          [newAccount]: false, // Set visibility to hidden by default
+        }));
         setNewAccount("");
         setNewPassword("");
         setMessage("Account added successfully!");
@@ -162,6 +174,14 @@ const Dashboard = ({ username, onLogout }) => {
     }
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = (accountName) => {
+    setPasswordVisibility((prev) => ({
+      ...prev,
+      [accountName]: !prev[accountName],
+    }));
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -245,6 +265,7 @@ const Dashboard = ({ username, onLogout }) => {
               <thead className="bg-gray-200 text-gray-600 uppercase text-sm">
                 <tr>
                   <th className="py-3 px-6 text-left">Name</th>
+                  <th className="py-3 px-6 text-left">Password</th>
                   <th className="py-3 px-6 text-center">Actions</th>
                 </tr>
               </thead>
@@ -253,6 +274,17 @@ const Dashboard = ({ username, onLogout }) => {
                   filteredAccounts.map((account) => (
                     <tr key={account.name} className="border-b hover:bg-gray-100">
                       <td className="py-3 px-6">{account.name}</td>
+                      <td className="py-3 px-6">
+                        {passwordVisibility[account.name]
+                          ? account.password
+                          : "••••••••"}
+                        <button
+                          onClick={() => togglePasswordVisibility(account.name)}
+                          className="ml-2 text-blue-500"
+                        >
+                          {passwordVisibility[account.name] ? "Hide" : "Show"}
+                        </button>
+                      </td>
                       <td className="py-3 px-6 text-center space-x-2">
                         {editingAccount?.name === account.name ? (
                           <>
@@ -296,7 +328,7 @@ const Dashboard = ({ username, onLogout }) => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="2" className="py-3 px-6 text-center">
+                    <td colSpan="3" className="py-3 px-6 text-center">
                       No accounts available.
                     </td>
                   </tr>
