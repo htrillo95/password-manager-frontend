@@ -23,18 +23,11 @@ const Dashboard = ({ username, onLogout }) => {
         });
 
         if (response.data.success) {
-          const accountsData = response.data.accounts || [];
-          setAccounts(accountsData); // Accounts are an array
-          setFilteredAccounts(accountsData); // Same data for filtering
-
-          // Initialize password visibility for all accounts
-          const visibilityState = accountsData.reduce((acc, account) => {
-            acc[account.name] = false; // Default to hidden
-            return acc;
-          }, {});
-          setPasswordVisibility(visibilityState);
+          setAccounts(response.data.accounts);
+          setFilteredAccounts(response.data.accounts);
+          setMessage("");
         } else {
-          setMessage("No accounts found.");
+          setMessage(response.data.message || "Failed to load accounts.");
         }
       } catch (error) {
         console.error("Error fetching accounts:", error);
@@ -62,14 +55,12 @@ const Dashboard = ({ username, onLogout }) => {
       });
 
       if (response.data.success) {
-        const newEntry = { name: newAccount, password: newPassword };
-        setAccounts((prev) => (Array.isArray(prev) ? [...prev, newEntry] : [newEntry]));
-        setFilteredAccounts((prev) =>
-          Array.isArray(prev) ? [...prev, newEntry] : [newEntry]
-        );
+        const newEntry = { account_name: newAccount, password: newPassword };
+        setAccounts((prev) => [...prev, newEntry]);
+        setFilteredAccounts((prev) => [...prev, newEntry]);
         setPasswordVisibility((prev) => ({
           ...prev,
-          [newAccount]: false, // Set visibility to hidden by default
+          [newAccount]: false,
         }));
         setNewAccount("");
         setNewPassword("");
@@ -89,11 +80,13 @@ const Dashboard = ({ username, onLogout }) => {
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    setFilteredAccounts(
-      accounts.filter((account) =>
-        account.name.toLowerCase().includes(query)
-      )
+
+    const filtered = accounts.filter(
+      (account) =>
+        account.account_name &&
+        account.account_name.toLowerCase().includes(query)
     );
+    setFilteredAccounts(filtered);
   };
 
   // Start editing an account
@@ -114,7 +107,7 @@ const Dashboard = ({ username, onLogout }) => {
     setLoading(true);
     try {
       const response = await axios.put(
-        `http://127.0.0.1:5000/passwords/${editingAccount.name}`,
+        `http://127.0.0.1:5000/passwords/${editingAccount.account_name}`,
         {
           username,
           password: editingPassword,
@@ -123,7 +116,7 @@ const Dashboard = ({ username, onLogout }) => {
 
       if (response.data.success) {
         const updatedAccounts = accounts.map((account) =>
-          account.name === editingAccount.name
+          account.account_name === editingAccount.account_name
             ? { ...account, password: editingPassword }
             : account
         );
@@ -158,7 +151,7 @@ const Dashboard = ({ username, onLogout }) => {
 
       if (response.data.success) {
         const updatedAccounts = accounts.filter(
-          (account) => account.name !== accountName
+          (account) => account.account_name !== accountName
         );
         setAccounts(updatedAccounts);
         setFilteredAccounts(updatedAccounts);
@@ -212,7 +205,6 @@ const Dashboard = ({ username, onLogout }) => {
           Welcome, {username}
         </h1>
 
-        {/* Notification Message */}
         {message && (
           <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
             {message}
@@ -270,28 +262,38 @@ const Dashboard = ({ username, onLogout }) => {
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm">
-                {Array.isArray(filteredAccounts) && filteredAccounts.length > 0 ? (
+                {filteredAccounts.length > 0 ? (
                   filteredAccounts.map((account) => (
-                    <tr key={account.name} className="border-b hover:bg-gray-100">
-                      <td className="py-3 px-6">{account.name}</td>
+                    <tr
+                      key={account.account_name}
+                      className="border-b hover:bg-gray-100"
+                    >
+                      <td className="py-3 px-6">{account.account_name}</td>
                       <td className="py-3 px-6">
-                        {passwordVisibility[account.name]
+                        {passwordVisibility[account.account_name]
                           ? account.password
                           : "••••••••"}
                         <button
-                          onClick={() => togglePasswordVisibility(account.name)}
+                          onClick={() =>
+                            togglePasswordVisibility(account.account_name)
+                          }
                           className="ml-2 text-blue-500"
                         >
-                          {passwordVisibility[account.name] ? "Hide" : "Show"}
+                          {passwordVisibility[account.account_name]
+                            ? "Hide"
+                            : "Show"}
                         </button>
                       </td>
                       <td className="py-3 px-6 text-center space-x-2">
-                        {editingAccount?.name === account.name ? (
+                        {editingAccount?.account_name ===
+                        account.account_name ? (
                           <>
                             <input
                               type="password"
                               value={editingPassword}
-                              onChange={(e) => setEditingPassword(e.target.value)}
+                              onChange={(e) =>
+                                setEditingPassword(e.target.value)
+                              }
                               className="px-2 py-1 border rounded"
                             />
                             <button
@@ -316,7 +318,9 @@ const Dashboard = ({ username, onLogout }) => {
                               Edit
                             </button>
                             <button
-                              onClick={() => handleDeleteAccount(account.name)}
+                              onClick={() =>
+                                handleDeleteAccount(account.account_name)
+                              }
                               className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
                             >
                               Delete
@@ -328,7 +332,10 @@ const Dashboard = ({ username, onLogout }) => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="3" className="py-3 px-6 text-center">
+                    <td
+                      colSpan="3"
+                      className="py-3 px-6 text-center text-gray-500"
+                    >
                       No accounts available.
                     </td>
                   </tr>
