@@ -14,7 +14,6 @@ import Contact from "./pages/Contact";
 import ScrollToTop from "./components/ScrollToTop";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const location = useLocation(); // Get the current location
@@ -46,7 +45,8 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Navbar />
+      {/* Conditionally render Navbar: Hide on /dashboard */}
+      {location.pathname !== "/dashboard" && <Navbar />}
       <AnimatePresence mode="wait" initial={false}>
         <Routes key={location.pathname} location={location}>
           {!loggedInUser ? (

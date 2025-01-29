@@ -13,6 +13,8 @@ const Dashboard = ({ username, onLogout }) => {
   const [message, setMessage] = useState(""); // Feedback message
   const [loading, setLoading] = useState(false); // Loading state
   const [passwordVisibility, setPasswordVisibility] = useState({}); // Password visibility for stored accounts
+  const [currentPage, setCurrentPage] = useState(1); // Current pagination page
+  const itemsPerPage = 8; // Number of accounts per page
 
   // Fetch accounts on component load
   useEffect(() => {
@@ -38,14 +40,13 @@ const Dashboard = ({ username, onLogout }) => {
     fetchAccounts();
   }, [username]);
 
-  // Add a new account
   const handleAddAccount = async (e) => {
     e.preventDefault();
     if (!newAccount || !newPassword) {
       setMessage("Please fill in all fields.");
       return;
     }
-
+  
     setLoading(true);
     try {
       const response = await axios.post("http://127.0.0.1:5000/passwords", {
@@ -53,15 +54,23 @@ const Dashboard = ({ username, onLogout }) => {
         account_name: newAccount,
         password: newPassword,
       });
-
+  
       if (response.data.success) {
         const newEntry = { account_name: newAccount, password: newPassword };
-        setAccounts((prev) => [...prev, newEntry]);
-        setFilteredAccounts((prev) => [...prev, newEntry]);
+        const updatedAccounts = [...filteredAccounts, newEntry];
+  
+        setAccounts(updatedAccounts);
+        setFilteredAccounts(updatedAccounts);
+  
+        // Recalculate total pages and navigate to the last page
+        const newTotalPages = Math.ceil(updatedAccounts.length / itemsPerPage);
+        setCurrentPage(newTotalPages);
+  
         setPasswordVisibility((prev) => ({
           ...prev,
           [newAccount]: false,
         }));
+  
         setNewAccount("");
         setNewPassword("");
         setMessage("Account added successfully!");
@@ -87,6 +96,7 @@ const Dashboard = ({ username, onLogout }) => {
         account.account_name.toLowerCase().includes(query)
     );
     setFilteredAccounts(filtered);
+    setCurrentPage(1); // Reset to the first page on new search
   };
 
   // Start editing an account
@@ -175,8 +185,41 @@ const Dashboard = ({ username, onLogout }) => {
     }));
   };
 
+// Calculate total number of pages
+const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
+
+// Get the accounts for the current page
+const paginatedAccounts = filteredAccounts.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
+
+// Move to the next page
+const handleNextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage((prevPage) => prevPage + 1);
+  }
+};
+
+// Move to the previous page
+const handlePreviousPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage((prevPage) => prevPage - 1);
+  }
+};
+
+// Debugging Logs
+console.log("Current Page:", currentPage);
+console.log("Total Pages:", totalPages);
+console.log("Filtered Accounts:", filteredAccounts);
+console.log("Paginated Accounts:",filteredAccounts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+);
+
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
       {/* Sidebar */}
       <aside className="w-64 bg-gray-800 text-white flex flex-col items-center py-6">
         <h2 className="text-2xl font-bold mb-8">PasswordVault</h2>
@@ -200,7 +243,7 @@ const Dashboard = ({ username, onLogout }) => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-6 overflow-hidden">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Welcome, {username}
         </h1>
@@ -212,7 +255,11 @@ const Dashboard = ({ username, onLogout }) => {
         )}
 
         {/* Add Account */}
-        <form onSubmit={handleAddAccount} className="mb-6 bg-white shadow-md rounded-lg p-4" autoComplete="off">
+        <form
+          onSubmit={handleAddAccount}
+          className="mb-6 bg-white shadow-md rounded-lg p-4"
+          autoComplete="off"
+        >
           <h2 className="text-lg font-semibold mb-4">Add New Account</h2>
           <div className="flex space-x-4">
             <input
@@ -250,9 +297,11 @@ const Dashboard = ({ username, onLogout }) => {
         </div>
 
         {/* Vault Table */}
-        <section>
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Stored Accounts</h2>
-          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <section className="overflow-y-auto">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">
+            Stored Accounts ({filteredAccounts.length})
+          </h2>
+          <div className="bg-white shadow-lg rounded-lg">
             <table className="min-w-full table-auto">
               <thead className="bg-gray-200 text-gray-600 uppercase text-sm">
                 <tr>
@@ -262,8 +311,8 @@ const Dashboard = ({ username, onLogout }) => {
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm">
-                {filteredAccounts.length > 0 ? (
-                  filteredAccounts.map((account) => (
+                {paginatedAccounts.length > 0 ? (
+                  paginatedAccounts.map((account) => (
                     <tr
                       key={account.account_name}
                       className="border-b hover:bg-gray-100"
@@ -342,6 +391,35 @@ const Dashboard = ({ username, onLogout }) => {
                 )}
               </tbody>
             </table>
+          </div>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-between items-center mt-4">
+            <button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded ${
+                currentPage === 1
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
+            >
+              Previous
+            </button>
+            <span className="text-gray-700">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded ${
+                currentPage === totalPages
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
+            >
+              Next
+            </button>
           </div>
         </section>
       </main>
