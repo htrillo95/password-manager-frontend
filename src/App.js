@@ -13,6 +13,8 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import ScrollToTop from "./components/ScrollToTop";
 import { AnimatePresence, motion } from "framer-motion";
+import Tools from "./components/Tools";
+import Settings from "./components/Settings";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -46,7 +48,7 @@ function App() {
     <>
       <ScrollToTop />
       {/* Conditionally render Navbar: Hide on /dashboard */}
-      {location.pathname !== "/dashboard" && <Navbar />}
+      {!["/dashboard", "/tools", "/settings"].includes(location.pathname) && <Navbar />}
       <AnimatePresence mode="wait" initial={false}>
         <Routes key={location.pathname} location={location}>
           {!loggedInUser ? (
@@ -195,6 +197,34 @@ function App() {
                       username={loggedInUser}
                       onLogout={handleLogout}
                     />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/tools"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Tools onLogout={handleLogout}/>
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Settings onLogout={handleLogout}/>
                   </motion.div>
                 }
               />

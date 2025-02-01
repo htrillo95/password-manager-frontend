@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Dashboard.css"; // Custom CSS file
+import { useNavigate } from "react-router-dom"; // ⬅️ ADD THIS
 
 const Dashboard = ({ username, onLogout }) => {
+  const navigate = useNavigate();
   const [accounts, setAccounts] = useState([]); // All stored accounts
   const [filteredAccounts, setFilteredAccounts] = useState([]); // Filtered accounts for search
   const [searchQuery, setSearchQuery] = useState(""); // Search input value
@@ -244,13 +246,22 @@ const Dashboard = ({ username, onLogout }) => {
       <aside className="w-64 bg-gray-800 text-white flex flex-col items-center py-6">
         <h2 className="text-2xl font-bold mb-8">PasswordVault</h2>
         <nav className="w-full px-4 space-y-6">
-          <button className="w-full text-left py-2 px-4 rounded hover:bg-gray-700">
+          <button
+            className="w-full text-left py-2 px-4 rounded hover:bg-gray-700"
+            onClick={() => navigate("/dashboard")}  // ⬅️ Vault sends user to Dashboard
+          >
             Vault
           </button>
-          <button className="w-full text-left py-2 px-4 rounded hover:bg-gray-700">
+          <button
+            className="w-full text-left py-2 px-4 rounded hover:bg-gray-700"
+            onClick={() => navigate("/tools")}  // ⬅️ Tools page
+          >
             Tools
           </button>
-          <button className="w-full text-left py-2 px-4 rounded hover:bg-gray-700">
+          <button
+            className="w-full text-left py-2 px-4 rounded hover:bg-gray-700"
+            onClick={() => navigate("/settings")}  // ⬅️ Settings page
+          >
             Settings
           </button>
         </nav>
