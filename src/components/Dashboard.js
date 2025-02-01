@@ -40,13 +40,14 @@ const Dashboard = ({ username, onLogout }) => {
     fetchAccounts();
   }, [username]);
 
+  // Add a new account
   const handleAddAccount = async (e) => {
     e.preventDefault();
     if (!newAccount || !newPassword) {
       setMessage("Please fill in all fields.");
       return;
     }
-  
+
     setLoading(true);
     try {
       const response = await axios.post("http://127.0.0.1:5000/passwords", {
@@ -54,23 +55,23 @@ const Dashboard = ({ username, onLogout }) => {
         account_name: newAccount,
         password: newPassword,
       });
-  
+
       if (response.data.success) {
         const newEntry = { account_name: newAccount, password: newPassword };
         const updatedAccounts = [...filteredAccounts, newEntry];
-  
+
         setAccounts(updatedAccounts);
         setFilteredAccounts(updatedAccounts);
-  
+
         // Recalculate total pages and navigate to the last page
         const newTotalPages = Math.ceil(updatedAccounts.length / itemsPerPage);
         setCurrentPage(newTotalPages);
-  
+
         setPasswordVisibility((prev) => ({
           ...prev,
           [newAccount]: false,
         }));
-  
+
         setNewAccount("");
         setNewPassword("");
         setMessage("Account added successfully!");
@@ -97,6 +98,35 @@ const Dashboard = ({ username, onLogout }) => {
     );
     setFilteredAccounts(filtered);
     setCurrentPage(1); // Reset to the first page on new search
+  };
+
+  // Handle sorting
+  const handleSort = (criteria) => {
+    if (criteria === "alphabetical") {
+        const sorted = [...filteredAccounts].sort((a, b) =>
+            a.account_name.localeCompare(b.account_name)
+        );
+        setFilteredAccounts(sorted);
+      } else {
+        // Reset to the original order by fetching from `accounts`
+        setFilteredAccounts([...accounts]); 
+      }
+    };
+
+  // Export accounts to CSV
+  const handleExportCSV = () => {
+    const csvContent = [
+      ["Account Name", "Password"], // Add headers
+      ...accounts.map((account) => [account.account_name, account.password]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "accounts.csv";
+    link.click();
   };
 
   // Start editing an account
@@ -185,38 +215,28 @@ const Dashboard = ({ username, onLogout }) => {
     }));
   };
 
-// Calculate total number of pages
-const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
+  // Calculate total number of pages
+  const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
 
-// Get the accounts for the current page
-const paginatedAccounts = filteredAccounts.slice(
-  (currentPage - 1) * itemsPerPage,
-  currentPage * itemsPerPage
-);
-
-// Move to the next page
-const handleNextPage = () => {
-  if (currentPage < totalPages) {
-    setCurrentPage((prevPage) => prevPage + 1);
-  }
-};
-
-// Move to the previous page
-const handlePreviousPage = () => {
-  if (currentPage > 1) {
-    setCurrentPage((prevPage) => prevPage - 1);
-  }
-};
-
-// Debugging Logs
-console.log("Current Page:", currentPage);
-console.log("Total Pages:", totalPages);
-console.log("Filtered Accounts:", filteredAccounts);
-console.log("Paginated Accounts:",filteredAccounts.slice(
+  // Get the accounts for the current page
+  const paginatedAccounts = filteredAccounts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
-  )
-);
+  );
+
+  // Move to the next page
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  // Move to the previous page
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden">
@@ -285,15 +305,28 @@ console.log("Paginated Accounts:",filteredAccounts.slice(
           </div>
         </form>
 
-        {/* Search Bar */}
-        <div className="flex items-center bg-white shadow-md rounded-lg px-4 py-3 mb-6">
-          <input
-            type="text"
-            placeholder="Search accounts..."
-            value={searchQuery}
-            onChange={handleSearch}
-            className="flex-1 outline-none bg-gray-50 px-2 py-1 rounded-lg"
-          />
+        {/* Sorting and Export Options */}
+        <div className="flex space-x-4 mb-4 items-center">
+        {/* Sorting Dropdown */}
+        <div className="sort-container">
+            <label htmlFor="sortOptions" className="sort-label">Sort by:</label>
+            <select
+            id="sortOptions"
+            onChange={(e) => handleSort(e.target.value)}
+            className="sort-dropdown"
+            >
+            <option value="default">Default</option>
+            <option value="alphabetical">Sort A-Z</option>
+            </select>
+        </div>
+
+        {/* Export Button */}
+        <button
+            onClick={handleExportCSV}
+            className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
+        >
+            Export to CSV
+        </button>
         </div>
 
         {/* Vault Table */}
@@ -312,10 +345,12 @@ console.log("Paginated Accounts:",filteredAccounts.slice(
               </thead>
               <tbody className="text-gray-600 text-sm">
                 {paginatedAccounts.length > 0 ? (
-                  paginatedAccounts.map((account) => (
+                  paginatedAccounts.map((account, index) => (
                     <tr
-                      key={account.account_name}
-                      className="border-b hover:bg-gray-100"
+                    key={account.account_name}
+                    className={`border-b hover:bg-gray-100 ${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                    }`}
                     >
                       <td className="py-3 px-6">{account.account_name}</td>
                       <td className="py-3 px-6">
@@ -333,50 +368,38 @@ console.log("Paginated Accounts:",filteredAccounts.slice(
                             : "Show"}
                         </button>
                       </td>
-                      <td className="py-3 px-6 text-center space-x-2">
-                        {editingAccount?.account_name ===
-                        account.account_name ? (
-                          <>
-                            <input
-                              type="password"
-                              value={editingPassword}
-                              onChange={(e) =>
-                                setEditingPassword(e.target.value)
-                              }
-                              className="px-2 py-1 border rounded"
-                            />
-                            <button
-                              onClick={handleUpdateAccount}
-                              className="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={() => setEditingAccount(null)}
-                              className="bg-gray-500 text-white py-1 px-3 rounded hover:bg-gray-600"
-                            >
-                              Cancel
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              onClick={() => handleEditAccount(account)}
-                              className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleDeleteAccount(account.account_name)
-                              }
-                              className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                            >
-                              Delete
-                            </button>
-                          </>
-                        )}
-                      </td>
+                      <td className="py-3 px-6 text-center">
+                        <div className="action-buttons">
+                            {editingAccount?.account_name === account.account_name ? (
+                            <>
+                                <input
+                                type="password"
+                                value={editingPassword}
+                                onChange={(e) => setEditingPassword(e.target.value)}
+                                className="px-2 py-1 border rounded"
+                                />
+                                <button onClick={handleUpdateAccount} className="edit-btn">
+                                Save
+                                </button>
+                                <button onClick={() => setEditingAccount(null)} className="cancel-btn">
+                                Cancel
+                                </button>
+                            </>
+                            ) : (
+                            <>
+                                <button onClick={() => handleEditAccount(account)} className="edit-btn">
+                                Edit
+                                </button>
+                                <button
+                                onClick={() => handleDeleteAccount(account.account_name)}
+                                className="delete-btn"
+                                >
+                                Delete
+                                </button>
+                            </>
+                            )}
+                        </div>
+                        </td>
                     </tr>
                   ))
                 ) : (
