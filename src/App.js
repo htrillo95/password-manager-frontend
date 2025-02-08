@@ -17,7 +17,7 @@ import Tools from "./components/Tools";
 import Settings from "./components/Settings";
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem("loggedInUser") || null);
   const location = useLocation(); // Get the current location
 
   useEffect(() => {
