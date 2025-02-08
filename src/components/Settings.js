@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
 
@@ -7,8 +7,9 @@ const Settings = ({ username, setUsername, onLogout }) => {
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [message, setMessage] = useState("");
+  const [deleteConfirmation, setDeleteConfirmation] = useState(""); // ✅ Added confirmation input
 
-  // ✅ Change Username Functionality with Confirmation
+  // ✅ Change Username Functionality
   const handleChangeUsername = async () => {
     const storedUsername = localStorage.getItem("loggedInUser");
   
@@ -38,7 +39,7 @@ const Settings = ({ username, setUsername, onLogout }) => {
       if (response.ok) {
         setMessage("Username updated successfully!");
         setUsername(newUsername);
-        localStorage.setItem("loggedInUser", newUsername); // ✅ Update after backend confirms
+        localStorage.setItem("loggedInUser", newUsername);
         setCurrentUsername(""); 
         setNewUsername("");
       } else {
@@ -51,21 +52,26 @@ const Settings = ({ username, setUsername, onLogout }) => {
     setTimeout(() => setMessage(""), 3000);
   };
 
-  // ✅ Delete Account Functionality
+  // ✅ Delete Account Functionality with Confirmation Input
   const handleDeleteAccount = async () => {
+    if (deleteConfirmation !== "delete my account") {
+      setMessage("You must type 'delete my account' exactly to proceed.");
+      return;
+    }
+
     if (!window.confirm("Are you sure you want to delete your account? This action is irreversible.")) return;
-  
+
     try {
       const response = await fetch("http://127.0.0.1:5000/delete-account", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }), // Send username to identify account
+        body: JSON.stringify({ username }),
       });
-  
+
       if (response.ok) {
-        localStorage.removeItem("loggedInUser"); // Clear user session
-        setUsername(""); // Reset state
-        navigate("/login"); // ✅ Redirect to login
+        localStorage.removeItem("loggedInUser");
+        setUsername("");
+        navigate("/login", { replace: true }); // ✅ Ensures smooth redirect
       } else {
         const data = await response.json();
         setMessage(data.message || "Failed to delete account.");
@@ -109,11 +115,11 @@ const Settings = ({ username, setUsername, onLogout }) => {
           </div>
         )}
 
-        {/* ✅ Change Username with Verification */}
+        {/* ✅ Change Username Section */}
         <div className="mb-8 bg-white shadow-md rounded-lg p-6 w-2/3">
           <h2 className="text-xl font-semibold mb-4">Change Username</h2>
           <p className="text-sm text-gray-600 mb-3">
-            Enter your <strong>current username</strong> and the new username you'd like to switch to. Make sure this is a username you'll remember for future logins.
+            Enter your <strong>current username</strong> and the new username you'd like to switch to.
           </p>
           <div className="space-y-4">
             <div>
@@ -149,11 +155,25 @@ const Settings = ({ username, setUsername, onLogout }) => {
         <div className="bg-white shadow-md rounded-lg p-6 w-2/3">
           <h2 className="text-xl font-semibold mb-4 text-red-500">Danger Zone</h2>
           <p className="text-sm text-gray-600 mb-3">
-            <strong>Deleting your account is irreversible.</strong> This will remove all your saved data.
+            <strong>Deleting your account is irreversible.</strong> Please type
+            <code className="bg-gray-200 px-1 ml-1">delete my account</code> below to confirm.
           </p>
+
+          {/* ✅ Confirmation Input */}
+          <input
+            type="text"
+            placeholder="Type 'delete my account' to confirm"
+            value={deleteConfirmation}
+            onChange={(e) => setDeleteConfirmation(e.target.value)}
+            className="px-4 py-2 border rounded w-full bg-gray-100 text-gray-900 mb-3"
+          />
+
           <button
             onClick={handleDeleteAccount}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            className={`bg-red-500 text-white px-4 py-2 rounded ${
+              deleteConfirmation !== "delete my account" ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600"
+            }`}
+            disabled={deleteConfirmation !== "delete my account"}
           >
             Delete Account
           </button>
