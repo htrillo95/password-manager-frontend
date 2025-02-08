@@ -224,7 +224,7 @@ function App() {
                     exit="exit"
                     transition={{ duration: 0.5 }}
                   >
-                    <Settings onLogout={handleLogout}/>
+                    <Settings onLogout={handleLogout} username={loggedInUser} setUsername={setLoggedInUser} />
                   </motion.div>
                 }
               />

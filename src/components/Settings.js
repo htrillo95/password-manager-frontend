@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
 
-const Settings = ({ username, onLogout }) => {
+const Settings = ({ username, setUsername, onLogout }) => {
   const navigate = useNavigate();
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
@@ -53,6 +53,7 @@ const Settings = ({ username, onLogout }) => {
       
       if (response.ok) {
         setMessage("Username updated successfully!");
+        setUsername(newUsername);
         localStorage.setItem("loggedInUser", newUsername); // ✅ Update after backend confirms
         setCurrentUsername(""); 
         setNewUsername("");
