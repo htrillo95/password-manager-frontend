@@ -16,7 +16,8 @@ const Dashboard = ({ username, onLogout }) => {
   const [loading, setLoading] = useState(false); // Loading state
   const [passwordVisibility, setPasswordVisibility] = useState({}); // Password visibility for stored accounts
   const [currentPage, setCurrentPage] = useState(1); // Current pagination page
-  const itemsPerPage = 8; // Number of accounts per page
+  const itemsPerPage = 6; // Number of accounts per page
+  const [showInstructions, setShowInstructions] = useState(true); // New state for instruction box
 
   // Fetch accounts on component load
   useEffect(() => {
@@ -41,6 +42,19 @@ const Dashboard = ({ username, onLogout }) => {
 
     fetchAccounts();
   }, [username]);
+  
+
+  // Reset pagination whenever filteredAccounts change
+useEffect(() => {
+  setCurrentPage(1); // ✅ Resets to page 1 when filteredAccounts change
+}, [filteredAccounts]); // ✅ Second useEffect, separate from the first one
+
+
+
+  // UI Enhancements - Dismissible Instructions
+const handleDismissInstructions = () => {
+  setShowInstructions(false);
+};
 
   // Add a new account
   const handleAddAccount = async (e) => {
@@ -104,16 +118,17 @@ const Dashboard = ({ username, onLogout }) => {
 
   // Handle sorting
   const handleSort = (criteria) => {
+    let sorted;
     if (criteria === "alphabetical") {
-        const sorted = [...filteredAccounts].sort((a, b) =>
-            a.account_name.localeCompare(b.account_name)
-        );
-        setFilteredAccounts(sorted);
-      } else {
-        // Reset to the original order by fetching from `accounts`
-        setFilteredAccounts([...accounts]); 
-      }
-    };
+      sorted = [...filteredAccounts].sort((a, b) =>
+        a.account_name.localeCompare(b.account_name)
+      );
+    } else {
+      sorted = [...accounts]; // Reset to original order
+    }
+    setFilteredAccounts(sorted);
+    setCurrentPage(1); // ✅ Reset to first page after sorting
+  };
 
   // Export accounts to CSV
   const handleExportCSV = () => {
@@ -278,6 +293,9 @@ const Dashboard = ({ username, onLogout }) => {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Welcome, {username}
         </h1>
+    
+        {/* Divider */}
+        <hr className="my-4 border-gray-300" />
 
         {message && (
           <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
@@ -291,7 +309,8 @@ const Dashboard = ({ username, onLogout }) => {
           className="mb-6 bg-white shadow-md rounded-lg p-4"
           autoComplete="off"
         >
-          <h2 className="text-lg font-semibold mb-4">Add New Account</h2>
+          <h2 className="text-lg font-semibold mb-4">Add New Account <span className="text-gray-500 text-sm">(e.g., Gmail, Netflix, Amazon)</span>
+</h2>
           <div className="flex space-x-4">
             <input
               type="text"
@@ -316,6 +335,12 @@ const Dashboard = ({ username, onLogout }) => {
           </div>
         </form>
 
+        {/* Divider */}
+        <hr className="my-4 border-gray-300" />
+        <h2 className="text-xl font-semibold mb-2">Manage Your Accounts</h2>
+        <p className="text-gray-700 text-base mb-4">
+          View, edit, or delete your saved accounts below. Use "Show" to reveal passwords.
+        </p>
         {/* Sorting and Export Options */}
         <div className="flex space-x-4 mb-4 items-center">
         {/* Sorting Dropdown */}
@@ -355,75 +380,66 @@ const Dashboard = ({ username, onLogout }) => {
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm">
-                {paginatedAccounts.length > 0 ? (
-                  paginatedAccounts.map((account, index) => (
-                    <tr
-                    key={account.account_name}
-                    className={`border-b hover:bg-gray-100 ${
-                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                    }`}
-                    >
-                      <td className="py-3 px-6">{account.account_name}</td>
-                      <td className="py-3 px-6">
-                        {passwordVisibility[account.account_name]
-                          ? account.password
-                          : "••••••••"}
-                        <button
-                          onClick={() =>
-                            togglePasswordVisibility(account.account_name)
-                          }
-                          className="ml-2 text-blue-500"
-                        >
-                          {passwordVisibility[account.account_name]
-                            ? "Hide"
-                            : "Show"}
-                        </button>
-                      </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="action-buttons">
-                            {editingAccount?.account_name === account.account_name ? (
-                            <>
-                                <input
-                                type="password"
-                                value={editingPassword}
-                                onChange={(e) => setEditingPassword(e.target.value)}
-                                className="px-2 py-1 border rounded"
-                                />
-                                <button onClick={handleUpdateAccount} className="edit-btn">
-                                Save
-                                </button>
-                                <button onClick={() => setEditingAccount(null)} className="cancel-btn">
-                                Cancel
-                                </button>
-                            </>
-                            ) : (
-                            <>
-                                <button onClick={() => handleEditAccount(account)} className="edit-btn">
-                                Edit
-                                </button>
-                                <button
-                                onClick={() => handleDeleteAccount(account.account_name)}
-                                className="delete-btn"
-                                >
-                                Delete
-                                </button>
-                            </>
-                            )}
-                        </div>
-                        </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan="3"
-                      className="py-3 px-6 text-center text-gray-500"
-                    >
-                      No accounts available.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
+  {paginatedAccounts.length > 0 ? (
+    paginatedAccounts.map((account, index) => {
+      
+      return (
+        <tr
+          key={account.account_name}
+          className={`border-b hover:bg-gray-100 ${
+            index % 2 === 0 ? "bg-gray-50" : "bg-white"
+          }`}
+        >
+          <td className="py-3 px-6">{account.account_name}</td>
+          <td className="py-3 px-6">
+            {passwordVisibility[account.account_name] ? account.password : "••••••••"}
+            <button
+              onClick={() => togglePasswordVisibility(account.account_name)}
+              className="ml-2 text-blue-500"
+            >
+              {passwordVisibility[account.account_name] ? "Hide" : "Show"}
+            </button>
+          </td>
+          <td className="py-3 px-6 text-center">
+            <div className="action-buttons">
+              {editingAccount?.account_name === account.account_name ? (
+                <>
+                  <input
+                    type="password"
+                    value={editingPassword}
+                    onChange={(e) => setEditingPassword(e.target.value)}
+                    className="px-2 py-1 border rounded"
+                  />
+                  <button onClick={handleUpdateAccount} className="edit-btn">
+                    Save
+                  </button>
+                  <button onClick={() => setEditingAccount(null)} className="cancel-btn">
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button title="Edit this account" onClick={() => handleEditAccount(account)} className="edit-btn">
+                    Edit
+                  </button>
+                  <button title="Delete this account" onClick={() => handleDeleteAccount(account.account_name)} className="delete-btn">
+                    Delete
+                  </button>
+                </>
+              )}
+            </div>
+          </td>
+        </tr>
+      );
+    }) // ✅ Now this function is correctly formatted
+  ) : (
+    <tr>
+      <td colSpan="3" className="py-3 px-6 text-center text-gray-500">
+        No accounts available.
+      </td>
+    </tr>
+  )}
+</tbody>
             </table>
           </div>
 
