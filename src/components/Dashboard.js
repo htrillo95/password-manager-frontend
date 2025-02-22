@@ -16,32 +16,44 @@ const Dashboard = ({ username, onLogout }) => {
   const [loading, setLoading] = useState(false); // Loading state
   const [passwordVisibility, setPasswordVisibility] = useState({}); // Password visibility for stored accounts
   const [currentPage, setCurrentPage] = useState(1); // Current pagination page
-  const itemsPerPage = 6; // Number of accounts per page
+  const itemsPerPage = 5; // Number of accounts per page
   const [showInstructions, setShowInstructions] = useState(true); // New state for instruction box
 
   // Fetch accounts on component load
   useEffect(() => {
+    let isMounted = true; // ✅ Prevents setting state on unmounted component
+  
     const fetchAccounts = async () => {
+      if (!username) return; // 🔥 Ensures username exists before making API call
+  
       try {
         const response = await axios.get("http://127.0.0.1:5000/accounts", {
           params: { username },
         });
-
-        if (response.data.success) {
-          setAccounts(response.data.accounts);
-          setFilteredAccounts(response.data.accounts);
-          setMessage("");
-        } else {
-          setMessage(response.data.message || "Failed to load accounts.");
+  
+        if (isMounted) {
+          if (response.data.success) {
+            setAccounts(response.data.accounts);
+            setFilteredAccounts(response.data.accounts);
+            setMessage("");
+          } else {
+            setMessage(response.data.message || "Failed to load accounts.");
+          }
         }
       } catch (error) {
-        console.error("Error fetching accounts:", error);
-        setMessage("Failed to load accounts.");
+        if (isMounted) {
+          console.error("Error fetching accounts:", error);
+          setMessage("Failed to load accounts.");
+        }
       }
     };
-
+  
     fetchAccounts();
-  }, [username]);
+  
+    return () => {
+      isMounted = false; // ✅ Cleanup function to prevent memory leaks
+    };
+  }, [username]); // ✅ Updates immediately when username changes
   
 
   // Reset pagination whenever filteredAccounts change
@@ -61,6 +73,11 @@ const handleDismissInstructions = () => {
     e.preventDefault();
     if (!newAccount || !newPassword) {
       setMessage("Please fill in all fields.");
+      return;
+    }
+
+    if (filteredAccounts.some((acc) => acc.account_name === newAccount)) {
+      setMessage("This account name already exists.");
       return;
     }
 
