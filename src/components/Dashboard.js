@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/Dashboard.css"; // Custom CSS file
-import { useNavigate } from "react-router-dom"; // ⬅️ ADD THIS
+import "../styles/Dashboard.css";
+import { useNavigate } from "react-router-dom"; 
+import Settings from "./Settings";
 
 const Dashboard = ({ username, onLogout }) => {
   const navigate = useNavigate();
@@ -20,41 +21,33 @@ const Dashboard = ({ username, onLogout }) => {
   const [showInstructions, setShowInstructions] = useState(true); // New state for instruction box
 
   // Fetch accounts on component load
-  useEffect(() => {
-    let isMounted = true; // ✅ Prevents setting state on unmounted component
-  
-    const fetchAccounts = async () => {
-      if (!username) return; // 🔥 Ensures username exists before making API call
-  
-      try {
-        const response = await axios.get("http://127.0.0.1:5000/accounts", {
-          params: { username },
-        });
-  
-        if (isMounted) {
-          if (response.data.success) {
-            setAccounts(response.data.accounts);
-            setFilteredAccounts(response.data.accounts);
-            setMessage("");
-          } else {
-            setMessage(response.data.message || "Failed to load accounts.");
-          }
-        }
-      } catch (error) {
-        if (isMounted) {
-          console.error("Error fetching accounts:", error);
-          setMessage("Failed to load accounts.");
-        }
-      }
-    };
-  
-    fetchAccounts();
-  
-    return () => {
-      isMounted = false; // ✅ Cleanup function to prevent memory leaks
-    };
-  }, [username]); // ✅ Updates immediately when username changes
-  
+// ✅ Extract fetchAccounts function outside useEffect so it's reusable
+const fetchAccounts = async (username) => {
+  if (!username) return; // 🔥 Ensures username exists before making API call
+
+  try {
+    const response = await axios.get("http://127.0.0.1:5000/accounts", {
+      params: { username },
+    });
+
+    if (response.data.success) {
+      setAccounts(response.data.accounts);
+      setFilteredAccounts(response.data.accounts);
+      setMessage("");
+    } else {
+      setMessage(response.data.message || "Failed to load accounts.");
+    }
+  } catch (error) {
+    console.error("Error fetching accounts:", error);
+    setMessage("Failed to load accounts.");
+  }
+};
+
+// ✅ UseEffect still calls fetchAccounts on mount & username change
+useEffect(() => {
+  fetchAccounts(username);
+}, [username]); // 🔥 Runs when username changes
+
 
   // Reset pagination whenever filteredAccounts change
 useEffect(() => {

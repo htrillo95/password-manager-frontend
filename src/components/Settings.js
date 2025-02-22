@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
 
-const Settings = ({ username, setUsername, onLogout }) => {
+const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
+    console.log("fetchAccounts in Settings:", fetchAccounts);
+    console.log("⚡ FetchAccounts Type:", typeof fetchAccounts);
   const navigate = useNavigate();
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [message, setMessage] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState(""); // ✅ Added confirmation input
 
-  // ✅ Change Username Functionality
   const handleChangeUsername = async () => {
     const storedUsername = localStorage.getItem("loggedInUser");
   
@@ -28,29 +29,38 @@ const Settings = ({ username, setUsername, onLogout }) => {
     }
   
     try {
-      const response = await fetch("http://127.0.0.1:5000/update-username", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ current_username: currentUsername, new_username: newUsername }),
-      });
-  
-      const data = await response.json();
+        const response = await fetch("http://127.0.0.1:5000/update-username", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ current_username: currentUsername, new_username: newUsername }),
+        });
       
-      if (response.ok) {
-        setMessage("Username updated successfully!");
-        setUsername(newUsername);
-        localStorage.setItem("loggedInUser", newUsername);
-        setCurrentUsername(""); 
-        setNewUsername("");
-      } else {
-        setMessage(data.message || "Failed to update username.");
+        const data = await response.json();
+      
+        console.log("📡 Response Status:", response.status);
+        console.log("📩 Response Data:", data);
+      
+        if (data.success) {  // ✅ Use data.success instead of response.ok
+          console.log("✅ Username update success!");
+      
+          setMessage("Username updated successfully!");  
+          setUsername(newUsername);
+          localStorage.setItem("loggedInUser", newUsername);
+          console.log("🔥 Calling fetchAccounts with:", newUsername);
+          fetchAccounts(newUsername);
+          setCurrentUsername("");
+          setNewUsername("");
+      
+          setTimeout(() => setMessage(""), 3000);
+        } else {
+          console.error("⚠️ Update Username Error:", data.message);
+          setMessage(`⚠️ ${data.message}`);  
+        }
+      } catch (error) {
+        console.error("❌ Request failed:", error);
+        setMessage("❌ Error updating username. Please try again.");
       }
-    } catch (error) {
-      setMessage("Error updating username. Please try again.");
-    }
-  
-    setTimeout(() => setMessage(""), 3000);
-  };
+};
 
   // ✅ Delete Account Functionality with Confirmation Input
   const handleDeleteAccount = async () => {

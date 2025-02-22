@@ -44,6 +44,24 @@ function App() {
     exit: { opacity: 0, y: -50 },
   };
 
+  const fetchAccounts = async (username) => {
+    if (!username) return;  // ✅ Prevent unnecessary requests if no user is logged in.
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/accounts?username=${username}`);
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log("✅ Fetched accounts successfully:", data.accounts);
+            return data.accounts; // ✅ Return the accounts data
+        } else {
+            console.error("⚠️ Failed to fetch accounts:", data.message);
+        }
+    } catch (error) {
+        console.error("❌ Error fetching accounts:", error);
+    }
+};
+
   return (
     <>
       <ScrollToTop />
@@ -224,7 +242,12 @@ function App() {
                     exit="exit"
                     transition={{ duration: 0.5 }}
                   >
-                    <Settings onLogout={handleLogout} username={loggedInUser} setUsername={setLoggedInUser} />
+                    <Settings 
+                      onLogout={handleLogout} 
+                      username={loggedInUser} 
+                      setUsername={setLoggedInUser}
+                      fetchAccounts={fetchAccounts}
+                   />
                   </motion.div>
                 }
               />
