@@ -3,19 +3,27 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
 
 const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
-    console.log("fetchAccounts in Settings:", fetchAccounts);
-    console.log("⚡ FetchAccounts Type:", typeof fetchAccounts);
   const navigate = useNavigate();
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [message, setMessage] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState(""); // ✅ Added confirmation input
 
+  const handleInputChange = (setter) => (e) => {
+    setter(e.target.value);
+    setMessage(""); 
+  };
+
   const handleChangeUsername = async () => {
     const storedUsername = localStorage.getItem("loggedInUser");
   
     if (!currentUsername.trim() || !newUsername.trim()) {
       setMessage("Please enter both your current and new username.");
+      return;
+    }
+
+    if (currentUsername === newUsername) {
+      setMessage("New username cannot be the same as the current username.");
       return;
     }
   
@@ -36,28 +44,23 @@ const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
         });
       
         const data = await response.json();
-      
-        console.log("📡 Response Status:", response.status);
-        console.log("📩 Response Data:", data);
-      
-        if (data.success) {  // ✅ Use data.success instead of response.ok
-          console.log("✅ Username update success!");
-      
-          setMessage("Username updated successfully!");  
-          setUsername(newUsername);
-          localStorage.setItem("loggedInUser", newUsername);
-          console.log("🔥 Calling fetchAccounts with:", newUsername);
-          fetchAccounts(newUsername);
-          setCurrentUsername("");
-          setNewUsername("");
-      
-          setTimeout(() => setMessage(""), 3000);
+        if (data.success) {
+            setMessage("✅ Username updated successfully!");
+            
+            setTimeout(() => {
+                setUsername(newUsername);
+                localStorage.setItem("loggedInUser", newUsername);
+                fetchAccounts(newUsername);
+                setCurrentUsername("");
+                setNewUsername("");
+            
+                setMessage(""); 
+              }, 2000);
+
         } else {
-          console.error("⚠️ Update Username Error:", data.message);
           setMessage(`⚠️ ${data.message}`);  
         }
       } catch (error) {
-        console.error("❌ Request failed:", error);
         setMessage("❌ Error updating username. Please try again.");
       }
 };
@@ -138,9 +141,9 @@ const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
                 type="text"
                 placeholder="Enter current username"
                 value={currentUsername}
-                onChange={(e) => setCurrentUsername(e.target.value)}
+                onChange={handleInputChange(setCurrentUsername)} // ✅ Calls handleInputChange function
                 className="px-4 py-2 border rounded w-3/4 bg-gray-100 text-gray-900"
-              />
+                />
             </div>
             <div>
               <label className="block text-gray-700 mb-2">New Username</label>
@@ -148,15 +151,20 @@ const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
                 type="text"
                 placeholder="Enter new username"
                 value={newUsername}
-                onChange={(e) => setNewUsername(e.target.value)}
+                onChange={handleInputChange(setNewUsername)} // ✅ Clears message when user types
                 className="px-4 py-2 border rounded w-3/4 bg-gray-100 text-gray-900"
-              />
+                />
             </div>
             <button
-              onClick={handleChangeUsername}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            onClick={handleChangeUsername}
+            className={`bg-blue-500 text-white px-4 py-2 rounded 
+                ${(!currentUsername.trim() || !newUsername.trim() || currentUsername === newUsername)
+                ? "opacity-50 cursor-not-allowed" 
+                : "hover:bg-blue-600"}
+            `}
+            disabled={!currentUsername.trim() || !newUsername.trim() || currentUsername === newUsername}
             >
-              Update Username
+            Update Username
             </button>
           </div>
         </div>
