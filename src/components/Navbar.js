@@ -4,6 +4,8 @@ import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [dropdownIndex, setDropdownIndex] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileDropdown, setMobileDropdown] = useState(null); // Tracks dropdowns in mobile
 
   const links = [
     {
@@ -26,14 +28,12 @@ const Navbar = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  const handleMouseEnter = (index) => {
-    setDropdownIndex(index);
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const handleMouseLeave = (index) => {
-    if (dropdownIndex === index) {
-      setDropdownIndex(null);
-    }
+  const toggleMobileDropdown = (index) => {
+    setMobileDropdown((prevIndex) => (prevIndex === index ? null : index));
   };
 
   return (
@@ -41,13 +41,22 @@ const Navbar = () => {
       <div className="logo">
         <Link to="/">RiverLock</Link>
       </div>
+
+      {/* Hamburger Button for Mobile */}
+      <button className={`hamburger-menu ${mobileMenuOpen ? "open" : ""}`} onClick={toggleMobileMenu}>
+        <div className="bar top"></div>
+        <div className="bar middle"></div>
+        <div className="bar bottom"></div>
+      </button>
+
+      {/* Desktop Navigation */}
       <ul className="nav-links">
         {links.map((link, index) => (
           <li
             key={index}
             className="nav-item"
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={() => handleMouseLeave(index)}
+            onMouseEnter={() => setDropdownIndex(index)}
+            onMouseLeave={() => setDropdownIndex(null)}
           >
             {link.subLinks ? (
               <>
@@ -55,11 +64,7 @@ const Navbar = () => {
                   {link.name}
                 </button>
                 {dropdownIndex === index && (
-                  <ul
-                    className="dropdown"
-                    onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={() => handleMouseLeave(index)}
-                  >
+                  <ul className="dropdown">
                     {link.subLinks.map((subLink, subIndex) => (
                       <li key={subIndex}>
                         <Link to={subLink.path} className="dropdown-item">
@@ -78,9 +83,45 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
+
+      {/* CTA Button - Hidden in Mobile */}
       <Link to="/register" className="cta-button">
         Get Started
       </Link>
+
+      {/* Mobile Navigation Menu */}
+      <div className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}>
+          <ul>
+            {links.map((link, index) => (
+              <li key={index}>
+                {link.subLinks ? (
+                  <>
+                    <button
+                      className="mobile-nav-link"
+                      onClick={() => toggleMobileDropdown(index)}
+                    >
+                      {link.name}
+                    </button>
+                    <ul className={`mobile-dropdown ${mobileDropdown === index ? "open" : ""}`}>
+                      {link.subLinks.map((subLink, subIndex) => (
+                        <li key={subIndex} className="mobile-dropdown-item">
+                          <Link to={subLink.path}>{subLink.name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <Link to={link.path} className="mobile-nav-link">
+                    {link.name}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+          <Link to="/register" className="mobile-cta-button">
+            Get Started
+          </Link>
+        </div>
     </nav>
   );
 };
