@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileDropdown, setMobileDropdown] = useState(null); // Tracks dropdowns in mobile
+  const [mobileDropdown, setMobileDropdown] = useState(null);
+  const menuRef = useRef(null); // Ref for detecting outside clicks
 
   const links = [
     {
@@ -36,17 +38,50 @@ const Navbar = () => {
     setMobileDropdown((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  const handleLinkClick = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // CLOSE MENU WHEN CLICKING OUTSIDE
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (mobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <nav className="navbar">
       <div className="logo">
         <Link to="/">RiverLock</Link>
       </div>
 
-      {/* Hamburger Button for Mobile */}
+      {/* Hamburger Button */}
       <button className={`hamburger-menu ${mobileMenuOpen ? "open" : ""}`} onClick={toggleMobileMenu}>
-        <div className="bar top"></div>
-        <div className="bar middle"></div>
-        <div className="bar bottom"></div>
+        <motion.div
+          className="bar top"
+          animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 6 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+        <motion.div
+          className="bar middle"
+          animate={{ opacity: mobileMenuOpen ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
+        />
+        <motion.div
+          className="bar bottom"
+          animate={{ rotate: mobileMenuOpen ? -45 : 0, y: mobileMenuOpen ? -6 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
       </button>
 
       {/* Desktop Navigation */}
@@ -60,68 +95,104 @@ const Navbar = () => {
           >
             {link.subLinks ? (
               <>
-                <button className="nav-link" onClick={(e) => e.preventDefault()}>
-                  {link.name}
-                </button>
+                <button className="nav-link">{link.name}</button>
                 {dropdownIndex === index && (
-                  <ul className="dropdown">
+                  <motion.ul
+                    className="dropdown"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     {link.subLinks.map((subLink, subIndex) => (
-                      <li key={subIndex}>
-                        <Link to={subLink.path} className="dropdown-item">
+                      <motion.li
+                        key={subIndex}
+                        whileTap={{ scale: 0.9, opacity: 0.6 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <Link to={subLink.path} onClick={handleLinkClick} className="mobile-nav-link">
                           {subLink.name}
                         </Link>
-                      </li>
+                      </motion.li>
                     ))}
-                  </ul>
+                  </motion.ul>
                 )}
               </>
             ) : (
-              <Link to={link.path} className="nav-link">
-                {link.name}
-              </Link>
+              <motion.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.15 }}>
+                <Link to={link.path} onClick={handleLinkClick} className="nav-link">
+                  {link.name}
+                </Link>
+              </motion.div>
             )}
           </li>
         ))}
       </ul>
 
-      {/* CTA Button - Hidden in Mobile */}
+      {/* CTA Button (Hidden in Mobile) */}
       <Link to="/register" className="cta-button">
         Get Started
       </Link>
 
       {/* Mobile Navigation Menu */}
-      <div className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}>
-          <ul>
-            {links.map((link, index) => (
-              <li key={index}>
-                {link.subLinks ? (
-                  <>
-                    <button
-                      className="mobile-nav-link"
-                      onClick={() => toggleMobileDropdown(index)}
-                    >
-                      {link.name}
-                    </button>
-                    <ul className={`mobile-dropdown ${mobileDropdown === index ? "open" : ""}`}>
-                      {link.subLinks.map((subLink, subIndex) => (
-                        <li key={subIndex} className="mobile-dropdown-item">
-                          <Link to={subLink.path}>{subLink.name}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <Link to={link.path} className="mobile-nav-link">
+      <motion.div
+        ref={menuRef} // Reference added here
+        className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}
+        initial={{ opacity: 0, x: "100%" }}
+        animate={{ opacity: mobileMenuOpen ? 1 : 0, x: mobileMenuOpen ? 0 : "100%" }}
+        transition={{ duration: 0.3 }}
+      >
+        <ul>
+          {links.map((link, index) => (
+            <li key={index}>
+              {link.subLinks ? (
+                <>
+                  <motion.button
+                    className="mobile-nav-link"
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    onClick={() => toggleMobileDropdown(index)}
+                  >
+                    {link.name}
+                  </motion.button>
+                  <motion.ul
+                    className={`mobile-dropdown ${mobileDropdown === index ? "open" : ""}`}
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{
+                      opacity: mobileDropdown === index ? 1 : 0,
+                      height: mobileDropdown === index ? "auto" : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {link.subLinks.map((subLink, subIndex) => (
+                      <motion.li
+                        key={subIndex}
+                        className="mobile-dropdown-item"
+                        whileTap={{ scale: 0.9, opacity: 0.6 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <Link to={subLink.path} onClick={handleLinkClick}>
+                          {subLink.name}
+                        </Link>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                </>
+              ) : (
+                <motion.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.15 }}>
+                  <Link to={link.path} onClick={handleLinkClick} className="mobile-nav-link">
                     {link.name}
                   </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-          <Link to="/register" className="mobile-cta-button">
+                </motion.div>
+              )}
+            </li>
+          ))}
+        </ul>
+        <motion.div whileTap={{ scale: 0.95 }} transition={{ duration: 0.15 }}>
+          <Link to="/register" onClick={handleLinkClick} className="mobile-cta-button">
             Get Started
           </Link>
-        </div>
+        </motion.div>
+      </motion.div>
     </nav>
   );
 };
