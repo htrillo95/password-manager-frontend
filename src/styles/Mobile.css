@@ -1,0 +1,189 @@
+/* Mobile-specific styles */
+
+/* Mobile sidebar styles */
+@media (max-width: 768px) {
+  .mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -200px; /* Initially hidden */
+    transition: left 0.3s ease-in-out; /* Smooth transition */
+    width: 200px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+  }
+
+  .mobile-sidebar.open {
+    left: 0; /* Slide in when open */
+  }
+
+  /* Hamburger icon button */
+  .mobile-toggle {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Adjust content for mobile view */
+  .mobile-content {
+    padding-left: 0; /* No padding when sidebar is hidden */
+    transition: padding-left 0.3s ease-in-out;
+  }
+
+  .mobile-sidebar.open ~ .mobile-content {
+    padding-left: 200px; /* Adjust content when sidebar is open */
+  }
+
+  .mobile-navbar {
+    display: block; /* Show mobile navbar */
+  }
+
+  /* Tables for smaller screens */
+  .table {
+    width: 100%;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  .table th,
+  .table td {
+    white-space: nowrap; /* Prevent text from wrapping */
+    padding: 12px; /* Ensure enough padding for readability */
+  }
+
+  /* Form and button styles */
+  .form-input {
+    width: 100%; /* Full-width form inputs */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 16px; /* Improve input text visibility */
+  }
+
+  .button {
+    width: 100%; /* Full-width buttons */
+    padding: 14px;
+    background-color: #10b981;
+    color: white;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .button:hover {
+    background-color: #059669;
+  }
+
+  /* Sorting dropdown and pagination */
+  .sort-container {
+    display: flex;
+    flex-direction: column; /* Stack elements for mobile */
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .sort-dropdown {
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .pagination-controls button {
+    padding: 12px 20px;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .pagination-controls button:disabled {
+    background-color: #d1d5db; /* Light Gray */
+    cursor: not-allowed;
+  }
+
+  .pagination-controls button:hover:not(:disabled) {
+    background-color: #2563eb;
+  }
+
+  /* Action buttons for Edit, Delete */
+  .action-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .edit-btn {
+    background-color: #3b82f6; /* Blue */
+    color: white;
+  }
+
+  .edit-btn:hover {
+    background-color: #2563eb;
+  }
+
+  .delete-btn {
+    background-color: #ef4444; /* Red */
+    color: white;
+  }
+
+  .delete-btn:hover {
+    background-color: #dc2626;
+  }
+
+  .cancel-btn {
+    background-color: #6b7280; /* Gray */
+    color: white;
+  }
+
+  .cancel-btn:hover {
+    background-color: #4b5563;
+  }
+
+  /* Adjust the row for edit mode */
+  .edit-mode input {
+    width: 100%; /* Make input fields take up full width */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* Ensure table rows have enough space for edit mode */
+  .edit-mode td {
+    height: auto; /* Allow the height to adjust based on content */
+    padding: 12px;
+  }
+
+  /* Style for Edit mode in rows */
+  .edit-mode .action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+}

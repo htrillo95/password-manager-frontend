@@ -3,6 +3,10 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import MobileDashboard from "./components/MobileDashboard";
+import MobileTools from "./components/MobileTools";
+import MobileSettings from "./components/MobileSettings";
+import MobileSidebar from "./components/MobileSidebar"; // Mobile sidebar import
 import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/Navbar";
 import Security from "./pages/Security";
@@ -15,9 +19,11 @@ import ScrollToTop from "./components/ScrollToTop";
 import { AnimatePresence, motion } from "framer-motion";
 import Tools from "./components/Tools";
 import Settings from "./components/Settings";
+import './styles/Mobile.css';  // Import the consolidated mobile CSS
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem("loggedInUser") || null);
+  const [isMobile, setIsMobile] = useState(false);
   const location = useLocation(); // Get the current location
 
   useEffect(() => {
@@ -26,6 +32,16 @@ function App() {
     if (storedUser) {
       setLoggedInUser(storedUser);
     }
+
+    // Check if the window size is mobile
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Check for mobile width
+    };
+    
+    window.addEventListener('resize', handleResize);
+    handleResize();  // Initial check on mount
+    
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleLogin = (username) => {
@@ -201,57 +217,99 @@ function App() {
             </>
           ) : (
             <>
-              <Route
-                path="/dashboard"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Dashboard
-                      username={loggedInUser}
-                      onLogout={handleLogout}
-                    />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/tools"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Tools onLogout={handleLogout}/>
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Settings 
-                      onLogout={handleLogout} 
-                      username={loggedInUser} 
-                      setUsername={setLoggedInUser}
-                      fetchAccounts={fetchAccounts}
-                   />
-                  </motion.div>
-                }
-              />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              {isMobile ? (
+                <>
+                  {/* Mobile Routes */}
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <motion.div
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.5 }}
+                      >
+                        <MobileDashboard username={loggedInUser} onLogout={handleLogout} />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/tools"
+                    element={
+                      <motion.div
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.5 }}
+                      >
+                        <MobileTools onLogout={handleLogout} />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/settings"
+                    element={
+                      <motion.div
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.5 }}
+                      >
+                        <MobileSettings onLogout={handleLogout} username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchAccounts} />
+                      </motion.div>
+                    }
+                  />
+                </>
+              ) : (
+                <>
+                  {/* Desktop Routes */}
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <motion.div
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Dashboard username={loggedInUser} onLogout={handleLogout} />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/tools"
+                    element={
+                      <motion.div
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Tools onLogout={handleLogout} />
+                      </motion.div>
+                    }
+                  />
+                  <Route
+                    path="/settings"
+                    element={
+                      <motion.div
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Settings onLogout={handleLogout} username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchAccounts} />
+                      </motion.div>
+                    }
+                  />
+                </>
+              )}
             </>
           )}
         </Routes>

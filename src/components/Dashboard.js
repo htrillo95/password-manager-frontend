@@ -19,8 +19,10 @@ const Dashboard = ({ username, onLogout }) => {
   const [currentPage, setCurrentPage] = useState(1); // Current pagination page
   const itemsPerPage = 5; // Number of accounts per page
   const [showInstructions, setShowInstructions] = useState(true); // New state for instruction box
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Fetch accounts on component load
+
+// Fetch accounts on component load
 // ✅ Extract fetchAccounts function outside useEffect so it's reusable
 const fetchAccounts = async (username) => {
   if (!username) return; // 🔥 Ensures username exists before making API call
@@ -263,6 +265,10 @@ const handleDismissInstructions = () => {
     if (currentPage > 1) {
       setCurrentPage((prevPage) => prevPage - 1);
     }
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
   return (
