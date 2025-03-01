@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"; 
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import MobileDashboard from "./components/MobileDashboard";
 import MobileTools from "./components/MobileTools";
 import MobileSettings from "./components/MobileSettings";
-import MobileSidebar from "./components/MobileSidebar"; // Mobile sidebar import
+import MobileSidebar from "./components/MobileSidebar"; 
 import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/Navbar";
 import Security from "./pages/Security";
@@ -19,39 +19,41 @@ import ScrollToTop from "./components/ScrollToTop";
 import { AnimatePresence, motion } from "framer-motion";
 import Tools from "./components/Tools";
 import Settings from "./components/Settings";
-import './styles/Mobile.css';  // Import the consolidated mobile CSS
+import './styles/Mobile.css';  
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem("loggedInUser") || null);
   const [isMobile, setIsMobile] = useState(false);
-  const location = useLocation(); // Get the current location
+  const location = useLocation(); 
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
-    console.log("Stored User:", storedUser); // Log to check if the value is set
+    console.log("Stored User:", storedUser); 
     if (storedUser) {
       setLoggedInUser(storedUser);
     }
 
-    // Check if the window size is mobile
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Check for mobile width
+      setIsMobile(window.innerWidth <= 768);
     };
-    
+
     window.addEventListener('resize', handleResize);
-    handleResize();  // Initial check on mount
-    
+    handleResize();
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleLogin = (username) => {
     setLoggedInUser(username);
     localStorage.setItem("loggedInUser", username);
+    navigate("/dashboard"); 
   };
 
   const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem("loggedInUser");
+    navigate("/"); 
   };
 
   const pageVariants = {
@@ -61,7 +63,7 @@ function App() {
   };
 
   const fetchAccounts = async (username) => {
-    if (!username) return;  // ✅ Prevent unnecessary requests if no user is logged in.
+    if (!username) return; 
 
     try {
         const response = await fetch(`http://127.0.0.1:5000/accounts?username=${username}`);
@@ -69,7 +71,7 @@ function App() {
 
         if (response.ok) {
             console.log("✅ Fetched accounts successfully:", data.accounts);
-            return data.accounts; // ✅ Return the accounts data
+            return data.accounts; 
         } else {
             console.error("⚠️ Failed to fetch accounts:", data.message);
         }
@@ -118,6 +120,9 @@ function App() {
               <Route
                 path="/login"
                 element={
+                  loggedInUser ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
                   <motion.div
                     variants={pageVariants}
                     initial="initial"
@@ -127,6 +132,7 @@ function App() {
                   >
                     <Login onLogin={handleLogin} />
                   </motion.div>
+                  )
                 }
               />
               <Route

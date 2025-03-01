@@ -207,10 +207,10 @@ const MobileDashboard = ({ username, onLogout }) => {
         </button>
 
         <main className="p-4">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">
-            Welcome, {username}
-          </h1>
-          <div className="border-t border-gray-300 mb-6"></div>
+  <h1 className="text-2xl font-bold text-gray-800 mb-4">
+    Your Password Vault - Welcome, {username}
+  </h1>
+  <div className="border-t border-gray-300 mb-6"></div>
 
           <form onSubmit={handleAddAccount} className="mb-6 bg-white shadow-md rounded-lg p-4">
             <h2 className="text-lg font-semibold mb-4">
