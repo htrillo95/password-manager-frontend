@@ -98,8 +98,7 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
 
   return (
     <div className="mobile-settings">
-      <MobileSidebar 
-      isOpen={isSidebarOpen} 
+      <MobileSidebar isOpen={isSidebarOpen} 
       toggleSidebar={toggleSidebar} 
       onLogout={onLogout}
       />

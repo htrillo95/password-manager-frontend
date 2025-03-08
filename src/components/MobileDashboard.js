@@ -38,11 +38,19 @@ const MobileDashboard = ({ username, onLogout }) => {
     fetchAccounts();
   }, [username]);
 
+  // Function to display a message and auto-hide after 3 seconds
+  const showMessage = (messageText) => {
+    setMessage(messageText);
+    setTimeout(() => {
+      setMessage(""); // Clear the message after 3 seconds
+    }, 3000);
+  };
+
   // Add a new account
   const handleAddAccount = async (e) => {
     e.preventDefault();
     if (!newAccount || !newPassword) {
-      setMessage("Please fill in all fields.");
+      showMessage("Please fill in all fields.");
       return;
     }
 
@@ -61,12 +69,12 @@ const MobileDashboard = ({ username, onLogout }) => {
 
         setNewAccount("");
         setNewPassword("");
-        setMessage("Account added successfully!");
+        showMessage("Account added successfully!");
       } else {
-        setMessage("Failed to add account.");
+        showMessage("Failed to add account.");
       }
     } catch (error) {
-      setMessage("Failed to add account.");
+      showMessage("Failed to add account.");
     } finally {
       setLoading(false);
     }
@@ -81,7 +89,7 @@ const MobileDashboard = ({ username, onLogout }) => {
   // Update an account
   const handleUpdateAccount = async () => {
     if (!editingAccount || !editingPassword) {
-      setMessage("Please fill in all fields.");
+      showMessage("Please fill in all fields.");
       return;
     }
 
@@ -105,12 +113,12 @@ const MobileDashboard = ({ username, onLogout }) => {
         setFilteredAccounts(updatedAccounts);
         setEditingAccount(null);
         setEditingPassword("");
-        setMessage("Account updated successfully!");
+        showMessage("Account updated successfully!");
       } else {
-        setMessage("Failed to update account.");
+        showMessage("Failed to update account.");
       }
     } catch (error) {
-      setMessage("Error updating account.");
+      showMessage("Error updating account.");
     } finally {
       setLoading(false);
     }
@@ -130,12 +138,12 @@ const MobileDashboard = ({ username, onLogout }) => {
         const updatedAccounts = accounts.filter((account) => account.account_name !== accountName);
         setAccounts(updatedAccounts);
         setFilteredAccounts(updatedAccounts);
-        setMessage("Account deleted successfully!");
+        showMessage("Account deleted successfully!");
       } else {
-        setMessage("Failed to delete account.");
+        showMessage("Failed to delete account.");
       }
     } catch (error) {
-      setMessage("Error deleting account.");
+      showMessage("Error deleting account.");
     } finally {
       setLoading(false);
     }
@@ -200,17 +208,22 @@ const MobileDashboard = ({ username, onLogout }) => {
 
   return (
     <div className="mobile-dashboard">
-      <MobileSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <MobileSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onLogout={onLogout} />
       <div className={`transition-all duration-300 ${isSidebarOpen ? "ml-64" : ""}`}>
         <button onClick={toggleSidebar} className="p-4 text-2xl">
           ☰ {/* Hamburger icon */}
         </button>
 
         <main className="p-4">
-  <h1 className="text-2xl font-bold text-gray-800 mb-4">
-    Your Password Vault - Welcome, {username}
-  </h1>
-  <div className="border-t border-gray-300 mb-6"></div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+            Your Password Vault - Welcome, {username}
+          </h1>
+          <div className="border-t border-gray-300 mb-6"></div>
+          {message && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+              {message}
+            </div>
+          )}
 
           <form onSubmit={handleAddAccount} className="mb-6 bg-white shadow-md rounded-lg p-4">
             <h2 className="text-lg font-semibold mb-4">

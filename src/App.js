@@ -22,6 +22,7 @@ import Settings from "./components/Settings";
 import './styles/Mobile.css';  
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem("loggedInUser") || null);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation(); 
@@ -78,7 +79,12 @@ function App() {
     } catch (error) {
         console.error("❌ Error fetching accounts:", error);
     }
-};
+    };
+
+    const toggleSidebar = () => {
+      setIsSidebarOpen(!isSidebarOpen);
+    };
+
 
   return (
     <>
@@ -236,7 +242,12 @@ function App() {
                         exit="exit"
                         transition={{ duration: 0.5 }}
                       >
-                        <MobileDashboard username={loggedInUser} onLogout={handleLogout} />
+                        <MobileDashboard 
+                          username={loggedInUser} 
+                          onLogout={handleLogout}
+                          isSidebarOpen={isSidebarOpen}
+                          toggleSidebar={toggleSidebar}
+                           />
                       </motion.div>
                     }
                   />
@@ -250,7 +261,10 @@ function App() {
                         exit="exit"
                         transition={{ duration: 0.5 }}
                       >
-                        <MobileTools onLogout={handleLogout} />
+                        <MobileTools onLogout={handleLogout}
+                        isSidebarOpen={isSidebarOpen}
+                        toggleSidebar={toggleSidebar}
+                         />
                       </motion.div>
                     }
                   />
@@ -264,7 +278,13 @@ function App() {
                         exit="exit"
                         transition={{ duration: 0.5 }}
                       >
-                        <MobileSettings onLogout={handleLogout} username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchAccounts} />
+                        <MobileSettings onLogout={handleLogout} 
+                        username={loggedInUser} 
+                        setUsername={setLoggedInUser} 
+                        fetchAccounts={fetchAccounts} 
+                        isSidebarOpen={isSidebarOpen}
+                        toggleSidebar={toggleSidebar}
+                        />
                       </motion.div>
                     }
                   />

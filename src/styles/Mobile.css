@@ -5,9 +5,9 @@
   .mobile-sidebar {
     position: fixed;
     top: 0;
-    left: -200px; /* Initially hidden */
+    left: -75%; /* Initially hidden off-screen */
     transition: left 0.3s ease-in-out; /* Smooth transition */
-    width: 200px;
+    width: 75%; /* Sidebar takes up 3/4 of the screen */
     height: 100%;
     background-color: #333;
     color: white;
@@ -32,14 +32,16 @@
   }
 
   /* Adjust content for mobile view */
+@media (max-width: 768px) {
   .mobile-content {
     padding-left: 0; /* No padding when sidebar is hidden */
     transition: padding-left 0.3s ease-in-out;
   }
 
   .mobile-sidebar.open ~ .mobile-content {
-    padding-left: 200px; /* Adjust content when sidebar is open */
+    padding-left: 75%; /* Adjust content when sidebar is open */
   }
+}
 
   .mobile-navbar {
     display: block; /* Show mobile navbar */

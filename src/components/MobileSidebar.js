@@ -11,9 +11,9 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 w-3/4 h-full bg-gray-800 text-white p-4 transition-transform transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+    className={`fixed top-0 left-0 z-50 w-3/4 h-full bg-gray-800 text-white p-4 transition-transform transform ${
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    }`}
     >
       {/* Close Menu Button */}
       <button
