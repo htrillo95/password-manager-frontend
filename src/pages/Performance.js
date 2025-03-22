@@ -4,58 +4,66 @@ import "../styles/Performance.css";
 const Performance = () => {
   return (
     <div>
-      {/* Hero Section */}
-      <div className="performance-hero">
+      {/* Parallax Section (Hero Section) */}
+      <div className="performance-parallax" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/Encryption.jpg)` }}>
         <h1>Unleashing Peak Performance</h1>
         <p>Discover the technology that powers RiverLock's unmatched speed and efficiency.</p>
       </div>
 
-      {/* Section 1 */}
-      <div className="performance-section">
-        <div className="performance-content">
-          <h2>Blazing Fast Speeds</h2>
-          <p>
-            With cutting-edge optimization, RiverLock ensures that every operation is carried out
-            with lightning-fast precision.
-          </p>
+      {/* Content Section */}
+      <div className="performance-content">
+        {/* Section 1 */}
+        <div className="performance-section">
+          <div className="performance-text">
+            <h2>Blazing Fast Speeds</h2>
+            <p>
+              Speed is everything! RiverLock makes sure you’re not sitting around waiting.
+              Whether you’re adding an account or checking your saved passwords, everything loads at lightning speed.
+              It’s all about keeping things smooth and fast, so you can get back to what matters.
+            </p>
+          </div>
+          <div className="performance-image">
+            <img
+              src={process.env.PUBLIC_URL + "/images/PerformanceImage1.jpg"}
+              alt="Fast Speeds"
+            />
+          </div>
         </div>
-        <div className="performance-image">
-          <img src="https://via.placeholder.com/600x400" alt="Fast speeds" />
-        </div>
-      </div>
 
-      {/* Section 2 */}
-      <div className="performance-section reverse">
-        <div className="performance-content">
-          <h2>Unmatched Reliability</h2>
-          <p>
-            Enjoy a seamless experience with 99.99% uptime and redundancy. Your data will always be
-            accessible whenever you need it.
-          </p>
+        {/* Section 2 */}
+        <div className="performance-section reverse">
+          <div className="performance-text">
+            <h2>Unmatched Reliability</h2>
+            <p>
+              Nothing’s worse than having your data vanish when you need it most.
+              That’s why RiverLock ensures 99.99% uptime. Your data stays safe and accessible,
+              so you can rest easy knowing it’s always ready when you are.
+            </p>
+          </div>
+          <div className="performance-image">
+            <img
+              src={process.env.PUBLIC_URL + "/images/PerformanceImage2.jpg"}
+              alt="Reliability"
+            />
+          </div>
         </div>
-        <div className="performance-image">
-          <img src="https://via.placeholder.com/600x400" alt="Reliability" />
-        </div>
-      </div>
 
-      {/* Section 3 */}
-      <div className="performance-parallax">
-        <div className="parallax-content">
-          <h2>Engineered for Scalability</h2>
-          <p>
-            From startups to enterprises, RiverLock’s infrastructure scales effortlessly as your
-            needs grow. Experience the perfect balance of performance and scalability.
-          </p>
+        {/* Section 3 */}
+        <div className="performance-section">
+          <div className="performance-text">
+            <h2>Data Integrity & Storage Security</h2>
+            <p>
+              Your data is safely stored in a secure SQL database. We ensure that all your accounts are encrypted and protected,
+              with no sensitive information exposed, even on the backend. RiverLock’s storage and security methods are second to none.
+            </p>
+          </div>
+          <div className="performance-image">
+            <img
+              src={process.env.PUBLIC_URL + "/images/PerformanceImage3.jpg"}
+              alt="Data Security"
+            />
+          </div>
         </div>
-      </div>
-
-      {/* Call to Action */}
-      <div className="performance-footer">
-        <h2>Maximize Your Potential</h2>
-        <p>
-          Partner with RiverLock today and unlock unparalleled performance for your digital security
-          needs.
-        </p>
       </div>
     </div>
   );
