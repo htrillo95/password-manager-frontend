@@ -20,6 +20,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Tools from "./components/Tools";
 import Settings from "./components/Settings";
 import './styles/Mobile.css';  
+import { AppProvider } from "./context/AppContext";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -87,6 +88,7 @@ function App() {
 
 
   return (
+    <AppProvider>
     <>
       <ScrollToTop />
       {/* Conditionally render Navbar: Hide on /dashboard */}
@@ -341,6 +343,7 @@ function App() {
         </Routes>
       </AnimatePresence>
     </>
+    </AppProvider>
   );
 }
 

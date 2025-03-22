@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Dashboard.css";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../context/AppContext"; 
 import Settings from "./Settings";
 
-const Dashboard = ({ username, onLogout }) => {
+const Dashboard = ({ onLogout }) => {
+  const { username, accounts, setAccounts, fetchAccounts } = useAppContext();
   const navigate = useNavigate();
-  const [accounts, setAccounts] = useState([]); // All stored accounts
   const [filteredAccounts, setFilteredAccounts] = useState([]); // Filtered accounts for search
   const [searchQuery, setSearchQuery] = useState(""); // Search input value
   const [newAccount, setNewAccount] = useState(""); // New account input
@@ -21,35 +22,15 @@ const Dashboard = ({ username, onLogout }) => {
   const [showInstructions, setShowInstructions] = useState(true); // New state for instruction box
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-
-// Fetch accounts on component load
-// ✅ Extract fetchAccounts function outside useEffect so it's reusable
-const fetchAccounts = async (username) => {
-  if (!username) return; // 🔥 Ensures username exists before making API call
-
-  try {
-    const response = await axios.get("http://127.0.0.1:5000/accounts", {
-      params: { username },
-    });
-
-    if (response.data.success) {
-      setAccounts(response.data.accounts);
-      setFilteredAccounts(response.data.accounts);
-      setMessage("");
-    } else {
-      setMessage(response.data.message || "Failed to load accounts.");
-    }
-  } catch (error) {
-    console.error("Error fetching accounts:", error);
-    setMessage("Failed to load accounts.");
-  }
-};
-
 // ✅ UseEffect still calls fetchAccounts on mount & username change
 useEffect(() => {
   fetchAccounts(username);
 }, [username]); // 🔥 Runs when username changes
 
+useEffect(() => {
+  setFilteredAccounts(accounts);
+  setCurrentPage(1);
+}, [accounts]);
 
   // Reset pagination whenever filteredAccounts change
 useEffect(() => {
@@ -62,6 +43,8 @@ useEffect(() => {
 const handleDismissInstructions = () => {
   setShowInstructions(false);
 };
+
+console.log("Username from context:", username);
 
   // Add a new account
   const handleAddAccount = async (e) => {

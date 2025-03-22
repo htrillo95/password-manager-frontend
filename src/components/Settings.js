@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
+import { useAppContext } from "../context/AppContext";
 
-const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
+const Settings = ({ onLogout }) => {
+  const { username, setUsername, fetchAccounts } = useAppContext();
   const navigate = useNavigate();
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
@@ -48,14 +50,13 @@ const Settings = ({ username, setUsername, fetchAccounts, onLogout }) => {
             setMessage("✅ Username updated successfully!");
             
             setTimeout(() => {
-                setUsername(newUsername);
-                localStorage.setItem("loggedInUser", newUsername);
-                fetchAccounts(newUsername);
-                setCurrentUsername("");
-                setNewUsername("");
-            
-                setMessage(""); 
-              }, 2000);
+              setUsername(newUsername);
+              localStorage.setItem("loggedInUser", newUsername);
+              fetchAccounts(newUsername); // ⬅️ Ensures updated accounts are pulled after username change
+              setCurrentUsername("");
+              setNewUsername("");
+              setMessage("");
+            }, 2000);
 
         } else {
           setMessage(`⚠️ ${data.message}`);  

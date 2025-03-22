@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import MobileSidebar from "./MobileSidebar"; // Importing the sidebar component
+import { useAppContext } from "../context/AppContext";
+import MobileSidebar from "./MobileSidebar"; // Sidebar component
 
-const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
+const MobileSettings = ({ onLogout }) => {
+  const { username, setUsername, fetchAccounts } = useAppContext();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentUsername, setCurrentUsername] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [message, setMessage] = useState("");
-  const [deleteConfirmation, setDeleteConfirmation] = useState(""); // ✅ Added confirmation input
+  const [deleteConfirmation, setDeleteConfirmation] = useState("");
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -14,12 +17,12 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);
-    setMessage(""); 
+    setMessage("");
   };
 
   const handleChangeUsername = async () => {
     const storedUsername = localStorage.getItem("loggedInUser");
-  
+
     if (!currentUsername.trim() || !newUsername.trim()) {
       setMessage("Please enter both your current and new username.");
       return;
@@ -29,43 +32,45 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
       setMessage("New username cannot be the same as the current username.");
       return;
     }
-  
+
     if (currentUsername !== storedUsername) {
       setMessage("Current username does not match our records.");
       return;
     }
-  
+
     if (!window.confirm(`Are you sure you want to change your username to "${newUsername}"?`)) {
       return;
     }
-  
-    try {
-        const response = await fetch("http://127.0.0.1:5000/update-username", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ current_username: currentUsername, new_username: newUsername }),
-        });
-      
-        const data = await response.json();
-        if (data.success) {
-            setMessage("✅ Username updated successfully!");
-            
-            setTimeout(() => {
-                setUsername(newUsername);
-                localStorage.setItem("loggedInUser", newUsername);
-                fetchAccounts(newUsername);
-                setCurrentUsername("");
-                setNewUsername("");
-            
-                setMessage(""); 
-              }, 2000);
 
-        } else {
-          setMessage(`⚠️ ${data.message}`);  
-        }
-      } catch (error) {
-        setMessage("❌ Error updating username. Please try again.");
+    try {
+      const response = await fetch("http://127.0.0.1:5000/update-username", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          current_username: currentUsername,
+          new_username: newUsername,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMessage("✅ Username updated successfully!");
+
+        setTimeout(() => {
+          setUsername(newUsername);
+          localStorage.setItem("loggedInUser", newUsername);
+          fetchAccounts(newUsername);
+          setCurrentUsername("");
+          setNewUsername("");
+          setMessage("");
+        }, 2000);
+      } else {
+        setMessage(`⚠️ ${data.message}`);
       }
+    } catch (error) {
+      setMessage("❌ Error updating username. Please try again.");
+    }
   };
 
   const handleDeleteAccount = async () => {
@@ -98,17 +103,15 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
 
   return (
     <div className="mobile-settings">
-      <MobileSidebar 
-      isOpen={isSidebarOpen} 
-      toggleSidebar={toggleSidebar} 
-      onLogout={onLogout}
+      <MobileSidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        onLogout={onLogout}
       />
-      
-      {/* Main content */}
+
       <div className={`transition-all duration-300 ${isSidebarOpen ? "ml-64" : ""}`}>
-        {/* Hamburger button for sidebar */}
         <button onClick={toggleSidebar} className="p-4 text-2xl">
-          ☰ {/* Hamburger icon */}
+          ☰
         </button>
 
         <main className="p-4">
@@ -120,7 +123,7 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
             </div>
           )}
 
-          {/* Change Username Section */}
+          {/* Change Username */}
           <div className="mb-6 bg-white shadow-md rounded-lg p-4">
             <h2 className="text-xl font-semibold mb-4">Change Username</h2>
             <p className="text-sm text-gray-600 mb-3">
@@ -133,7 +136,7 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
                   type="text"
                   placeholder="Enter current username"
                   value={currentUsername}
-                  onChange={handleInputChange(setCurrentUsername)} 
+                  onChange={handleInputChange(setCurrentUsername)}
                   className="px-4 py-2 border rounded w-full bg-gray-100 text-gray-900"
                 />
               </div>
@@ -143,25 +146,31 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
                   type="text"
                   placeholder="Enter new username"
                   value={newUsername}
-                  onChange={handleInputChange(setNewUsername)} 
+                  onChange={handleInputChange(setNewUsername)}
                   className="px-4 py-2 border rounded w-full bg-gray-100 text-gray-900"
                 />
               </div>
               <button
                 onClick={handleChangeUsername}
-                className={`bg-blue-500 text-white px-4 py-2 rounded
-                    ${(!currentUsername.trim() || !newUsername.trim() || currentUsername === newUsername)
-                    ? "opacity-50 cursor-not-allowed" 
-                    : "hover:bg-blue-600"}
-                `}
-                disabled={!currentUsername.trim() || !newUsername.trim() || currentUsername === newUsername}
+                className={`bg-blue-500 text-white px-4 py-2 rounded ${
+                  (!currentUsername.trim() ||
+                    !newUsername.trim() ||
+                    currentUsername === newUsername)
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-blue-600"
+                }`}
+                disabled={
+                  !currentUsername.trim() ||
+                  !newUsername.trim() ||
+                  currentUsername === newUsername
+                }
               >
                 Update Username
               </button>
             </div>
           </div>
 
-          {/* Danger Zone (Account Deletion) */}
+          {/* Danger Zone */}
           <div className="mb-6 bg-white shadow-md rounded-lg p-4">
             <h2 className="text-xl font-semibold mb-4 text-red-500">Danger Zone</h2>
             <p className="text-sm text-gray-600 mb-3">
@@ -169,7 +178,6 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
               <code className="bg-gray-200 px-1 ml-1">delete my account</code> below to confirm.
             </p>
 
-            {/* Confirmation Input */}
             <input
               type="text"
               placeholder="Type 'delete my account' to confirm"
@@ -180,9 +188,11 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
 
             <button
               onClick={handleDeleteAccount}
-              className={`bg-red-500 text-white px-4 py-2 rounded
-                  ${deleteConfirmation !== "delete my account" ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600"}
-              `}
+              className={`bg-red-500 text-white px-4 py-2 rounded ${
+                deleteConfirmation !== "delete my account"
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-red-600"
+              }`}
               disabled={deleteConfirmation !== "delete my account"}
             >
               Delete Account

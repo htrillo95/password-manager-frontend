@@ -35,7 +35,7 @@ const FAQ = () => {
     },
     {
         question: "What happens if I forget my master password?",
-        answer: "You’ll have to call in a psychic, because once it’s gone, it’s gone. We don’t store it, for your safety. So, please remember it! 😉",
+        answer: "Unfortunately, we don’t store it for your security, so there’s no way to retrieve it. Be sure to keep it safe and secure!",
     },
   ];
 
