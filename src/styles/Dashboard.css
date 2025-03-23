@@ -1,0 +1,44 @@
+.cancel-btn:hover {
+  background-color: #4b5563;
+}
+
+/* For Mobile - Sidebar Hidden Initially */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: -250px; /* Initially hide sidebar */
+    transition: left 0.3s ease;
+    width: 250px;
+  }
+
+  .main-content {
+    margin-left: 0; /* No left margin when sidebar is hidden */
+    width: 100%;
+  }
+
+  .sidebar.open {
+    left: 0; /* Show sidebar when open */
+  }
+
+  /* Toggle Button */
+  .mobile-toggle {
+    display: block; 
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+/* Hide mobile toggle on larger screens */
+@media (min-width: 1024px) {
+  .mobile-toggle {
+    display: none;
+  }
+}
