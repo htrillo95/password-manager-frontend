@@ -1,0 +1,281 @@
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent scrolling beyond the screen */
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1f2937; /* Dark Gray */
+  color: white;
+  padding: 20px;
+  position: fixed;
+  height: 100%; /* Full height for the sidebar */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  background-color: #4b5563;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  margin-bottom: 10px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar button:hover {
+  background-color: #374151;
+}
+
+.logout-btn {
+  margin-top: auto;
+  background-color: #ef4444; /* Red */
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  width: calc(100% - 250px); /* Adjust width to exclude sidebar */
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px); /* Ensure main content fits viewport */
+  overflow: hidden; /* Prevent extra scrolling */
+  justify-content: space-between; /* Keeps pagination at the bottom */
+}
+
+.alert {
+  background-color: #fef2f2;
+  color: #9b2c2c;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.add-account-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-account-form .form-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-account-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.add-account-form button {
+  background-color: #10b981; /* Green */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-account-form button:hover {
+  background-color: #059669;
+}
+
+.account-list-container {
+  flex: 1; /* Ensures the table grows to fill available space */
+  max-height: calc(100vh - 300px); /* Dynamic height adjusted for header and form */
+  overflow-y: hidden; /* Prevent scrolling in the table */
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.account-list th {
+  background-color: #1f2937; /* Dark header */
+  color: white;
+  font-weight: 600;
+  padding: 12px;
+  text-align: left;
+}
+
+.account-list td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.account-list tbody tr:nth-child(odd) td {
+  background-color: #f9fafb; /* Light gray for odd rows */
+}
+
+.account-list tbody tr:nth-child(even) td {
+  background-color: #ffffff; /* Keep even rows white */
+}
+
+.account-list tbody tr:hover td {
+  background-color: #e5e7eb !important; /* Stronger hover effect */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pagination-controls button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background-color: #d1d5db; /* Light Gray */
+  cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between label & dropdown */
+}
+
+.sort-label {
+  font-weight: 600;
+  color: #374151; /* Dark gray */
+}
+
+.sort-dropdown {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db; /* Light gray */
+  border-radius: 6px;
+  background-color: white;
+  color: #374151;
+  cursor: pointer;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.sort-dropdown:hover {
+  border-color: #3b82f6; /* Blue border on hover */
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+/* Improve button spacing and styling */
+.action-buttons {
+  display: flex;
+  gap: 8px; /* Adds spacing between buttons */
+  justify-content: center;
+}
+
+.action-buttons button {
+  padding: 6px 12px; /* Slightly larger for better clickability */
+  font-size: 14px;
+  border-radius: 6px; /* Softer rounded corners */
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Edit Button */
+.edit-btn {
+  background-color: #3b82f6; /* Blue */
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #2563eb;
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: #ef4444; /* Red */
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  background-color: #6b7280; /* Gray */
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #4b5563;
+}
+
+/* For Mobile - Sidebar Hidden Initially */
+@media (max-width: 1024px) {
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: -250px; /* Initially hide sidebar */
+    transition: left 0.3s ease;
+    width: 250px;
+  }
+
+  .main-content {
+    margin-left: 0; /* No left margin when sidebar is hidden */
+    width: 100%;
+  }
+
+  .sidebar.open {
+    left: 0; /* Show sidebar when open */
+  }
+
+  /* Toggle Button */
+  .mobile-toggle {
+    display: block; 
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 999;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+/* Hide mobile toggle on larger screens */
+@media (min-width: 1024px) {
+  .mobile-toggle {
+    display: none;
+  }
+}
