@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/Register.css"; // Reusing Register.css
+import { loginUser } from "../utils/api"; // Adjust path if needed
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
@@ -10,10 +11,7 @@ const Login = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:5000/login", {
-        username,
-        password,
-      });
+      const response = await loginUser(username, password);
       setMessage(response.data.message);
       if (response.data.success) {
         onLogin(username);

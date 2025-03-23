@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import MobileSidebar from "./MobileSidebar"; // Importing the sidebar component
+import { updateUsername } from "../utils/api";
+import { deleteUserAccount } from "../utils/api";
 
 const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -40,11 +42,7 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
     }
   
     try {
-        const response = await fetch("http://127.0.0.1:5000/update-username", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ current_username: currentUsername, new_username: newUsername }),
-        });
+      const response = await updateUsername(currentUsername, newUsername);
       
         const data = await response.json();
         if (data.success) {
@@ -77,11 +75,7 @@ const MobileSettings = ({ username, setUsername, fetchAccounts, onLogout }) => {
     if (!window.confirm("Are you sure you want to delete your account? This action is irreversible.")) return;
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/delete-account", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }),
-      });
+      const response = await deleteUserAccount(username);
 
       if (response.ok) {
         localStorage.removeItem("loggedInUser");

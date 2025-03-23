@@ -21,6 +21,7 @@ import Tools from "./components/Tools";
 import Settings from "./components/Settings";
 import './styles/Mobile.css';  
 import { AppProvider } from "./context/AppContext";
+import { fetchAccounts } from "./utils/api"; // Adjust the path if needed
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -65,22 +66,21 @@ function App() {
   };
 
   const fetchAccounts = async (username) => {
-    if (!username) return; 
-
+    if (!username) return;
+  
     try {
-        const response = await fetch(`http://127.0.0.1:5000/accounts?username=${username}`);
-        const data = await response.json();
-
-        if (response.ok) {
-            console.log("✅ Fetched accounts successfully:", data.accounts);
-            return data.accounts; 
-        } else {
-            console.error("⚠️ Failed to fetch accounts:", data.message);
-        }
+      const response = await fetchAccounts(username);
+  
+      if (response.data.success) {
+        console.log("✅ Fetched accounts successfully:", response.data.accounts);
+        return response.data.accounts;
+      } else {
+        console.error("⚠️ Failed to fetch accounts:", response.data.message);
+      }
     } catch (error) {
-        console.error("❌ Error fetching accounts:", error);
+      console.error("❌ Error fetching accounts:", error);
     }
-    };
+  };
 
     const toggleSidebar = () => {
       setIsSidebarOpen(!isSidebarOpen);

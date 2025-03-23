@@ -3,6 +3,9 @@ import axios from "axios";
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext"; 
+import { addPassword } from "../utils/api"; // ✅ add this
+import { updatePassword } from "../utils/api"; // import at the top
+import { deletePassword } from "../utils/api";
 import Settings from "./Settings";
 
 const Dashboard = ({ onLogout }) => {
@@ -61,11 +64,7 @@ console.log("Username from context:", username);
 
     setLoading(true);
     try {
-      const response = await axios.post("http://127.0.0.1:5000/passwords", {
-        username,
-        account_name: newAccount,
-        password: newPassword,
-      });
+      const response = await addPassword(username, newAccount, newPassword);
 
       if (response.data.success) {
         const newEntry = { account_name: newAccount, password: newPassword };
@@ -158,13 +157,7 @@ console.log("Username from context:", username);
 
     setLoading(true);
     try {
-      const response = await axios.put(
-        `http://127.0.0.1:5000/passwords/${editingAccount.account_name}`,
-        {
-          username,
-          password: editingPassword,
-        }
-      );
+      const response = await updatePassword(username, editingAccount.account_name, editingPassword);
 
       if (response.data.success) {
         const updatedAccounts = accounts.map((account) =>
@@ -194,12 +187,7 @@ console.log("Username from context:", username);
 
     setLoading(true);
     try {
-      const response = await axios.delete(
-        `http://127.0.0.1:5000/passwords/${accountName}`,
-        {
-          data: { username },
-        }
-      );
+      const response = await deletePassword(username, accountName);
 
       if (response.data.success) {
         const updatedAccounts = accounts.filter(

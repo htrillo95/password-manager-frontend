@@ -1,6 +1,7 @@
 import "../styles/Register.css";
 import React, { useState } from "react";
 import axios from "axios";
+import { registerUser } from "../utils/api"; 
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -10,11 +11,8 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:5000/register", {
-        username,
-        password,
-      });
-      setMessage(response.data.message);  // Set the message returned from the server
+      const response = await registerUser(username, password);
+      setMessage(response.data.message);
     } catch (error) {
       setMessage(error.response?.data?.message || "An error occurred while registering");
     }

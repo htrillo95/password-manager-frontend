@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { fetchAccounts as fetchAccountsAPI } from "../utils/api"; 
 
 const AppContext = createContext();
 
@@ -23,12 +24,10 @@ export const AppProvider = ({ children }) => {
 
   const fetchAccounts = async (usernameToFetch = username) => {
     if (!usernameToFetch) return;
-
+  
     try {
-      const response = await axios.get("http://127.0.0.1:5000/accounts", {
-        params: { username: usernameToFetch },
-      });
-
+      const response = await fetchAccountsAPI(usernameToFetch);
+  
       if (response.data.success) {
         setAccounts(response.data.accounts);
       } else {

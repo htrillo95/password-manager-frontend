@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
 import { useAppContext } from "../context/AppContext";
+import { updateUsername } from "../utils/api";
+import { deleteUserAccount } from "../utils/api"; 
 
 const Settings = ({ onLogout }) => {
   const { username, setUsername, fetchAccounts } = useAppContext();
@@ -23,7 +25,7 @@ const Settings = ({ onLogout }) => {
       setMessage("Please enter both your current and new username.");
       return;
     }
-
+  
     if (currentUsername === newUsername) {
       setMessage("New username cannot be the same as the current username.");
       return;
@@ -39,53 +41,43 @@ const Settings = ({ onLogout }) => {
     }
   
     try {
-        const response = await fetch("http://127.0.0.1:5000/update-username", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ current_username: currentUsername, new_username: newUsername }),
-        });
-      
-        const data = await response.json();
-        if (data.success) {
-            setMessage("✅ Username updated successfully!");
-            
-            setTimeout(() => {
-              setUsername(newUsername);
-              localStorage.setItem("loggedInUser", newUsername);
-              fetchAccounts(newUsername); // ⬅️ Ensures updated accounts are pulled after username change
-              setCurrentUsername("");
-              setNewUsername("");
-              setMessage("");
-            }, 2000);
-
-        } else {
-          setMessage(`⚠️ ${data.message}`);  
-        }
-      } catch (error) {
-        setMessage("❌ Error updating username. Please try again.");
+      const response = await updateUsername(currentUsername, newUsername);
+      const data = await response.json();
+  
+      if (data.success) {
+        setMessage("✅ Username updated successfully!");
+  
+        setTimeout(() => {
+          setUsername(newUsername);
+          localStorage.setItem("loggedInUser", newUsername);
+          fetchAccounts(newUsername);
+          setCurrentUsername("");
+          setNewUsername("");
+          setMessage("");
+        }, 2000);
+      } else {
+        setMessage(`⚠️ ${data.message}`);
       }
-};
+    } catch (error) {
+      setMessage("❌ Error updating username. Please try again.");
+    }
+  };
 
-  // ✅ Delete Account Functionality with Confirmation Input
   const handleDeleteAccount = async () => {
     if (deleteConfirmation !== "delete my account") {
       setMessage("You must type 'delete my account' exactly to proceed.");
       return;
     }
-
+  
     if (!window.confirm("Are you sure you want to delete your account? This action is irreversible.")) return;
-
+  
     try {
-      const response = await fetch("http://127.0.0.1:5000/delete-account", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }),
-      });
-
+      const response = await deleteUserAccount(username);
+  
       if (response.ok) {
         localStorage.removeItem("loggedInUser");
         setUsername("");
-        navigate("/login", { replace: true }); // ✅ Ensures smooth redirect
+        onLogout();
       } else {
         const data = await response.json();
         setMessage(data.message || "Failed to delete account.");
