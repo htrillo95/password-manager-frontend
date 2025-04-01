@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
+const BASE_URL = process.env.REACT_APP_API_BASE || "http://127.0.0.1:5000";
 
 // Shared axios config with CORS credentials
 const axiosConfig = {

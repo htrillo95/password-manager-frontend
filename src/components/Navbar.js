@@ -7,7 +7,8 @@ const Navbar = () => {
   const [dropdownIndex, setDropdownIndex] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(null);
-  const menuRef = useRef(null); // Ref for detecting outside clicks
+  const menuRef = useRef(null);
+  const hamburgerRef = useRef(null); // ✅ NEW
 
   const links = [
     {
@@ -42,10 +43,15 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
-  // CLOSE MENU WHEN CLICKING OUTSIDE
+  // ✅ CLOSE MENU WHEN CLICKING OUTSIDE — IGNORE HAMBURGER BUTTON
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(event.target)
+      ) {
         setMobileMenuOpen(false);
       }
     };
@@ -66,7 +72,11 @@ const Navbar = () => {
       </div>
 
       {/* Hamburger Button */}
-      <button className={`hamburger-menu ${mobileMenuOpen ? "open" : ""}`} onClick={toggleMobileMenu}>
+      <button
+        ref={hamburgerRef} // ✅ Added ref here
+        className={`hamburger-menu ${mobileMenuOpen ? "open" : ""}`}
+        onClick={toggleMobileMenu}
+      >
         <motion.div
           className="bar top"
           animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 6 : 0 }}
@@ -135,7 +145,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation Menu */}
       <motion.div
-        ref={menuRef} // Reference added here
+        ref={menuRef}
         className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}
         initial={{ opacity: 0, x: "100%" }}
         animate={{ opacity: mobileMenuOpen ? 1 : 0, x: mobileMenuOpen ? 0 : "100%" }}
