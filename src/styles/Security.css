@@ -1,7 +1,5 @@
 /* Parallax Section */
 .security-parallax {
-    background-image: url("https://via.placeholder.com/1920x1080"); /* Replace with actual image */
-    background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -103,4 +101,5 @@
     .security-image {
       margin-top: 1.5rem;
     }
+    
   }

@@ -1,14 +1,18 @@
 import React from "react";
+import { Parallax } from 'react-parallax';
+import SecurityBanner from "../images/SecurityBanner.jpg";
 import "../styles/Security.css";
 
 const Security = () => {
   return (
     <div>
-      {/* Parallax Section */}
-      <div className="security-parallax" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/SecurityBanner.jpg)` }}>
-        <h1>Unmatched Digital Security</h1>
-        <p>Your data, safeguarded with precision and care.</p>
-      </div>
+      {/* Parallax Hero Section */}
+      <Parallax bgImage={SecurityBanner} strength={300}>
+        <div className="security-parallax">
+          <h1>Unmatched Digital Security</h1>
+          <p>Your data, safeguarded with precision and care.</p>
+        </div>
+      </Parallax>
 
       {/* Content Section */}
       <div className="security-content">
