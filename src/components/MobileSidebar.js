@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
   const navigate = useNavigate();
@@ -10,8 +10,7 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
     } else {
       document.body.classList.remove("sidebar-open");
     }
-  
-    // Clean up on unmount (just in case)
+
     return () => {
       document.body.classList.remove("sidebar-open");
     };
@@ -24,8 +23,13 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
 
   return (
     <div
-      className={`mobile-sidebar ${isOpen ? "open" : ""} flex flex-col h-[100dvh] bg-gray-800 text-white p-4`}
-      style={{ boxSizing: "border-box" }}
+      className={`mobile-sidebar ${isOpen ? "open" : ""} flex flex-col bg-gray-800 text-white p-4`}
+      style={{
+        height: "100dvh",
+        boxSizing: "border-box",
+        paddingTop: "env(safe-area-inset-top)",
+        paddingBottom: "env(safe-area-inset-bottom)",
+      }}
     >
       {/* Top section */}
       <div>
@@ -67,8 +71,8 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
       {/* Divider */}
       <hr className="border-gray-700 my-6" />
 
-      {/* Bottom Logout */}
-      <div className="mt-auto pt-4 pb-[env(safe-area-inset-bottom)] flex justify-center">
+      {/* Logout Button */}
+      <div className="mt-auto pt-4 flex justify-center">
         <button
           onClick={onLogout}
           className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium shadow transition"
