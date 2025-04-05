@@ -90,7 +90,7 @@ body {
 }
 
 .illustration {
-  max-width: 100%;
+  max-width: 150%;
   height: auto;
   transform: scale(1);
   transition: transform 0.3s ease-in-out;
