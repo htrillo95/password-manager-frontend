@@ -23,17 +23,17 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
 
   return (
     <div
-      className={`mobile-sidebar ${isOpen ? "open" : ""} flex flex-col bg-gray-800 text-white p-4`}
+      className={`mobile-sidebar ${isOpen ? "open" : ""} flex flex-col bg-gray-800 text-white p-4 overflow-y-auto`}
       style={{
         height: "100dvh",
         boxSizing: "border-box",
-        paddingTop: "env(safe-area-inset-top)",
-        paddingBottom: "env(safe-area-inset-bottom)",
+        paddingTop: "calc(env(safe-area-inset-top) + 1rem)",
+        paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)",
+        WebkitOverflowScrolling: "touch",
       }}
     >
       {/* Top section */}
       <div>
-        {/* App Title */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">PasswordVault</h2>
           <button
@@ -71,7 +71,7 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
       {/* Divider */}
       <hr className="border-gray-700 my-6" />
 
-      {/* Logout Button */}
+      {/* Logout */}
       <div className="mt-auto pt-4 flex justify-center">
         <button
           onClick={onLogout}
