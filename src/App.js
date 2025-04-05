@@ -47,6 +47,19 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+// ⬇️ Place this under your first useEffect (window resize)
+useEffect(() => {
+  if (isSidebarOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [isSidebarOpen]);
+
   const handleLogin = (username) => {
     setLoggedInUser(username);
     localStorage.setItem("loggedInUser", username);

@@ -1,8 +1,21 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 
 const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("sidebar-open");
+    } else {
+      document.body.classList.remove("sidebar-open");
+    }
+  
+    // Clean up on unmount (just in case)
+    return () => {
+      document.body.classList.remove("sidebar-open");
+    };
+  }, [isOpen]);
 
   const handleNavigate = (route) => {
     toggleSidebar();

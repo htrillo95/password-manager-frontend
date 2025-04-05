@@ -15,6 +15,8 @@
     transition: transform 0.3s ease-in-out;
     z-index: 9999;
     padding: 1rem;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+    padding-top: calc(env(safe-area-inset-top) + 1rem);
   }
   .mobile-sidebar.open {
     transform: translateX(0);
@@ -174,4 +176,8 @@
     gap: 8px;
     justify-content: center;
   }
+}
+
+body.sidebar-open {
+  overflow: hidden;
 }
