@@ -58,7 +58,10 @@ const MobileTools = ({onLogout}) => {
 
   return (
     <div className="mobile-tools">
-      <MobileSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}  onLogout={onLogout}  />
+      <MobileSidebar isOpen={isSidebarOpen}
+      toggleSidebar={toggleSidebar} 
+      onLogout={onLogout} 
+      />
 
       {/* Main content */}
       <div className={`transition-all duration-300 ${isSidebarOpen ? "ml-64" : ""}`}>

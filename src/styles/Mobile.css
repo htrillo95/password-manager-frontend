@@ -1,29 +1,31 @@
-/* Mobile-specific styles */
-
-/* Mobile sidebar styles */
+/* ----------------------------
+   Mobile-specific styles
+---------------------------- */
 @media (max-width: 768px) {
+  /* Sidebar styles */
   .mobile-sidebar {
     position: fixed;
     top: 0;
-    left: -75%; /* Initially hidden off-screen */
-    transition: left 0.3s ease-in-out; /* Smooth transition */
-    width: 75%; /* Sidebar takes up 3/4 of the screen */
-    height: 100%;
-    background-color: #333;
+    left: 0;
+    width: 100vw; /* Full screen if you want to block the view */
+    height: 100vh;
+    background-color: #1f2937; /* Tailwind's gray-800 */
     color: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 9999;
+    padding: 1rem;
   }
-
   .mobile-sidebar.open {
-    left: 0; /* Slide in when open */
+    transform: translateX(0);
   }
 
-  /* Hamburger icon button */
+  /* Hamburger toggle button */
   .mobile-toggle {
-    display: block;
     position: absolute;
     top: 10px;
     left: 10px;
-    z-index: 999;
+    z-index: 10000;
     background-color: #333;
     color: white;
     padding: 10px 15px;
@@ -31,47 +33,32 @@
     cursor: pointer;
   }
 
-  /* Adjust content for mobile view */
-@media (max-width: 768px) {
-  .mobile-content {
-    padding-left: 0; /* No padding when sidebar is hidden */
-    transition: padding-left 0.3s ease-in-out;
-  }
-
-  .mobile-sidebar.open ~ .mobile-content {
-    padding-left: 75%; /* Adjust content when sidebar is open */
-  }
-}
-
-  .mobile-navbar {
-    display: block; /* Show mobile navbar */
-  }
-
   /* Tables for smaller screens */
   .table {
     width: 100%;
-    overflow-x: auto; /* Allow horizontal scrolling */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .table th,
   .table td {
-    white-space: nowrap; /* Prevent text from wrapping */
-    padding: 12px; /* Ensure enough padding for readability */
+    white-space: nowrap;
+    padding: 12px;
   }
 
-  /* Form and button styles */
+  /* Form inputs */
   .form-input {
-    width: 100%; /* Full-width form inputs */
+    width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 6px;
     margin-bottom: 12px;
-    font-size: 16px; /* Improve input text visibility */
+    font-size: 16px;
   }
 
+  /* Buttons */
   .button {
-    width: 100%; /* Full-width buttons */
+    width: 100%;
     padding: 14px;
     background-color: #10b981;
     color: white;
@@ -85,10 +72,10 @@
     background-color: #059669;
   }
 
-  /* Sorting dropdown and pagination */
+  /* Sorting & dropdown */
   .sort-container {
     display: flex;
-    flex-direction: column; /* Stack elements for mobile */
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
   }
@@ -103,6 +90,7 @@
     border: 1px solid #ddd;
   }
 
+  /* Pagination */
   .pagination-controls {
     display: flex;
     justify-content: center;
@@ -120,7 +108,7 @@
   }
 
   .pagination-controls button:disabled {
-    background-color: #d1d5db; /* Light Gray */
+    background-color: #d1d5db;
     cursor: not-allowed;
   }
 
@@ -128,7 +116,7 @@
     background-color: #2563eb;
   }
 
-  /* Action buttons for Edit, Delete */
+  /* Action buttons */
   .action-buttons button {
     padding: 10px 20px;
     font-size: 16px;
@@ -139,7 +127,7 @@
   }
 
   .edit-btn {
-    background-color: #3b82f6; /* Blue */
+    background-color: #3b82f6;
     color: white;
   }
 
@@ -148,7 +136,7 @@
   }
 
   .delete-btn {
-    background-color: #ef4444; /* Red */
+    background-color: #ef4444;
     color: white;
   }
 
@@ -157,7 +145,7 @@
   }
 
   .cancel-btn {
-    background-color: #6b7280; /* Gray */
+    background-color: #6b7280;
     color: white;
   }
 
@@ -165,9 +153,9 @@
     background-color: #4b5563;
   }
 
-  /* Adjust the row for edit mode */
+  /* Edit mode input fields */
   .edit-mode input {
-    width: 100%; /* Make input fields take up full width */
+    width: 100%;
     padding: 12px;
     font-size: 16px;
     border: 1px solid #ddd;
@@ -176,13 +164,11 @@
     display: block;
   }
 
-  /* Ensure table rows have enough space for edit mode */
   .edit-mode td {
-    height: auto; /* Allow the height to adjust based on content */
+    height: auto;
     padding: 12px;
   }
 
-  /* Style for Edit mode in rows */
   .edit-mode .action-buttons {
     display: flex;
     gap: 8px;
