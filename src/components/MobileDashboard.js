@@ -246,11 +246,33 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
             </button>
           </div>
 
-          <div className="flex justify-between items-center mt-4">
-            <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
-            <span>{currentPage} of {totalPages}</span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-          </div>
+          <div className="flex justify-between items-center mt-6 text-sm text-gray-700">
+  <button
+    onClick={handlePreviousPage}
+    disabled={currentPage === 1}
+    className={`px-4 py-2 rounded border transition
+      ${currentPage === 1
+        ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"}`}
+  >
+    ← Previous
+  </button>
+
+  <span className="text-xs text-gray-500">
+    Page {currentPage} of {totalPages}
+  </span>
+
+  <button
+    onClick={handleNextPage}
+    disabled={currentPage === totalPages}
+    className={`px-4 py-2 rounded border transition
+      ${currentPage === totalPages
+        ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"}`}
+  >
+    Next →
+  </button>
+</div>
         </main>
       </div>
     </div>
