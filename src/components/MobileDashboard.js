@@ -196,13 +196,19 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
             </button>
           </form>
 
-          <h2 className="text-xl font-semibold mb-4 flex justify-between items-center">
-            Manage Accounts
-            <select onChange={(e) => handleSort(e.target.value)} className="p-2 border rounded">
+          <div className="flex justify-between items-center mb-4">
+  <h2 className="text-xl font-semibold">Manage Accounts</h2>
+
+          <div className="relative z-0 overflow-visible">
+            <select
+              onChange={(e) => handleSort(e.target.value)}
+              className="p-2 border rounded bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option value="default">Sort by: Default</option>
-              <option value="alphabetical">Sort A-Z</option>
+              <option value="alphabetical">Sort A–Z</option>
             </select>
-          </h2>
+          </div>
+        </div>
 
           <table className="min-w-full table-auto overflow-x-auto">
             <thead className="bg-gray-200 text-gray-600">

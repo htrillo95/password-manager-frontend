@@ -52,7 +52,7 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
       <hr className="border-gray-700 my-6" />
 
       {/* Bottom Logout */}
-      <div className="flex justify-center mt-auto">
+      <div className="mt-auto p-4 pb-[env(safe-area-inset-bottom)] flex justify-center">
         <button
           onClick={onLogout}
           className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium shadow transition"
