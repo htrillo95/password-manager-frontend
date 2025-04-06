@@ -7,16 +7,16 @@ const Contact = () => {
       <div className="contact-header">
         <h1>Contact RiverLock</h1>
         <p>
-          Whether you have questions about our services, feedback, or just want to say hi, we're here to help.
+        Found a bug or have feedback? Use the form to share your thoughts. Every bit helps as the project improves.
         </p>
       </div>
 
       <div className="contact-container">
         {/* Left Side - Contact Form */}
         <div className="contact-form-section">
-          <h2 className="contact-heading">Get in Touch</h2>
+          <h2 className="contact-heading">Share Your Feedback</h2>
           <p className="contact-description">
-            Fill out the form below, and someone from our team will reach out shortly.
+            Fill out the form below to leave a comment or report an issue.
           </p>
           <form className="contact-form">
             <div className="form-group">
@@ -34,30 +34,30 @@ const Contact = () => {
           </form>
         </div>
 
-        {/* Right Side - Filler Content */}
+        {/* Right Side - Info Cards */}
         <div className="contact-info-section">
           <div className="info-card">
-            <h2>Why Contact Us?</h2>
-            <p>
-              RiverLock is dedicated to providing top-tier service. Reach out to us for:
-            </p>
+            <h2>Why Reach Out?</h2>
+            <p>You can use the form to:</p>
             <ul>
-              <li>Questions about our features</li>
-              <li>Support with your account</li>
-              <li>Business or partnership inquiries</li>
+              <li>- Report bugs or technical issues</li>
+              <li>- Share feedback or suggestions</li>
+              <li>- Leave a quick note or comment</li>
             </ul>
           </div>
 
           <div className="info-card">
-            <h2>Our Address</h2>
-            <p>123 RiverLock Lane</p>
-            <p>Fictional City, FA 45678</p>
+            <h2>Location</h2>
+            <p>Based in Philadelphia, PA
+            <p>Made in VS Code, tested in Chrome</p>
+            </p>
           </div>
 
           <div className="info-card">
-            <h2>Working Hours</h2>
-            <p>Mon - Fri: 9am - 5pm</p>
-            <p>Sat - Sun: Closed</p>
+            <h2>Heads Up</h2>
+            <p>
+            This isn’t a real business (but yes the email works). RiverLock is a demo app made for learning and portfolio purposes. Still, if you’ve got feedback or run into anything weird, feel free to send a message.
+            </p>
           </div>
         </div>
       </div>

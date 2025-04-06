@@ -24,10 +24,10 @@ const Team = () => {
         />
         <div className="team-info">
           <h3>Hector Trillo</h3>
-          <p className="team-role">Aspiring Full-Stack Dev</p>
+          <p className="team-role">Aspiring Full Stack Dev</p>
           <p className="team-bio">
-            I’m Hector, a self-taught web developer currently learning the
-            fundamentals of building user-friendly and secure web applications.
+            I’m Hector, a self taught web developer currently learning the
+            fundamentals of building user friendly and secure web applications.
             RiverLock reflects my efforts to grow as a developer by putting
             newly learned skills into practice. This demo project is part of my
             portfolio and represents where I am in my learning journey.
@@ -45,7 +45,7 @@ const Team = () => {
         </p>
         <p>
           <strong>Note:</strong> This project is entirely fictional and built
-          for learning purposes. The "team" behind it is just me—figuring things
+          for learning purposes. The "team" behind it is just me, figuring things
           out one step at a time.
         </p>
       </div>
@@ -69,10 +69,10 @@ const Team = () => {
             </p>
           </div>
           <div className="value-item">
-            <h3>Problem-Solving</h3>
+            <h3>Problem Solving</h3>
             <p>
               Debugging, researching solutions, and learning to write clean and
-              maintainable code for real-world scenarios.
+              maintainable code for real world scenarios.
             </p>
           </div>
         </div>

@@ -1,43 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/FAQ.css";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const FAQ = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
   const faqs = [
     {
       question: "What is RiverLock?",
-      answer: "RiverLock is a fictional password manager demo for portfolio purposes. It's here to show off some great features, but don't try to store your personal passwords just yet.",
+      answer:
+        "RiverLock is a demo project that shows a password manager built for portfolio purposes. It is a prototype and is not meant for real password storage.",
     },
     {
       question: "How secure is RiverLock?",
       answer:
-        "This app uses industry-standard AES-256 encryption, ensuring data security. AES-256 encrypts your passwords with a 256-bit key, making them virtually impossible to decrypt without the correct key.",
+        "RiverLock uses AES 256 encryption to protect your data. This encryption standard is trusted by banks and government agencies for its strong security.",
     },
     {
-      question: "Can I use this app in production?",
+      question: "Can I use this app for real passwords?",
       answer:
-        "Nope. This is a demo project, not ready for production.",
+        "No, this app is a demo. It is not designed for storing actual passwords securely.",
     },
     {
-      question: "Is there a mobile app for RiverLock?",
+      question: "Is there a mobile version of RiverLock?",
       answer:
-        "Currently, RiverLock is a web-based platform, but a mobile app may be developed in the future. We'll let you know if that happens—just keep an eye out.",
+        "At this time, RiverLock is available only as a web application. A mobile version may be developed in the future, but it is not available now.",
     },
     {
       question: "How do I change my password?",
       answer:
-        "To change your password, go to settings and select 'Change Password.' It's that simple. No magic required.",
+        "You can change your password by going to the settings page and selecting Change Password. The process is simple and straightforward.",
     },
     {
-      question: "Can I integrate RiverLock with other services?",
+      question: "Can I connect RiverLock to other services?",
       answer:
-        "Currently, RiverLock does not support integration with third-party services. But who knows, in the future, maybe we'll be friends with other apps too.",
+        "Currently, RiverLock does not integrate with other services. Future versions may include integrations, but it is not available right now.",
     },
     {
-        question: "What happens if I forget my master password?",
-        answer: "Unfortunately, we don’t store it for your security, so there’s no way to retrieve it. Be sure to keep it safe and secure!",
+      question: "What happens if I forget my master password?",
+      answer:
+        "For security reasons, we do not store your master password. Please keep it safe because if you lose it, there is no way to recover it.",
     },
   ];
+
+  const handleToggle = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   return (
     <div className="faq-container">
@@ -59,14 +67,29 @@ const FAQ = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
           >
-            <motion.h3
-              className="faq-question"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              <i className="fas fa-question-circle"></i> {faq.question}
-            </motion.h3>
-            <motion.p className="faq-answer">{faq.answer}</motion.p>
+            <div className="faq-question" onClick={() => handleToggle(index)}>
+              <i
+                className={`fas fa-chevron-${
+                  activeIndex === index ? "up" : "down"
+                }`}
+              ></i>
+              {faq.question}
+            </div>
+
+            <AnimatePresence>
+              {activeIndex === index && (
+                <motion.p
+                  className="faq-answer"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ overflow: "hidden" }}
+                >
+                  {faq.answer}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </motion.div>
         ))}
       </div>

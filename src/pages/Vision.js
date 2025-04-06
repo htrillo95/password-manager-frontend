@@ -5,36 +5,43 @@ const Vision = () => {
   return (
     <div className="vision-container">
       <header className="vision-header">
-        <h1>Our Vision</h1>
+        <h1>Vision</h1>
         <p>
-          At <strong>RiverLock</strong>, we dream of a future where digital security is not just a necessity but a seamless experience for everyone. 
+          RiverLock started as a learning project with a simple goal in mind: build something secure and useful from the ground up.
         </p>
       </header>
+
       <section className="vision-content">
         <div className="vision-section">
-          <h2>Empowering Individuals</h2>
+          <h2>Learning Through Practice</h2>
           <p>
-            We believe that everyone deserves the peace of mind that comes with secure digital tools. From families protecting their personal data to enterprises managing sensitive information, our mission is to offer tools that work effortlessly in the background, leaving users to focus on what matters most.
+            This app isn’t meant to be perfect. It’s a way to learn by doing. Every feature, bug, and improvement is part of the process. 
+            The goal is to understand how real apps work.
           </p>
         </div>
+
         <div className="vision-section">
-          <h2>Leading with Innovation</h2>
+          <h2>Security First</h2>
           <p>
-            Innovation is the heart of RiverLock. Our team of experts is dedicated to staying ahead of the curve, integrating state-of-the-art encryption and user-friendly designs into every solution we create. Security doesn’t have to be complicated, and we’re here to prove it.
+            Even as a demo, RiverLock takes encryption seriously. Passwords are encrypted and stored safely to show how real apps handle sensitive data. 
+            It’s not just for show, it’s for learning how to build secure systems the right way.
           </p>
         </div>
+
         <div className="vision-section">
-          <h2>Building Trust</h2>
+          <h2>Keep Growing</h2>
           <p>
-            Trust is the foundation of everything we do. Transparency, reliability, and integrity are woven into our processes, ensuring users feel confident choosing RiverLock as their digital security partner.
+            The vision is simple. Keep learning. Keep building. And eventually turn this into something bigger. 
+            RiverLock is one step in the journey, and it reflects the effort to grow as a developer.
           </p>
         </div>
       </section>
+
       <footer className="vision-footer">
-        <h2>Join Our Journey</h2>
+        <h2>Looking Ahead</h2>
         <p>
-          Together, let’s redefine the standards of cybersecurity and create a digital world where everyone feels safe. 
-          <strong>RiverLock</strong>—where security meets simplicity.
+          This is just the start. There’s more to learn, more to improve, and more to build. 
+          RiverLock is a snapshot of progress and a reminder that it’s okay to build small while thinking big.
         </p>
       </footer>
     </div>
