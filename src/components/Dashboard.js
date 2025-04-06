@@ -27,7 +27,9 @@ const Dashboard = ({ onLogout }) => {
 
 // ✅ UseEffect still calls fetchAccounts on mount & username change
 useEffect(() => {
+  if (username) {
   fetchAccounts(username);
+  }
 }, [username]); // 🔥 Runs when username changes
 
 useEffect(() => {

@@ -46,7 +46,7 @@ const Security = () => {
           </div>
           <div className="security-image">
             <img
-              src={process.env.PUBLIC_URL + "/images/json.jpg"} // JSON encryption data image
+              src={process.env.PUBLIC_URL + "/images/Json.jpg"} // JSON encryption data image
               alt="Password Encryption"
             />
           </div>

@@ -258,6 +258,7 @@ useEffect(() => {
                         transition={{ duration: 0.5 }}
                       >
                         <MobileDashboard 
+                          key={loggedInUser}
                           username={loggedInUser} 
                           onLogout={handleLogout}
                           isSidebarOpen={isSidebarOpen}
@@ -317,7 +318,10 @@ useEffect(() => {
                         exit="exit"
                         transition={{ duration: 0.5 }}
                       >
-                        <Dashboard username={loggedInUser} onLogout={handleLogout} />
+                        <Dashboard 
+                        key ={loggedInUser}
+                        username={loggedInUser} 
+                        onLogout={handleLogout} />
                       </motion.div>
                     }
                   />

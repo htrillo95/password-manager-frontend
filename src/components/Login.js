@@ -13,8 +13,13 @@ const Login = ({ onLogin }) => {
     try {
       const response = await loginUser(username, password);
       setMessage(response.data.message);
+  
       if (response.data.success) {
-        onLogin(username);
+        // Save user to localStorage for AppContext
+        localStorage.setItem("loggedInUser", username);
+  
+        // 🔄 Force full reload to trigger AppContext and fresh fetch
+        window.location.href = "/dashboard";
       }
     } catch (error) {
       setMessage(error.response?.data?.message || "An error occurred");
