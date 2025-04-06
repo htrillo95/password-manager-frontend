@@ -101,6 +101,31 @@
     text-decoration: underline;
   }
 
+  .register-message {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  
+  .success-message {
+    color: #2e7d32; /* Green */
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .error-message {
+    color: #b71c1c; /* Red */
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
   .spinner {
     display: inline-block;
     width: 18px;

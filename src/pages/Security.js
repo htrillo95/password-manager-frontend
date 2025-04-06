@@ -55,17 +55,19 @@ const Security = () => {
         {/* Section 3 */}
         <div className="security-section">
           <div className="security-text">
-            <h2> Data Integrity & Storage Security</h2>
+            <h2>Data Integrity & Storage Security</h2>
             <p>
-            Your data is safely stored in a secure SQL database.
-            We ensure that all your accounts are encrypted and protected,
-            with no sensitive information exposed, even on the backend.
+              Your data is safely stored in a secure SQL database.
+              We ensure that all your accounts are encrypted and protected,
+              with no sensitive information exposed, even on the backend.
+              <br /><br />
+              Shown below is a live view of our PostgreSQL database with encrypted passwords stored securely.
             </p>
           </div>
           <div className="security-image">
             <img
-              src="https://via.placeholder.com/400x300"
-              alt="Secure Backups"
+              src={process.env.PUBLIC_URL + "/images/Sql.jpg"}
+              alt="PostgreSQL Backup Screenshot"
             />
           </div>
         </div>

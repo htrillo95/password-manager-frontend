@@ -68,7 +68,17 @@ const Register = () => {
             )}
           </button>
         </form>
-        {message && <p className="error-message">{message}</p>}
+        {message && (
+          <div
+            className={`register-message ${
+              message.toLowerCase().includes("success")
+                ? "success-message"
+                : "error-message"
+            }`}
+          >
+            {message}
+          </div>
+        )}
         <p className="register-link">
           Already have an account? <a href="/login">Login here</a>
         </p>

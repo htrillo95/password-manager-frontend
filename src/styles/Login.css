@@ -100,3 +100,19 @@
   .register-form .register-link a:hover {
     text-decoration: underline;
   }
+
+/* ✅ Success Message */
+.success-message {
+  color: #2e7d32;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* ✅ Error Message */
+.error-message {
+  color: #e63946;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
