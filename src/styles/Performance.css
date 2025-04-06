@@ -84,7 +84,6 @@
   line-height: 1.6;
 }
 
-/* For all performance images */
 .performance-image {
   flex: 1;
   display: flex;
@@ -104,7 +103,7 @@
   gap: 2rem;
   justify-items: center;
   align-items: start;
-  margin-left: -15rem;
+  transform: translateX(-5rem); /* better than margin-left for shift */
 }
 
 .tech-logo {
@@ -154,9 +153,7 @@
 
   .tech-stack-logos {
     grid-template-columns: repeat(2, 1fr);
-    margin-left: auto !important;
-    margin-right: auto !important;
-    transform: none !important;
+    transform: none; /* override shift on mobile */
   }
 }
 
@@ -178,4 +175,29 @@
   max-width: 900px;
   margin: 0 auto;
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .performance-parallax {
+    background-position: -435px center; 
+    height: 60vh; /* Increase height on mobile */
+    padding-top: 5rem; /* Push content down a bit */
+  }
+
+  .performance-parallax h1 {
+    font-size: 2.2rem;
+  }
+
+  .performance-parallax p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .performance-parallax {
+    background-position-x: 75%;       /* tiny nudge to the left */
+    background-position-y: center;
+    background-size: 110%;            /* zoom slightly to hide the edge */
+    background-repeat: no-repeat;
+  }
 }
