@@ -3,8 +3,8 @@
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: cover; /* Cover the container */
-  height: 60vh; /* Adjust height for your design */
+  background-size: cover;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
@@ -33,18 +33,25 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   z-index: 2;
   position: relative;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .performance-parallax p {
   font-size: 1.5rem;
+  line-height: 1.6;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   z-index: 2;
   position: relative;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Content Section */
 .performance-content {
-  background: linear-gradient(to bottom, #ffffff, #e3f2fd); /* Light gradient */
+  background: linear-gradient(to bottom, #ffffff, #e3f2fd);
   padding: 4rem 2rem;
 }
 
@@ -62,30 +69,67 @@
 .performance-text {
   flex: 1;
   padding: 1rem;
+  max-width: 700px;
 }
 
 .performance-text h2 {
   font-size: 2rem;
-  color: #1d3557; /* Dark Blue */
+  color: #1d3557;
   margin-bottom: 1rem;
 }
 
 .performance-text p {
   font-size: 1rem;
-  color: #4b5563; /* Neutral Gray */
+  color: #4b5563;
   line-height: 1.6;
 }
 
+/* For all performance images */
 .performance-image {
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.performance-image img {
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* Tech Stack Logo Section */
+.performance-image.tech-stack-wrapper {
+  justify-content: flex-start;
+  padding-left: 1rem;
+}
+
+.tech-stack-logos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  justify-items: center;
+  align-items: start;
+  margin-left: -15rem;
+}
+
+.tech-logo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tech-logo img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.tech-logo p {
+  font-weight: 600;
+  margin: 0;
+}
+
+.tech-logo span {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
 }
 
 /* Responsive Adjustments */
@@ -102,11 +146,23 @@
   .performance-image {
     margin-top: 1.5rem;
   }
+
+  .performance-image.tech-stack-wrapper {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .tech-stack-logos {
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: none !important;
+  }
 }
 
 /* Footer Section */
 .performance-footer {
-  background: #1d3557; /* Dark Blue */
+  background: #1d3557;
   color: #ffffff;
   text-align: center;
   padding: 3rem 2rem;

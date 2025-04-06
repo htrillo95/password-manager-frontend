@@ -4,63 +4,95 @@ import "../styles/Performance.css";
 const Performance = () => {
   return (
     <div>
-      {/* Parallax Section (Hero Section) */}
-      <div className="performance-parallax" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/images/Encryption.jpg)` }}>
-        <h1>Unleashing Peak Performance</h1>
-        <p>Discover the technology that powers RiverLock's unmatched speed and efficiency.</p>
+      {/* Hero Section */}
+      <div
+        className="performance-parallax"
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL}/images/Encryption.jpg)`,
+        }}
+      >
+        <h1>A Work in Progress</h1>
+        <p>RiverLock is lightweight and intentionally simple.
+          While you may notice occasional lag, that’s the tradeoff for keeping the app minimal and beginner friendly.
+          Performance improvements are on the roadmap, but this version keeps things functional without the complexity.</p>
       </div>
 
       {/* Content Section */}
       <div className="performance-content">
-        {/* Section 1 */}
+
+        {/* Section 1 - Honest Note */}
         <div className="performance-section">
           <div className="performance-text">
-            <h2>Blazing Fast Speeds</h2>
+            <h2>Designed for Simplicity</h2>
             <p>
-              Speed is everything! RiverLock makes sure you’re not sitting around waiting.
-              Whether you’re adding an account or checking your saved passwords, everything loads at lightning speed.
-              It’s all about keeping things smooth and fast, so you can get back to what matters.
+            This project was built with clarity and usability in mind. 
+            There may be some rough edges, but it works. 
+            It’s proof that with a focused mindset and simple tools, you can build something real, without a big team or budget.
             </p>
           </div>
           <div className="performance-image">
             <img
               src={process.env.PUBLIC_URL + "/images/PerformanceImage1.jpg"}
-              alt="Fast Speeds"
+              alt="App in Progress"
             />
           </div>
         </div>
 
-        {/* Section 2 */}
-        <div className="performance-section reverse">
-          <div className="performance-text">
-            <h2>Unmatched Reliability</h2>
-            <p>
-              Nothing’s worse than having your data vanish when you need it most.
-              That’s why RiverLock ensures 99.99% uptime. Your data stays safe and accessible,
-              so you can rest easy knowing it’s always ready when you are.
-            </p>
-          </div>
-          <div className="performance-image">
-            <img
-              src={process.env.PUBLIC_URL + "/images/PerformanceImage2.jpg"}
-              alt="Reliability"
-            />
-          </div>
-        </div>
+        {/* Section 2 - Tech Stack */}
+<div className="performance-section reverse">
+  <div className="performance-text">
+    <h2>Tech Stack</h2>
+    <p>
+      RiverLock is built from scratch using a modern stack:
+      <br /><br />
+      • <strong>Frontend:</strong> React, TailwindCSS, Framer Motion<br />
+      • <strong>Backend:</strong> Flask (Python)<br />
+      • <strong>Database:</strong> PostgreSQL, hosted on Railway<br />
+      • <strong>Security:</strong> AES-256 encryption, password hashing
+      <br /><br />
+      From the UI to the encrypted backend, everything was built by me while learning to code.
+    </p>
+  </div>
 
-        {/* Section 3 */}
+  <div className="performance-image">
+    <div className="tech-stack-logos">
+      <div className="tech-logo">
+        <img src={process.env.PUBLIC_URL + "/images/React.png"} alt="React Logo" />
+        <p>React</p>
+        <span>Frontend</span>
+      </div>
+      <div className="tech-logo">
+        <img src={process.env.PUBLIC_URL + "/images/Python.png"} alt="Python Logo" />
+        <p>Python</p>
+        <span>Language</span>
+      </div>
+      <div className="tech-logo">
+        <img src={process.env.PUBLIC_URL + "/images/Flask.png"} alt="Flask Logo" />
+        <p>Flask</p>
+        <span>Web Framework</span>
+      </div>
+      <div className="tech-logo">
+        <img src={process.env.PUBLIC_URL + "/images/Postgre.png"} alt="PostgreSQL Logo" />
+        <p>PostgreSQL</p>
+        <span>Database</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+        {/* Section 3 - Optional Closing */}
         <div className="performance-section">
           <div className="performance-text">
-            <h2>Data Integrity & Storage Security</h2>
+            <h2>Independently Built, Collectively Useful</h2>
             <p>
-              Your data is safely stored in a secure SQL database. We ensure that all your accounts are encrypted and protected,
-              with no sensitive information exposed, even on the backend. RiverLock’s storage and security methods are second to none.
+              RiverLock isn't an enterprise level app, it's a personal project turned real tool.
+              It stores real encrypted data, works across devices, and proves what can be done with clear goals and consistent effort.
             </p>
           </div>
           <div className="performance-image">
             <img
               src={process.env.PUBLIC_URL + "/images/PerformanceImage3.jpg"}
-              alt="Data Security"
+              alt="Personal Dev Journey"
             />
           </div>
         </div>

@@ -19,17 +19,16 @@ const Security = () => {
         {/* Section 1 */}
         <div className="security-section">
           <div className="security-text">
-            <h2>AES-256 Encryption</h2>
+            <h2>AES 256 Encryption</h2>
             <p>
-            AES-256 encryption is a top-level security method used to keep your data safe.
-            It’s the same technology trusted by organizations worldwide,
-            ensuring that your information stays protected from unauthorized access.
+              Your passwords are encrypted using AES 256, the same level of encryption trusted by banks and governments.
+              This keeps your data locked and unreadable to anyone but you.
             </p>
           </div>
           <div className="security-image">
             <img
-              src={process.env.PUBLIC_URL + "/images/DemoAccount1.jpg"} // AES Encryption demo image
-              alt="Demo Account"
+              src={process.env.PUBLIC_URL + "/images/DemoAccount1.jpg"}
+              alt="AES Encryption Demo"
             />
           </div>
         </div>
@@ -37,17 +36,16 @@ const Security = () => {
         {/* Section 2 */}
         <div className="security-section reverse">
           <div className="security-text">
-            <h2>Password Encryption on the Backend</h2>
+            <h2>End to End Protection</h2>
             <p>
-            All stored passwords are securely encrypted on the backend using advanced hashing techniques.
-            Even if unauthorized access were gained to the database, the passwords remain protected and unreadable.
-            This process ensures your data stays private and secure.
+              Even if someone managed to access the database, your saved passwords would show up as scrambled code.
+              All password data is encrypted and hashed behind the scenes, so no one else can read it. Not even us.
             </p>
           </div>
           <div className="security-image">
             <img
-              src={process.env.PUBLIC_URL + "/images/Json.jpg"} // JSON encryption data image
-              alt="Password Encryption"
+              src={process.env.PUBLIC_URL + "/images/Json.jpg"}
+              alt="Hashed Password Storage"
             />
           </div>
         </div>
@@ -55,19 +53,18 @@ const Security = () => {
         {/* Section 3 */}
         <div className="security-section">
           <div className="security-text">
-            <h2>Data Integrity & Storage Security</h2>
+            <h2>Secure SQL Storage</h2>
             <p>
-              Your data is safely stored in a secure SQL database.
-              We ensure that all your accounts are encrypted and protected,
-              with no sensitive information exposed, even on the backend.
+              Your encrypted accounts are stored in a PostgreSQL database built for performance and reliability.
+              It keeps everything organized and protected, no matter how many entries you add.
               <br /><br />
-              Shown below is a live view of our PostgreSQL database with encrypted passwords stored securely.
+              The screenshot below shows a real view of how passwords are stored in our database.
             </p>
           </div>
           <div className="security-image">
             <img
               src={process.env.PUBLIC_URL + "/images/Sql.jpg"}
-              alt="PostgreSQL Backup Screenshot"
+              alt="PostgreSQL Password Vault"
             />
           </div>
         </div>
