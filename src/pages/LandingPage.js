@@ -12,7 +12,7 @@ const LandingPage = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch(fetch("https://password-manager-api-production.up.railway.app/stats");); // Replace with your actual API base URL
+        const response = await fetch("https://password-manager-api-production.up.railway.app/stats");
         const data = await response.json();
         if (data.success) {
           setStats({
