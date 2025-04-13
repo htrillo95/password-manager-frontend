@@ -58,7 +58,7 @@ const Security = () => {
               Your encrypted accounts are stored in a PostgreSQL database built for performance and reliability.
               It keeps everything organized and protected, no matter how many entries you add.
               <br /><br />
-              The screenshot below shows a real view of how passwords are stored in our database.
+              The following screenshot shows a real view of how passwords are stored in our database.
             </p>
           </div>
           <div className="security-image">
