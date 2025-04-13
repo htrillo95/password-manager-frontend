@@ -1,0 +1,83 @@
+.pre-landing {
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .intro-box {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .intro-box h1 {
+    font-size: 2.2rem;
+    color: #1d3557;
+  }
+  
+  .intro-box p {
+    font-size: 1rem;
+    color: #444;
+    margin: 1rem 0;
+  }
+  
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1.5rem 0;
+  }
+  
+  .stat h3 {
+    font-size: 1.8rem;
+    color: #457b9d;
+    margin: 0;
+  }
+  
+  .stat p {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+  .click-enter-btn {
+    background: #457b9d;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    max-width: 250px;
+    margin: 2rem auto;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .click-enter-btn:hover {
+    background: #386d8c;
+    transform: scale(1.05);
+  }
+  
+  .quote {
+    font-style: italic;
+    font-size: 1rem;
+    color: #1d3557;
+    margin-top: 2rem;
+  }
+  
+  .small-note {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+  

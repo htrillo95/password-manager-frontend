@@ -40,7 +40,6 @@ const Vision = () => {
       <footer className="vision-footer">
         <h2>Looking Ahead</h2>
         <p>
-          This is just the start. There’s more to learn, more to improve, and more to build. 
           RiverLock is a snapshot of progress and a reminder that it’s okay to build small while thinking big.
         </p>
       </footer>

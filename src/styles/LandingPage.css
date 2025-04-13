@@ -280,3 +280,9 @@ footer {
     padding: 0.5rem 0.75rem;
   }
 }
+
+@media (max-width: 768px) {
+  .illustration {
+    transform: translate(18px);
+  }
+}

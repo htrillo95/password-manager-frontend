@@ -95,19 +95,19 @@ const LandingPage = () => {
           These live numbers reflect actual users who have signed up and stored their passwords using RiverLock.
         </p>
         <div className="stats-container" style={{ marginTop: "2rem" }}>
-          <motion.div className="stat-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h3>{stats.total_passwords !== null ? stats.total_passwords : "—"}</h3>
-            <p>Passwords Secured</p>
-          </motion.div>
-          <motion.div className="stat-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-            <h3>{stats.total_users !== null ? stats.total_users : "—"}</h3>
-            <p>Trusted Users</p>
-          </motion.div>
-          <motion.div className="stat-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
-            <h3>∞</h3>
-            <p>Growth Potential</p>
-          </motion.div>
-        </div>
+        <motion.div className="stat-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <h3>{stats.total_users !== null ? stats.total_users : "—"}</h3>
+          <p>Trusted Users</p>
+        </motion.div>
+        <motion.div className="stat-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+          <h3>{stats.total_passwords !== null ? stats.total_passwords : "—"}</h3>
+          <p>Passwords Secured</p>
+        </motion.div>
+        <motion.div className="stat-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
+          <h3>∞</h3>
+          <p>Growth Potential</p>
+        </motion.div>
+      </div>
       </section>
 
       {/* Visual Quote */}

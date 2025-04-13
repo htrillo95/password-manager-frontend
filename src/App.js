@@ -21,6 +21,7 @@ import Tools from "./components/Tools";
 import Settings from "./components/Settings";
 import './styles/Mobile.css';  
 import { AppProvider } from "./context/AppContext";
+import PreLanding from "./pages/PreLanding";
 import { fetchAccounts } from "./utils/api"; // Adjust the path if needed
 
 function App() {
@@ -59,6 +60,14 @@ useEffect(() => {
     document.body.style.overflow = "";
   };
 }, [isSidebarOpen]);
+
+useEffect(() => {
+  const hasSeenPreLanding = localStorage.getItem("hasSeenPreLanding");
+  if (!hasSeenPreLanding && location.pathname === "/") {
+    localStorage.setItem("hasSeenPreLanding", "true");
+    navigate("/pre-landing");
+  }
+}, [location.pathname, navigate]);
 
   const handleLogin = (username) => {
     setLoggedInUser(username);
@@ -105,7 +114,7 @@ useEffect(() => {
     <>
       <ScrollToTop />
       {/* Conditionally render Navbar: Hide on /dashboard */}
-      {!["/dashboard", "/tools", "/settings"].includes(location.pathname) && <Navbar />}
+      {!["/dashboard", "/tools", "/settings","/pre-landing"].includes(location.pathname) && <Navbar />}
       <AnimatePresence mode="wait" initial={false}>
         <Routes key={location.pathname} location={location}>
           {!loggedInUser ? (
@@ -121,6 +130,20 @@ useEffect(() => {
                     transition={{ duration: 0.5 }}
                   >
                     <LandingPage />
+                  </motion.div>
+                }
+              />
+              <Route
+                path="/pre-landing"
+                element={
+                  <motion.div
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    transition={{ duration: 0.5 }}
+                  >
+                    <PreLanding />
                   </motion.div>
                 }
               />
