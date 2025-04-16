@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MobileSidebar from "./MobileSidebar";
 import { useAppContext } from "../context/AppContext";
 import { addPassword, deletePassword } from "../utils/api";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   const { username, accounts, setAccounts, fetchAccounts } = useAppContext();
@@ -18,6 +19,7 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [showTypedPassword, setShowTypedPassword] = useState(false);
 
   useEffect(() => {
     fetchAccounts(username);
@@ -178,21 +180,25 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                   className="form-input border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
                 <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    className="form-input border border-gray-300 rounded pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2 top-2 text-sm text-blue-500"
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </button>
-                </div>
+                <input
+                  type={showTypedPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="form-input w-full pr-10 focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowTypedPassword(!showTypedPassword)}
+                  className="absolute top-1/3 right-3 -translate-y-1/4 text-gray-400 hover:text-gray-600"
+                >
+                  {showTypedPassword ? (
+                    <EyeSlashIcon className="w-5 h-5" />
+                  ) : (
+                    <EyeIcon className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
                 <button type="submit" className="button bg-green-500 text-white py-2 px-4 rounded">
                   {loading ? "Adding..." : "Add Account"}
                 </button>

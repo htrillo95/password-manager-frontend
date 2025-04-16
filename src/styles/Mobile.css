@@ -229,3 +229,17 @@ body.sidebar-open {
     box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
   }
 }
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #9ca3af; /* Tailwind's gray-400 */
+  font-size: 1.2rem;
+}
