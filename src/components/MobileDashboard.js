@@ -9,17 +9,16 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [editingAccount, setEditingAccount] = useState(null);
-  const [editingPassword, setEditingPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [passwordVisibility, setPasswordVisibility] = useState({});
+  const [editingAccount, setEditingAccount] = useState(null);
+  const [editingPassword, setEditingPassword] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const [showTypedPassword, setShowTypedPassword] = useState(false);
+  const [editingPasswordVisibility, setEditingPasswordVisibility] = useState({});
 
   useEffect(() => {
     fetchAccounts(username);
@@ -67,16 +66,16 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
     setEditingPassword(account.password);
   };
 
-  const handleUpdateAccount = async () => {
-    if (!editingAccount || !editingPassword) {
-      showMessage("Please fill in all fields.");
+  const handleUpdateAccount = async (account) => {
+    if (!editingPassword) {
+      showMessage("Please fill in the new password.");
       return;
     }
 
     setLoading(true);
     try {
       const updated = accounts.map((acc) =>
-        acc.account_name === editingAccount.account_name
+        acc.account_name === account.account_name
           ? { ...acc, password: editingPassword }
           : acc
       );
@@ -113,6 +112,13 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
     setPasswordVisibility((prev) => ({
       ...prev,
       [name]: !prev[name],
+    }));
+  };
+
+  const toggleEditingPasswordVisibility = (accountName) => {
+    setEditingPasswordVisibility((prev) => ({
+      ...prev,
+      [accountName]: !prev[accountName],
     }));
   };
 
@@ -180,25 +186,14 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                   className="form-input border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                 />
                 <div className="relative">
-                <input
-                  type={showTypedPassword ? "text" : "password"}
-                  placeholder="Password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="form-input w-full pr-10 focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowTypedPassword(!showTypedPassword)}
-                  className="absolute top-1/3 right-3 -translate-y-1/4 text-gray-400 hover:text-gray-600"
-                >
-                  {showTypedPassword ? (
-                    <EyeSlashIcon className="w-5 h-5" />
-                  ) : (
-                    <EyeIcon className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="form-input w-full pr-10 focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded"
+                  />
+                </div>
                 <button type="submit" className="button bg-green-500 text-white py-2 px-4 rounded">
                   {loading ? "Adding..." : "Add Account"}
                 </button>
@@ -248,14 +243,52 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                     <tr key={acc.account_name} className="border-b border-gray-200">
                       <td className="py-2 px-4">{acc.account_name}</td>
                       <td className="py-2 px-4">
-                        {passwordVisibility[acc.account_name] ? acc.password : "••••••••"}
-                        <button onClick={() => togglePasswordVisibility(acc.account_name)} className="ml-2 text-blue-500">
-                          {passwordVisibility[acc.account_name] ? "Hide" : "Show"}
-                        </button>
+                        {editingAccount?.account_name === acc.account_name ? (
+                          <div className="relative">
+                            <input
+                              type={editingPasswordVisibility[acc.account_name] ? "text" : "password"}
+                              value={editingPassword}
+                              onChange={(e) => setEditingPassword(e.target.value)}
+                              className="form-input w-full pr-10 focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => toggleEditingPasswordVisibility(acc.account_name)}
+                              className="absolute top-1/3 right-3 -translate-y-1/4 text-gray-400 hover:text-gray-600"
+                            >
+                              {editingPasswordVisibility[acc.account_name] ? (
+                                <EyeSlashIcon className="w-5 h-5" />
+                              ) : (
+                                <EyeIcon className="w-5 h-5" />
+                              )}
+                            </button>
+                          </div>
+                        ) : (
+                          <span>{passwordVisibility[acc.account_name] ? acc.password : "••••••••"}</span>
+                        )}
                       </td>
                       <td className="py-2 px-4 text-center">
-                        <button onClick={() => handleEditAccount(acc)} className="text-blue-500">Edit</button>
-                        <button onClick={() => handleDeleteAccount(acc.account_name)} className="ml-2 text-red-500">Delete</button>
+                        {editingAccount?.account_name === acc.account_name ? (
+                          <button
+                            onClick={() => handleUpdateAccount(acc)}
+                            className="text-blue-500"
+                          >
+                            Save
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleEditAccount(acc)}
+                            className="text-blue-500"
+                          >
+                            Edit
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleDeleteAccount(acc.account_name)}
+                          className="ml-2 text-red-500"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
