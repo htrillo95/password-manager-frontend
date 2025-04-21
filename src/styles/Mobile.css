@@ -62,18 +62,18 @@
   .button {
     width: 100%;
     padding: 14px;
-    background-color: #10b981;
+    background-color: #3b82f6; /* blue-500 */
     color: white;
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
   }
-
+  
   .button:hover {
-    background-color: #059669;
+    background-color: #2563eb; /* blue-600 */
   }
-
+  
   /* Sorting & dropdown */
   .sort-container {
     display: flex;
@@ -243,3 +243,4 @@ body.sidebar-open {
   color: #9ca3af; /* Tailwind's gray-400 */
   font-size: 1.2rem;
 }
+

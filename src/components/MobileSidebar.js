@@ -71,15 +71,18 @@ const MobileSidebar = ({ isOpen, toggleSidebar, onLogout }) => {
       {/* Divider */}
       <hr className="border-gray-700 my-6" />
 
-      {/* Logout */}
-      <div className="mt-auto pt-4 flex justify-center">
-        <button
-          onClick={onLogout}
-          className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium shadow transition"
-        >
-          Logout
-        </button>
-      </div>
+      {/* Logout + Footer */}
+<div className="mt-auto pt-4 flex flex-col items-center">
+  <button
+    onClick={onLogout}
+    className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm font-medium shadow transition"
+  >
+    Logout
+  </button>
+  <p className="mt-4 text-xs text-gray-400 text-center italic">
+    Developed as a personal project
+  </p>
+</div>
     </div>
   );
 };

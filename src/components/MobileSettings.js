@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import MobileSidebar from "./MobileSidebar"; // Sidebar component
-import { updateUsername } from "../utils/api"; // adjust path if needed
-import { deleteUserAccount } from "../utils/api"; // adjust path if needed
+import MobileSidebar from "./MobileSidebar";
+import { updateUsername, deleteUserAccount } from "../utils/api";
 
 const MobileSettings = ({ onLogout }) => {
   const { username, setUsername, fetchAccounts } = useAppContext();
@@ -50,7 +49,6 @@ const MobileSettings = ({ onLogout }) => {
 
       if (data.success) {
         setMessage("✅ Username updated successfully!");
-
         setTimeout(() => {
           setUsername(newUsername);
           localStorage.setItem("loggedInUser", newUsername);
@@ -92,17 +90,10 @@ const MobileSettings = ({ onLogout }) => {
   };
 
   return (
-    <div className="mobile-settings">
-      <MobileSidebar
-        isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-        onLogout={onLogout}
-      />
-
-      <div className={`transition-all duration-300 ${isSidebarOpen ? "ml-64" : ""}`}>
-        <button onClick={toggleSidebar} className="p-4 text-2xl">
-          ☰
-        </button>
+    <div className="mobile-settings min-h-screen bg-gradient-to-br from-white to-slate-200">
+      <MobileSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onLogout={onLogout} />
+      <div className="mobile-content transition-all duration-300">
+        <button onClick={toggleSidebar} className="p-4 text-2xl">☰</button>
 
         <main className="p-4">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">Settings</h1>
@@ -113,8 +104,10 @@ const MobileSettings = ({ onLogout }) => {
             </div>
           )}
 
+<div className="border-t border-gray-200 my-6"></div>
+
           {/* Change Username */}
-          <div className="mb-6 bg-white shadow-md rounded-lg p-4">
+          <div className="mb-6 bg-white shadow-md border border-gray-200 rounded-lg p-4">
             <h2 className="text-xl font-semibold mb-4">Change Username</h2>
             <p className="text-sm text-gray-600 mb-3">
               Enter your <strong>current username</strong> and the new username you'd like to switch to.
@@ -160,8 +153,10 @@ const MobileSettings = ({ onLogout }) => {
             </div>
           </div>
 
+          <div className="border-t border-gray-200 my-6"></div>
+
           {/* Danger Zone */}
-          <div className="mb-6 bg-white shadow-md rounded-lg p-4">
+          <div className="mb-6 bg-white shadow-md border border-gray-200 rounded-lg p-4">
             <h2 className="text-xl font-semibold mb-4 text-red-500">Danger Zone</h2>
             <p className="text-sm text-gray-600 mb-3">
               <strong>Deleting your account is irreversible.</strong> Please type

@@ -9,16 +9,17 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [passwordVisibility, setPasswordVisibility] = useState({});
   const [editingAccount, setEditingAccount] = useState(null);
   const [editingPassword, setEditingPassword] = useState("");
+  const [editingPasswordVisibility, setEditingPasswordVisibility] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const [editingPasswordVisibility, setEditingPasswordVisibility] = useState({});
 
   useEffect(() => {
     fetchAccounts(username);
@@ -40,7 +41,6 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   const handleAddAccount = async (e) => {
     e.preventDefault();
     if (!newAccount || !newPassword) return showMessage("Please fill in all fields.");
-
     setLoading(true);
     try {
       const response = await addPassword(username, newAccount, newPassword);
@@ -50,7 +50,6 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
         setNewAccount("");
         setNewPassword("");
         showMessage("Account added successfully!");
-        setShowForm(false);
       } else {
         showMessage("Failed to add account.");
       }
@@ -67,11 +66,7 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   };
 
   const handleUpdateAccount = async (account) => {
-    if (!editingPassword) {
-      showMessage("Please fill in the new password.");
-      return;
-    }
-
+    if (!editingPassword) return showMessage("Please fill in the new password.");
     setLoading(true);
     try {
       const updated = accounts.map((acc) =>
@@ -109,25 +104,11 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
   };
 
   const togglePasswordVisibility = (name) => {
-    setPasswordVisibility((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
+    setPasswordVisibility((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const toggleEditingPasswordVisibility = (accountName) => {
-    setEditingPasswordVisibility((prev) => ({
-      ...prev,
-      [accountName]: !prev[accountName],
-    }));
-  };
-
-  const handleSort = (criteria) => {
-    const sorted =
-      criteria === "alphabetical"
-        ? [...filteredAccounts].sort((a, b) => a.account_name.localeCompare(b.account_name))
-        : [...accounts];
-    setFilteredAccounts(sorted);
+  const toggleEditingPasswordVisibility = (name) => {
+    setEditingPasswordVisibility((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
   const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
@@ -136,12 +117,12 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
     currentPage * itemsPerPage
   );
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+  const handleSort = (criteria) => {
+    const sorted =
+      criteria === "alphabetical"
+        ? [...filteredAccounts].sort((a, b) => a.account_name.localeCompare(b.account_name))
+        : [...accounts];
+    setFilteredAccounts(sorted);
   };
 
   const handleExportCSV = () => {
@@ -159,17 +140,33 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
     link.click();
   };
 
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+  
   return (
-    <div className="mobile-dashboard bg-gray-50 min-h-screen">
+    <div className="mobile-dashboard min-h-screen bg-gradient-to-br from-white to-slate-200 animate-background-flow">
       <MobileSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onLogout={onLogout} />
       <div className="mobile-content transition-all duration-300">
         <button onClick={toggleSidebar} className="p-4 text-2xl">☰</button>
 
         <main className="p-4">
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">Welcome, {username}</h1>
-          <p className="text-gray-500 mb-5 text-sm">This is your password vault. Manage everything securely below.</p>
+          <div className="rounded-lg bg-gradient-to-r from-slate-100 to-slate-200 border border-gray-200 text-gray-800 px-4 py-3 mb-4 shadow-sm">
+            <h1 className="text-xl font-semibold">Welcome, {username}</h1>
+            <p className="text-sm opacity-90">This is your password vault. Manage everything securely below.</p>
+          </div>
 
-          <div className="bg-white rounded-lg shadow-md mb-5 transition-all duration-300">
+          <div className="border-t border-gray-200 my-6"></div>
+
+          <div className="bg-white rounded-lg shadow-md border border-gray-200 mb-5 transition-all duration-300">
             <button
               onClick={() => setShowForm(!showForm)}
               className="w-full p-3 text-left font-medium text-blue-700 border-b"
@@ -177,7 +174,7 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
               {showForm ? "➖ Hide New Account Form" : "➕ Add New Account"}
             </button>
             {showForm && (
-              <form onSubmit={handleAddAccount} className="p-4 space-y-3 transition-all duration-300">
+              <form onSubmit={handleAddAccount} className="p-4 space-y-3">
                 <input
                   type="text"
                   placeholder="Account Name"
@@ -187,12 +184,19 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                 />
                 <div className="relative">
                   <input
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     placeholder="Password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="form-input w-full pr-10 focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded"
+                    className="form-input w-full pr-10 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                    className="absolute top-1/3 right-3 -translate-y-1/4 text-gray-400 hover:text-gray-600"
+                  >
+                    {showNewPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
+                  </button>
                 </div>
                 <button type="submit" className="button bg-green-500 text-white py-2 px-4 rounded">
                   {loading ? "Adding..." : "Add Account"}
@@ -239,8 +243,11 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedAccounts.map((acc) => (
-                    <tr key={acc.account_name} className="border-b border-gray-200">
+                  {paginatedAccounts.map((acc, index) => (
+                    <tr
+                      key={`${acc.account_name}-${index}`}
+                      className="border-b border-gray-200 hover:bg-gray-50 transition duration-200 ease-in-out"
+                    >
                       <td className="py-2 px-4">{acc.account_name}</td>
                       <td className="py-2 px-4">
                         {editingAccount?.account_name === acc.account_name ? (
@@ -249,7 +256,7 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                               type={editingPasswordVisibility[acc.account_name] ? "text" : "password"}
                               value={editingPassword}
                               onChange={(e) => setEditingPassword(e.target.value)}
-                              className="form-input w-full pr-10 focus:ring-2 focus:ring-blue-300 border border-gray-300 rounded"
+                              className="form-input w-full pr-10 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
                             />
                             <button
                               type="button"
@@ -264,24 +271,27 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
                             </button>
                           </div>
                         ) : (
-                          <span>{passwordVisibility[acc.account_name] ? acc.password : "••••••••"}</span>
+                          <div className="flex items-center">
+                            <span className="mr-2">{passwordVisibility[acc.account_name] ? acc.password : "••••••••"}</span>
+                            <button
+                              type="button"
+                              onClick={() => togglePasswordVisibility(acc.account_name)}
+                              className="text-gray-400 hover:text-gray-600"
+                            >
+                              {passwordVisibility[acc.account_name] ? (
+                                <EyeSlashIcon className="w-4 h-4" />
+                              ) : (
+                                <EyeIcon className="w-4 h-4" />
+                              )}
+                            </button>
+                          </div>
                         )}
                       </td>
                       <td className="py-2 px-4 text-center">
                         {editingAccount?.account_name === acc.account_name ? (
-                          <button
-                            onClick={() => handleUpdateAccount(acc)}
-                            className="text-blue-500"
-                          >
-                            Save
-                          </button>
+                          <button onClick={() => handleUpdateAccount(acc)} className="text-blue-500">Save</button>
                         ) : (
-                          <button
-                            onClick={() => handleEditAccount(acc)}
-                            className="text-blue-500"
-                          >
-                            Edit
-                          </button>
+                          <button onClick={() => handleEditAccount(acc)} className="text-blue-500">Edit</button>
                         )}
                         <button
                           onClick={() => handleDeleteAccount(acc.account_name)}
@@ -320,7 +330,7 @@ const MobileDashboard = ({ onLogout, isSidebarOpen, toggleSidebar }) => {
           </div>
 
           <div className="flex flex-col items-center mt-6">
-            <button onClick={handleExportCSV} className="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-600">
+            <button onClick={handleExportCSV} className="border border-blue-500 text-blue-600 hover:bg-blue-500 hover:text-white px-4 py-2 rounded shadow">
               Export to CSV
             </button>
             <p className="text-xs text-gray-500 mt-2">

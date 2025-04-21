@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import MobileSidebar from "./MobileSidebar"; // Importing the sidebar component
+import MobileSidebar from "./MobileSidebar";
 
-const MobileTools = ({onLogout}) => {
+const MobileTools = ({ onLogout }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [generatedPassword, setGeneratedPassword] = useState("");
   const [recentPasswords, setRecentPasswords] = useState([]);
-  const [strength, setStrength] = useState(""); // Track password strength separately
-  const [passwordToCheck, setPasswordToCheck] = useState(""); // Password input for strength checker
+  const [strength, setStrength] = useState("");
+  const [passwordToCheck, setPasswordToCheck] = useState("");
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Function to generate a random password
   const generatePassword = () => {
     const charset =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
@@ -21,20 +20,15 @@ const MobileTools = ({onLogout}) => {
       password += charset.charAt(Math.floor(Math.random() * charset.length));
     }
     setGeneratedPassword(password);
-    setRecentPasswords([password, ...recentPasswords.slice(0, 4)]); // Keep last 5 passwords
+    setRecentPasswords([password, ...recentPasswords.slice(0, 4)]);
   };
 
-  // Function to copy password to clipboard
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedPassword);
   };
 
-  // Function to check password strength
   const checkPasswordStrength = (password) => {
-    if (!password) {
-      setStrength(""); // Reset if empty
-      return;
-    }
+    if (!password) return setStrength("");
 
     const hasLower = /[a-z]/.test(password);
     const hasUpper = /[A-Z]/.test(password);
@@ -42,47 +36,33 @@ const MobileTools = ({onLogout}) => {
     const hasSymbol = /[!@#$%^&*()_+]/.test(password);
     const isLong = password.length >= 12;
 
-    // Strong: Must have all character types AND be at least 12 characters
     if (isLong && hasLower && hasUpper && hasNumber && hasSymbol) {
       setStrength("Strong");
-    }
-    // Medium: At least 8 characters and missing one element
-    else if (password.length >= 8 && (hasLower + hasUpper + hasNumber + hasSymbol >= 3)) {
+    } else if (
+      password.length >= 8 &&
+      [hasLower, hasUpper, hasNumber, hasSymbol].filter(Boolean).length >= 3
+    ) {
       setStrength("Medium");
-    }
-    // Weak: Anything below 8 characters or missing multiple elements
-    else {
+    } else {
       setStrength("Weak");
     }
   };
 
   return (
-    <div className="mobile-tools">
-      <MobileSidebar isOpen={isSidebarOpen}
-      toggleSidebar={toggleSidebar} 
-      onLogout={onLogout} 
-      />
-
-      {/* Main content */}
-      <div className={`transition-all duration-300 ${isSidebarOpen ? "ml-64" : ""}`}>
-        {/* Hamburger button for sidebar */}
-        <button onClick={toggleSidebar} className="p-4 text-2xl">
-          ☰ {/* Hamburger icon */}
-        </button>
+    <div className="mobile-tools min-h-screen bg-gradient-to-br from-white to-slate-200">
+      <MobileSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} onLogout={onLogout} />
+      <div className="mobile-content transition-all duration-300">
+        <button onClick={toggleSidebar} className="p-4 text-2xl">☰</button>
 
         <main className="p-4">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Tools</h1>
-          {/* Instruction Text (Optionally Adjusted or Removed) */}
-          {/* You can either keep this or remove based on your preference */}
           <p className="text-sm text-gray-600 mb-6">
             Generate secure passwords and check their strength.
           </p>
 
-          {/* Divider above password generator */}
-          <div className="border-t border-gray-300 mb-6"></div>
+          <div className="border-t border-gray-300 mb-6" />
 
-          {/* Password Generator */}
-          <div className="bg-white p-4 shadow-lg rounded-lg mb-6">
+          <div className="bg-white p-4 shadow-md rounded-lg mb-6 border border-gray-200">
             <h2 className="font-semibold text-lg mb-2">Password Generator</h2>
             <p className="text-gray-600 mb-4 text-sm">
               Create strong, random passwords for better security. Click to generate and copy.
@@ -108,12 +88,8 @@ const MobileTools = ({onLogout}) => {
             )}
           </div>
 
-          {/* Divider below password generator */}
-          <div className="border-t border-gray-300 mb-6"></div>
-
-          {/* Recent Passwords */}
           {recentPasswords.length > 0 && (
-            <div className="bg-white p-4 shadow-lg rounded-lg mb-6">
+            <div className="bg-white p-4 shadow-md rounded-lg mb-6 border border-gray-200">
               <h2 className="font-semibold text-lg mb-2">Recent Passwords</h2>
               <p className="text-gray-600 mb-4 text-sm">
                 These are the last 5 passwords you generated. Access them if needed.
@@ -126,18 +102,16 @@ const MobileTools = ({onLogout}) => {
             </div>
           )}
 
-          {/* Divider below recent passwords */}
-          <div className="border-t border-gray-300 mb-6"></div>
+          <div className="border-t border-gray-200 my-6"></div>
 
-          {/* Password Strength Checker */}
-          <div className="bg-white p-4 shadow-lg rounded-lg">
+          <div className="bg-white p-4 shadow-md rounded-lg border border-gray-200">
             <h2 className="font-semibold text-lg mb-2">Password Strength Checker</h2>
             <p className="text-gray-600 mb-4 text-sm">
               Test your password's strength below. A strong password should be at least 12 characters long and contain all types of characters.
             </p>
             <input
               type="password"
-              className="border px-3 py-2 w-full rounded text-sm"
+              className="border px-3 py-2 w-full rounded text-sm mb-2"
               placeholder="Enter a password..."
               value={passwordToCheck}
               onChange={(e) => {
@@ -146,22 +120,27 @@ const MobileTools = ({onLogout}) => {
               }}
             />
 
-            {/* Bullet Point Instructions for Strength Levels */}
             <ul className="mt-4 text-sm text-gray-600">
               <li><strong className="text-red-500">Weak:</strong> Less than 6 characters, only letters or numbers.</li>
-              <li><strong className="text-yellow-500">Medium:</strong> At least 8 characters, includes uppercase/lowercase letters and numbers.</li>
-              <li><strong className="text-green-500">Strong:</strong> At least 12 characters, includes uppercase/lowercase letters, numbers, and symbols (!@#$%^&*).</li>
+              <li><strong className="text-yellow-500">Medium:</strong> At least 8 characters, includes upper/lowercase and numbers.</li>
+              <li><strong className="text-green-500">Strong:</strong> 12+ chars with upper/lowercase, numbers, and symbols.</li>
             </ul>
 
             {strength && (
               <div className="mt-4">
-                <p className={`text-lg font-semibold ${strength === "Weak" ? "text-red-500" : strength === "Medium" ? "text-yellow-500" : "text-green-500"}`}>
+                <p className={`text-lg font-semibold ${
+                  strength === "Weak" ? "text-red-500" :
+                  strength === "Medium" ? "text-yellow-500" :
+                  "text-green-500"
+                }`}>
                   Strength: {strength}
                 </p>
                 <div className="h-2 w-full bg-gray-300 rounded mt-1">
-                  <div
-                    className={`h-2 rounded ${strength === "Weak" ? "bg-red-500 w-1/4" : strength === "Medium" ? "bg-yellow-500 w-1/2" : "bg-green-500 w-full"}`}
-                  ></div>
+                  <div className={`h-2 rounded ${
+                    strength === "Weak" ? "bg-red-500 w-1/4" :
+                    strength === "Medium" ? "bg-yellow-500 w-1/2" :
+                    "bg-green-500 w-full"
+                  }`} />
                 </div>
               </div>
             )}
