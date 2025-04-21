@@ -20,23 +20,32 @@ const Performance = () => {
       {/* Content Section */}
       <div className="performance-content">
 
-        {/* Section 1 - Honest Note */}
-        <div className="performance-section">
-          <div className="performance-text">
-            <h2>Designed for Simplicity</h2>
-            <p>
-            This project was built with clarity and usability in mind. 
-            There may be some rough edges, but it works. 
-            It’s proof that with a focused mindset and simple tools, you can build something real, without a big team or budget.
-            </p>
-          </div>
-          <div className="performance-image">
-            <img
-              src={process.env.PUBLIC_URL + "/images/PerformanceImage1.jpg"}
-              alt="App in Progress"
-            />
-          </div>
-        </div>
+       {/* Section 1 - Designed for Simplicity */}
+<div className="performance-section stacked">
+  <div className="performance-text">
+    <h2>Designed for Simplicity</h2>
+    <p>
+      This project was built with clarity and usability in mind. 
+      There may be some rough edges, but it works. 
+      It’s proof that with a focused mindset and simple tools, you can build something real, without a big team or budget.
+    </p>
+  </div>
+
+  <div className="stacked-images">
+    <div className="image-card">
+      <img
+        src={process.env.PUBLIC_URL + "/images/AddAccount.jpg"}
+        alt="Add Account Screenshot"
+      />
+    </div>
+    <div className="image-card">
+      <img
+        src={process.env.PUBLIC_URL + "/images/Tools.jpg"}
+        alt="Tools Page Screenshot"
+      />
+    </div>
+  </div>
+</div>
 
         {/* Section 2 - Tech Stack */}
 <div className="performance-section reverse">
@@ -91,7 +100,7 @@ const Performance = () => {
           </div>
           <div className="performance-image">
             <img
-              src={process.env.PUBLIC_URL + "/images/PerformanceImage3.jpg"}
+              src={process.env.PUBLIC_URL + "/images/Generator.jpg"}
               alt="Personal Dev Journey"
             />
           </div>

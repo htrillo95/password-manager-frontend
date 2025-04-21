@@ -1,10 +1,18 @@
+html, body {
+  scroll-behavior: smooth;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Force GPU compositing */
+}
+
 /* Hero Section */
 .performance-parallax {
+  background-color: #f0f0f0; 
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 60vh;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -179,7 +187,8 @@
 
 @media (max-width: 768px) {
   .performance-parallax {
-    background-position: -435px center; 
+    background-attachment: scroll;
+    background-position: center; 
     height: 60vh; /* Increase height on mobile */
     padding-top: 5rem; /* Push content down a bit */
   }
@@ -195,9 +204,46 @@
 
 @media (min-width: 769px) {
   .performance-parallax {
-    background-position-x: 75%;       /* tiny nudge to the left */
+    background-attachment: fixed;
+    background-position-x: 75%;
     background-position-y: center;
-    background-size: 110%;            /* zoom slightly to hide the edge */
+    background-size: 110%;
     background-repeat: no-repeat;
+    will-change: background-position;
+    transform: translateZ(0); /* help reduce shifting */
   }
+}
+
+.performance-parallax {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.stacked-images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.image-card img {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
 }

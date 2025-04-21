@@ -9,9 +9,9 @@ const Team = () => {
         <h1>About the Creator</h1>
         <p>
           RiverLock is a personal project built by a beginner developer,
-          showcasing an exploration of web development concepts like design,
+          it's an exploration of web development concepts like design,
           routing, and responsive UI. This project is a step forward in my
-          journey to becoming a skilled web developer.
+          journey to becoming a web developer.
         </p>
       </div>
 
@@ -26,10 +26,10 @@ const Team = () => {
           <h3>Hector Trillo</h3>
           <p className="team-role">Aspiring Full Stack Dev</p>
           <p className="team-bio">
-            I’m Hector, a self taught web developer currently learning the
+            I’m Hector, learning web development and dev-related concepts. Currently testing the
             fundamentals of building user friendly and secure web applications.
-            RiverLock reflects my efforts to grow as a developer by putting
-            newly learned skills into practice. This demo project is part of my
+            RiverLock is fun to show off my efforts to grow as a developer by putting
+            some skills into practice. This demo project is part of my
             portfolio and represents where I am in my learning journey.
           </p>
         </div>
@@ -39,12 +39,12 @@ const Team = () => {
       <div className="team-mission">
         <h2>About RiverLock</h2>
         <p>
-          RiverLock is a demo project designed to showcase secure password
+          RiverLock is a demo project used for secure password
           management solutions. This is not a real product, but a way to
-          practice building secure and visually appealing web applications.
+          practice building secure and appealing web applications.
         </p>
         <p>
-          <strong>Note:</strong> This project is entirely fictional and built
+          <strong>Note:</strong> This project is just for fun and built
           for learning purposes. The "team" behind it is just me, figuring things
           out one step at a time.
         </p>

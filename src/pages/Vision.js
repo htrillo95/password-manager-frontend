@@ -7,13 +7,13 @@ const Vision = () => {
       <header className="vision-header">
         <h1>Vision</h1>
         <p>
-          RiverLock started as a learning project with a simple goal in mind: build something secure and useful from the ground up.
+          RiverLock started with a simple goal in mind: build something secure and useful from the ground up.
         </p>
       </header>
 
       <section className="vision-content">
         <div className="vision-section">
-          <h2>Learning Through Practice</h2>
+          <h2>Practice</h2>
           <p>
             This app isn’t meant to be perfect. It’s a way to learn by doing. Every feature, bug, and improvement is part of the process. 
             The goal is to understand how real apps work.
@@ -29,10 +29,10 @@ const Vision = () => {
         </div>
 
         <div className="vision-section">
-          <h2>Keep Growing</h2>
+          <h2>Growth</h2>
           <p>
             The vision is simple. Keep learning. Keep building. And eventually turn this into something bigger. 
-            RiverLock is one step in the journey, and it reflects the effort to grow as a developer.
+            RiverLock is one step in the journey, and it reflects the effort to grow.
           </p>
         </div>
       </section>
