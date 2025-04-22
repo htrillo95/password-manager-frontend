@@ -111,7 +111,6 @@ html, body {
   gap: 2rem;
   justify-items: center;
   align-items: start;
-  transform: translateX(-5rem); /* better than margin-left for shift */
 }
 
 .tech-logo {
@@ -139,7 +138,7 @@ html, body {
   margin-top: 0.25rem;
 }
 
-/* Responsive Adjustments */
+/* Mobile Only */
 @media (max-width: 768px) {
   .performance-section {
     flex-direction: column;
@@ -161,11 +160,26 @@ html, body {
 
   .tech-stack-logos {
     grid-template-columns: repeat(2, 1fr);
-    transform: none; /* override shift on mobile */
+    transform: none;
+  }
+
+  .performance-parallax {
+    background-attachment: scroll;
+    background-position: center; 
+    height: 60vh;
+    padding-top: 5rem;
+  }
+
+  .performance-parallax h1 {
+    font-size: 2.2rem;
+  }
+
+  .performance-parallax p {
+    font-size: 1.1rem;
   }
 }
 
-/* Footer Section */
+/* Footer */
 .performance-footer {
   background: #1d3557;
   color: #ffffff;
@@ -183,35 +197,6 @@ html, body {
   max-width: 900px;
   margin: 0 auto;
   line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-  .performance-parallax {
-    background-attachment: scroll;
-    background-position: center; 
-    height: 60vh; /* Increase height on mobile */
-    padding-top: 5rem; /* Push content down a bit */
-  }
-
-  .performance-parallax h1 {
-    font-size: 2.2rem;
-  }
-
-  .performance-parallax p {
-    font-size: 1.1rem;
-  }
-}
-
-@media (min-width: 769px) {
-  .performance-parallax {
-    background-attachment: fixed;
-    background-position-x: 75%;
-    background-position-y: center;
-    background-size: 110%;
-    background-repeat: no-repeat;
-    will-change: background-position;
-    transform: translateZ(0); /* help reduce shifting */
-  }
 }
 
 .performance-parallax {
@@ -246,4 +231,116 @@ html, body {
   text-align: center;
   font-size: 0.9rem;
   color: #6b7280;
+}
+
+/* Timeline Layout */
+.performance-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+  gap: 4rem;
+}
+
+.performance-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #cbd5e1;
+  transform: translateX(-50%);
+  border-left: 2px dotted #94a3b8; 
+  z-index: 0;
+}
+
+.timeline-block {
+  position: relative;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 1100px;
+  z-index: 1;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timeline-block::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background: #1d3557;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.timeline-content h2 {
+  font-size: 2rem;
+  color: #1d3557;
+  margin-bottom: 1rem;
+}
+
+.timeline-content p {
+  color: #4b5563;
+  font-size: 1rem;
+  max-width: 800px;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.timeline-images {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.timeline-images img,
+.single-image {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Desktop Only (Final Updates) */
+@media (min-width: 769px) {
+  .timeline-content {
+    text-align: center;
+    align-items: center;
+    padding-top: 1.5rem;
+  }
+
+  .timeline-content h2,
+  .timeline-content p {
+    text-align: center;
+  }
+
+  .timeline-images img,
+  .single-image {
+    max-width: 350px;
+  }
+
+  .timeline-images {
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1.5rem;
+  }
 }

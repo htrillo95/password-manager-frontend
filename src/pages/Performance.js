@@ -3,7 +3,7 @@ import "../styles/Performance.css";
 
 const Performance = () => {
   return (
-    <div>
+    <div className="performance-wrapper">
       {/* Hero Section */}
       <div
         className="performance-parallax"
@@ -12,96 +12,66 @@ const Performance = () => {
         }}
       >
         <h1>A Work in Progress</h1>
-        <p>RiverLock is lightweight and intentionally simple.
+        <p>
+          RiverLock is lightweight and intentionally simple.
           While you may notice occasional lag, that’s the tradeoff for keeping the app minimal and beginner friendly.
-          Performance improvements are on the roadmap, but this version keeps things functional without the complexity.</p>
+        </p>
       </div>
 
-      {/* Content Section */}
-      <div className="performance-content">
+      {/* Timeline Content */}
+      <div className="performance-timeline">
 
-       {/* Section 1 - Designed for Simplicity */}
-<div className="performance-section stacked">
-  <div className="performance-text">
-    <h2>Designed for Simplicity</h2>
-    <p>
-      This project was built with clarity and usability in mind. 
-      There may be some rough edges, but it works. 
-      It’s proof that with a focused mindset and simple tools, you can build something real, without a big team or budget.
-    </p>
-  </div>
-
-  <div className="stacked-images">
-    <div className="image-card">
-      <img
-        src={process.env.PUBLIC_URL + "/images/AddAccount.jpg"}
-        alt="Add Account Screenshot"
-      />
-    </div>
-    <div className="image-card">
-      <img
-        src={process.env.PUBLIC_URL + "/images/Tools.jpg"}
-        alt="Tools Page Screenshot"
-      />
-    </div>
-  </div>
-</div>
-
-        {/* Section 2 - Tech Stack */}
-<div className="performance-section reverse">
-  <div className="performance-text">
-    <h2>Tech Stack</h2>
-    <p>
-      RiverLock is built from scratch using a modern stack:
-      <br /><br />
-      • <strong>Frontend:</strong> React, TailwindCSS, Framer Motion<br />
-      • <strong>Backend:</strong> Flask (Python)<br />
-      • <strong>Database:</strong> PostgreSQL, hosted on Railway<br />
-      • <strong>Security:</strong> AES-256 encryption, password hashing
-      <br /><br />
-      From the UI to the encrypted backend, everything was built by me while learning to code.
-    </p>
-  </div>
-
-  <div className="performance-image">
-    <div className="tech-stack-logos">
-      <div className="tech-logo">
-        <img src={process.env.PUBLIC_URL + "/images/React.png"} alt="React Logo" />
-        <p>React</p>
-        <span>Frontend</span>
-      </div>
-      <div className="tech-logo">
-        <img src={process.env.PUBLIC_URL + "/images/Python.png"} alt="Python Logo" />
-        <p>Python</p>
-        <span>Language</span>
-      </div>
-      <div className="tech-logo">
-        <img src={process.env.PUBLIC_URL + "/images/Flask.png"} alt="Flask Logo" />
-        <p>Flask</p>
-        <span>Web Framework</span>
-      </div>
-      <div className="tech-logo">
-        <img src={process.env.PUBLIC_URL + "/images/Postgre.png"} alt="PostgreSQL Logo" />
-        <p>PostgreSQL</p>
-        <span>Database</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-        {/* Section 3 - Optional Closing */}
-        <div className="performance-section">
-          <div className="performance-text">
-            <h2>Independently Built, Collectively Useful</h2>
+        {/* Timeline Block 1 */}
+        <div className="timeline-block">
+          <div className="timeline-content">
+            <h2>Designed for Simplicity</h2>
             <p>
-              RiverLock isn't an enterprise level app, it's a personal project turned real tool.
-              It stores real encrypted data, works across devices, and proves what can be done with clear goals and consistent effort.
+              This project was built with clarity and usability in mind.
+              There may be some rough edges, but it works.
+              It’s proof that with a focused mindset and simple tools, you can build something real, without a big team or budget.
             </p>
+            <div className="timeline-images">
+              <img src={`${process.env.PUBLIC_URL}/images/AddAccount.jpg`} alt="Add Account" />
+            </div>
           </div>
-          <div className="performance-image">
+        </div>
+
+        {/* Timeline Block 2 */}
+        <div className="timeline-block alt">
+          <div className="timeline-content">
+            <h2>Tech Stack</h2>
+            <p>
+              RiverLock is built from scratch using a modern stack:
+              <br /><br />
+              • <strong>Frontend:</strong> React, TailwindCSS, Framer Motion<br />
+              • <strong>Backend:</strong> Flask (Python)<br />
+              • <strong>Database:</strong> PostgreSQL (Railway)<br />
+              • <strong>Security:</strong> AES-256 encryption, hashing<br /><br />
+            </p>
+            <div className="tech-stack-logos">
+              {["React", "Python", "Flask", "Postgre"].map((tech) => (
+                <div key={tech} className="tech-logo">
+                  <img src={`${process.env.PUBLIC_URL}/images/${tech}.png`} alt={tech} />
+                  <p>{tech}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline Block 3 */}
+        <div className="timeline-block">
+          <div className="timeline-content">
+          <h2>From Concept to Reality</h2>
+            <p>
+              RiverLock started as a personal project and turned into a fully functional app.
+              It encrypts data, syncs across devices, and was built from scratch to be secure, minimal, and easy to use.
+              Whether you're storing one password or fifty, it's built to handle real use, not just a showcase.
+            </p>
             <img
-              src={process.env.PUBLIC_URL + "/images/Generator.jpg"}
-              alt="Personal Dev Journey"
+              className="single-image"
+              src={`${process.env.PUBLIC_URL}/images/Generator.jpg`}
+              alt="Generator Screenshot"
             />
           </div>
         </div>

@@ -15,8 +15,8 @@ const Navbar = () => {
       name: "Features",
       path: "#",
       subLinks: [
-        { name: "Security", path: "/features/security" },
-        { name: "Performance", path: "/features/performance" },
+        { name: "Data Protection", path: "/features/security" },
+        { name: "How It Works", path: "/features/performance" },
       ],
     },
     {

@@ -1,108 +1,142 @@
 /* Parallax Section */
 .security-parallax {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 60vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff; /* White text */
-    text-align: center;
-    padding: 2rem;
-    position: relative;
+  height: 60vh;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.security-parallax::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.security-parallax h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  position: relative;
+}
+
+.security-parallax p {
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  position: relative;
+}
+
+/* Parallax image override for better scaling */
+.react-parallax {
+  height: 60vh;
+}
+
+.react-parallax-bgimage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .security-parallax {
+    height: 50vh;
+    padding-top: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
-  
-  .security-parallax::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Dark overlay */
-    z-index: 1;
-  }
-  
+
   .security-parallax h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    z-index: 2;
-    position: relative;
-  }
-  
-  .security-parallax p {
-    font-size: 1.5rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    z-index: 2;
-    position: relative;
-  }
-  
-  /* Content Section */
-  .security-content {
-    background: linear-gradient(to bottom, #ffffff, #e3f2fd); /* Gradient */
-    padding: 4rem 2rem;
-  }
-  
-  .security-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 3rem;
-  }
-  
-  .security-section.reverse {
-    flex-direction: row-reverse;
-  }
-  
-  .security-text {
-    flex: 1;
-    padding: 1rem;
-  }
-  
-  .security-text h2 {
     font-size: 2rem;
-    color: #1d3557; /* Dark Blue */
-    margin-bottom: 1rem;
   }
-  
-  .security-text p {
-    font-size: 1rem;
-    color: #4b5563; /* Neutral Gray */
-    line-height: 1.6;
-    max-width: 700px;
+
+  .security-parallax p {
+    font-size: 1.1rem;
   }
-  
-  .security-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+
+  .react-parallax {
+    height: 50vh;
   }
-  
-  .security-image img {
-  max-width: 725px; /* Cap the image width */
-  width: 100%; /* Still responsive */
+
+  .react-parallax-bgimage {
+    object-position: 70% center;
+  }
+}
+
+/* Content Section */
+.security-content {
+  background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+  padding: 4rem 2rem;
+}
+
+.security-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.security-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.security-text {
+  flex: 1;
+  padding: 1rem;
+}
+
+.security-text h2 {
+  font-size: 2rem;
+  color: #1d3557;
+  margin-bottom: 1rem;
+}
+
+.security-text p {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+.security-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.security-image img {
+  max-width: 725px;
+  width: 100%;
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .security-section {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .security-section.reverse {
-      flex-direction: column;
-    }
-  
-    .security-image {
-      margin-top: 1.5rem;
-    }
-    
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .security-section {
+    flex-direction: column;
+    text-align: center;
   }
+
+  .security-section.reverse {
+    flex-direction: column;
+  }
+
+  .security-image {
+    margin-top: 1.5rem;
+  }
+}

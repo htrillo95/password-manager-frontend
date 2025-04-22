@@ -1,7 +1,8 @@
 import React from "react";
 import { Parallax } from 'react-parallax';
-import SecurityBanner from "../images/SecurityBanner.jpg";
 import "../styles/Security.css";
+
+const SecurityBanner = process.env.PUBLIC_URL + "/images/Security.jpg";
 
 const Security = () => {
   return (
@@ -9,8 +10,8 @@ const Security = () => {
       {/* Parallax Hero Section */}
       <Parallax bgImage={SecurityBanner} strength={300}>
         <div className="security-parallax">
-          <h1>Unmatched Digital Security</h1>
-          <p>Your data, safeguarded with precision and care.</p>
+          <h1>Secure by Design</h1>
+          <p>No complicated setup, no extra steps.</p>
         </div>
       </Parallax>
 
@@ -22,7 +23,7 @@ const Security = () => {
             <h2>AES 256 Encryption</h2>
             <p>
               Your passwords are encrypted using AES 256, the same level of encryption trusted by banks and governments.
-              This keeps your data locked and unreadable to anyone but you.
+              This keeps your data locked and unreadable.
             </p>
           </div>
           <div className="security-image">
@@ -39,7 +40,7 @@ const Security = () => {
             <h2>End to End Protection</h2>
             <p>
               Even if someone managed to access the database, your saved passwords would show up as scrambled code.
-              All password data is encrypted and hashed behind the scenes, so no one else can read it. Not even us.
+              All password data is encrypted and hashed behind the scenes, so no one else can read it.
             </p>
           </div>
           <div className="security-image">
