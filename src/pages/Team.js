@@ -28,7 +28,7 @@ const Team = () => {
           <p className="team-bio">
             I’m Hector, learning web development and dev-related concepts. Currently testing the
             fundamentals of building user friendly and secure web applications.
-            RiverLock is fun to show off my efforts to grow as a developer by putting
+            RiverLock is a fun way show off my efforts to grow as a developer by putting
             some skills into practice. This demo project is part of my
             portfolio and represents where I am in my learning journey.
           </p>
@@ -40,13 +40,13 @@ const Team = () => {
         <h2>About RiverLock</h2>
         <p>
           RiverLock is a demo project used for secure password
-          management solutions. This is not a real product, but a way to
+          management solutions. This is not a finished product, but a way to
           practice building secure and appealing web applications.
         </p>
         <p>
-          <strong>Note:</strong> This project is just for fun and built
+          <strong>Note:</strong> This project is built
           for learning purposes. The "team" behind it is just me, figuring things
-          out one step at a time.
+          out as I go.
         </p>
       </div>
 
