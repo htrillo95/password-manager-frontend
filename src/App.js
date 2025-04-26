@@ -1,390 +1,163 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom"; 
-import Register from "./components/Register";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import MobileDashboard from "./components/MobileDashboard";
-import MobileTools from "./components/MobileTools";
-import MobileSettings from "./components/MobileSettings";
-import MobileSidebar from "./components/MobileSidebar"; 
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { AppProvider } from "./context/AppContext";
+import ScrollToTop from "./components/ScrollToTop";
+
+// Pages
 import LandingPage from "./pages/LandingPage";
-import Navbar from "./components/Navbar";
+import PreLanding from "./pages/PreLanding";
 import Security from "./pages/Security";
 import Performance from "./pages/Performance";
 import Team from "./pages/Team";
 import Vision from "./pages/Vision";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
-import ScrollToTop from "./components/ScrollToTop";
-import { AnimatePresence, motion } from "framer-motion";
+
+// Components
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import MobileDashboard from "./components/MobileDashboard";
 import Tools from "./components/Tools";
+import MobileTools from "./components/MobileTools";
 import Settings from "./components/Settings";
-import './styles/Mobile.css';  
-import { AppProvider } from "./context/AppContext";
-import PreLanding from "./pages/PreLanding";
-import { fetchAccounts } from "./utils/api"; // Adjust the path if needed
+import MobileSettings from "./components/MobileSettings";
+import MobileSidebar from "./components/MobileSidebar";
+import Navbar from "./components/Navbar";
+
+// Styles
+import './styles/Mobile.css';
+
+// Utilities
+import { fetchAccounts as fetchUserAccounts } from "./utils/api";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(localStorage.getItem("loggedInUser") || null);
   const [isMobile, setIsMobile] = useState(false);
-  const location = useLocation(); 
-  const navigate = useNavigate(); 
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Detect logged in user and mobile screen size
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
-    console.log("Stored User:", storedUser); 
-    if (storedUser) {
-      setLoggedInUser(storedUser);
-    }
+    if (storedUser) setLoggedInUser(storedUser);
 
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-// ⬇️ Place this under your first useEffect (window resize)
-useEffect(() => {
-  if (isSidebarOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
-  }
+  // Lock scrolling when sidebar is open (Mobile only)
+  useEffect(() => {
+    document.body.style.overflow = isSidebarOpen ? "hidden" : "";
+    return () => (document.body.style.overflow = "");
+  }, [isSidebarOpen]);
 
-  return () => {
-    document.body.style.overflow = "";
-  };
-}, [isSidebarOpen]);
+  // Redirect first-time users to PreLanding page
+  useEffect(() => {
+    const hasSeenPreLanding = localStorage.getItem("hasSeenPreLanding");
+    if (!hasSeenPreLanding && location.pathname === "/") {
+      localStorage.setItem("hasSeenPreLanding", "true");
+      navigate("/pre-landing");
+    }
+  }, [location.pathname, navigate]);
 
-useEffect(() => {
-  const hasSeenPreLanding = localStorage.getItem("hasSeenPreLanding");
-  if (!hasSeenPreLanding && location.pathname === "/") {
-    localStorage.setItem("hasSeenPreLanding", "true");
-    navigate("/pre-landing");
-  }
-}, [location.pathname, navigate]);
-
+  // Handle login and logout
   const handleLogin = (username) => {
     setLoggedInUser(username);
     localStorage.setItem("loggedInUser", username);
-    navigate("/dashboard"); 
+    navigate("/dashboard");
   };
 
   const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem("loggedInUser");
-    navigate("/"); 
+    navigate("/");
   };
 
+  // Sidebar toggle
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  // Page transition variants
   const pageVariants = {
     initial: { opacity: 0, y: 50 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -50 },
   };
 
-  const fetchAccounts = async (username) => {
-    if (!username) return;
-  
-    try {
-      const response = await fetchAccounts(username);
-  
-      if (response.data.success) {
-        console.log("✅ Fetched accounts successfully:", response.data.accounts);
-        return response.data.accounts;
-      } else {
-        console.error("⚠️ Failed to fetch accounts:", response.data.message);
-      }
-    } catch (error) {
-      console.error("❌ Error fetching accounts:", error);
-    }
-  };
-
-    const toggleSidebar = () => {
-      setIsSidebarOpen(!isSidebarOpen);
-    };
-
-
   return (
     <AppProvider>
-    <>
-      <ScrollToTop />
-      {/* Conditionally render Navbar: Hide on /dashboard */}
-      {!["/dashboard", "/tools", "/settings","/pre-landing"].includes(location.pathname) && <Navbar />}
-      <AnimatePresence mode="wait" initial={false}>
-        <Routes key={location.pathname} location={location}>
-          {!loggedInUser ? (
-            <>
-              <Route
-                path="/"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <LandingPage />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/pre-landing"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <PreLanding />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Register />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/login"
-                element={
-                  loggedInUser ? (
-                    <Navigate to="/dashboard" />
-                  ) : (
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Login onLogin={handleLogin} />
-                  </motion.div>
-                  )
-                }
-              />
-              <Route
-                path="/features/security"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Security />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/features/performance"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Performance />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/about/team"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Team />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/about/vision"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Vision />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/faq"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <FAQ />
-                  </motion.div>
-                }
-              />
-              <Route
-                path="/contact"
-                element={
-                  <motion.div
-                    variants={pageVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Contact />
-                  </motion.div>
-                }
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          ) : (
-            <>
-              {isMobile ? (
-                <>
-                  {/* Mobile Routes */}
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <motion.div
-                        variants={pageVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.5 }}
-                      >
-                        <MobileDashboard 
-                          key={loggedInUser}
-                          username={loggedInUser} 
-                          onLogout={handleLogout}
-                          isSidebarOpen={isSidebarOpen}
-                          toggleSidebar={toggleSidebar}
-                           />
-                      </motion.div>
-                    }
-                  />
-                  <Route
-                    path="/tools"
-                    element={
-                      <motion.div
-                        variants={pageVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.5 }}
-                      >
-                        <MobileTools onLogout={handleLogout}
-                        isSidebarOpen={isSidebarOpen}
-                        toggleSidebar={toggleSidebar}
-                         />
-                      </motion.div>
-                    }
-                  />
-                  <Route
-                    path="/settings"
-                    element={
-                      <motion.div
-                        variants={pageVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.5 }}
-                      >
-                        <MobileSettings onLogout={handleLogout} 
-                        username={loggedInUser} 
-                        setUsername={setLoggedInUser} 
-                        fetchAccounts={fetchAccounts} 
-                        isSidebarOpen={isSidebarOpen}
-                        toggleSidebar={toggleSidebar}
-                        />
-                      </motion.div>
-                    }
-                  />
-                </>
-              ) : (
-                <>
-                  {/* Desktop Routes */}
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <motion.div
-                        variants={pageVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Dashboard 
-                        key ={loggedInUser}
-                        username={loggedInUser} 
-                        onLogout={handleLogout} />
-                      </motion.div>
-                    }
-                  />
-                  <Route
-                    path="/tools"
-                    element={
-                      <motion.div
-                        variants={pageVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Tools onLogout={handleLogout} />
-                      </motion.div>
-                    }
-                  />
-                  <Route
-                    path="/settings"
-                    element={
-                      <motion.div
-                        variants={pageVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Settings onLogout={handleLogout} username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchAccounts} />
-                      </motion.div>
-                    }
-                  />
-                </>
-              )}
-            </>
-          )}
-        </Routes>
-      </AnimatePresence>
-    </>
+      <>
+        <ScrollToTop />
+        {/* Show Navbar on public pages only */}
+        {!["/dashboard", "/tools", "/settings", "/pre-landing"].includes(location.pathname) && <Navbar />}
+
+        <AnimatePresence mode="wait" initial={false}>
+          <Routes key={location.pathname} location={location}>
+            {!loggedInUser ? (
+              <>
+                {/* Public Routes */}
+                <Route path="/" element={<PageWrapper><LandingPage /></PageWrapper>} />
+                <Route path="/pre-landing" element={<PageWrapper><PreLanding /></PageWrapper>} />
+                <Route path="/register" element={<PageWrapper><Register /></PageWrapper>} />
+                <Route path="/login" element={<PageWrapper><Login onLogin={handleLogin} /></PageWrapper>} />
+                <Route path="/features/security" element={<PageWrapper><Security /></PageWrapper>} />
+                <Route path="/features/performance" element={<PageWrapper><Performance /></PageWrapper>} />
+                <Route path="/about/team" element={<PageWrapper><Team /></PageWrapper>} />
+                <Route path="/about/vision" element={<PageWrapper><Vision /></PageWrapper>} />
+                <Route path="/faq" element={<PageWrapper><FAQ /></PageWrapper>} />
+                <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </>
+            ) : (
+              <>
+                {/* Protected Routes */}
+                {isMobile ? (
+                  <>
+                    {/* Mobile Dashboard */}
+                    <Route path="/dashboard" element={<PageWrapper><MobileDashboard username={loggedInUser} onLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /></PageWrapper>} />
+                    <Route path="/tools" element={<PageWrapper><MobileTools onLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /></PageWrapper>} />
+                    <Route path="/settings" element={<PageWrapper><MobileSettings username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchUserAccounts} onLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /></PageWrapper>} />
+                  </>
+                ) : (
+                  <>
+                    {/* Desktop Dashboard */}
+                    <Route path="/dashboard" element={<PageWrapper><Dashboard username={loggedInUser} onLogout={handleLogout} /></PageWrapper>} />
+                    <Route path="/tools" element={<PageWrapper><Tools onLogout={handleLogout} /></PageWrapper>} />
+                    <Route path="/settings" element={<PageWrapper><Settings username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchUserAccounts} onLogout={handleLogout} /></PageWrapper>} />
+                  </>
+                )}
+              </>
+            )}
+          </Routes>
+        </AnimatePresence>
+      </>
     </AppProvider>
   );
 }
+
+// Wrapper for page transitions
+const PageWrapper = ({ children }) => (
+  <motion.div
+    variants={{
+      initial: { opacity: 0, y: 50 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -50 },
+    }}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    transition={{ duration: 0.5 }}
+  >
+    {children}
+  </motion.div>
+);
 
 export default App;
