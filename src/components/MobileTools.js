@@ -8,24 +8,16 @@ const MobileTools = ({ onLogout }) => {
   const [strength, setStrength] = useState("");
   const [passwordToCheck, setPasswordToCheck] = useState("");
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const generatePassword = () => {
-    const charset =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-    let password = "";
-    for (let i = 0; i < 12; i++) {
-      password += charset.charAt(Math.floor(Math.random() * charset.length));
-    }
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+    const password = Array.from({ length: 12 }, () => charset[Math.floor(Math.random() * charset.length)]).join("");
     setGeneratedPassword(password);
-    setRecentPasswords([password, ...recentPasswords.slice(0, 4)]);
+    setRecentPasswords((prev) => [password, ...prev.slice(0, 4)]);
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(generatedPassword);
-  };
+  const copyToClipboard = () => navigator.clipboard.writeText(generatedPassword);
 
   const checkPasswordStrength = (password) => {
     if (!password) return setStrength("");
@@ -38,10 +30,7 @@ const MobileTools = ({ onLogout }) => {
 
     if (isLong && hasLower && hasUpper && hasNumber && hasSymbol) {
       setStrength("Strong");
-    } else if (
-      password.length >= 8 &&
-      [hasLower, hasUpper, hasNumber, hasSymbol].filter(Boolean).length >= 3
-    ) {
+    } else if (password.length >= 8 && [hasLower, hasUpper, hasNumber, hasSymbol].filter(Boolean).length >= 3) {
       setStrength("Medium");
     } else {
       setStrength("Weak");
@@ -62,6 +51,7 @@ const MobileTools = ({ onLogout }) => {
 
           <div className="border-t border-gray-300 mb-6" />
 
+          {/* Password Generator Section */}
           <div className="bg-white p-4 shadow-md rounded-lg mb-6 border border-gray-200">
             <h2 className="font-semibold text-lg mb-2">Password Generator</h2>
             <p className="text-gray-600 mb-4 text-sm">
@@ -73,11 +63,10 @@ const MobileTools = ({ onLogout }) => {
             >
               Generate Password
             </button>
+
             {generatedPassword && (
               <div className="mt-3 flex items-center space-x-2">
-                <span className="font-mono text-sm bg-gray-200 px-2 py-1 rounded">
-                  {generatedPassword}
-                </span>
+                <span className="font-mono text-sm bg-gray-200 px-2 py-1 rounded">{generatedPassword}</span>
                 <button
                   className="bg-green-500 text-white px-2 py-1 rounded text-sm hover:bg-green-600"
                   onClick={copyToClipboard}
@@ -88,6 +77,7 @@ const MobileTools = ({ onLogout }) => {
             )}
           </div>
 
+          {/* Recent Passwords Section */}
           {recentPasswords.length > 0 && (
             <div className="bg-white p-4 shadow-md rounded-lg mb-6 border border-gray-200">
               <h2 className="font-semibold text-lg mb-2">Recent Passwords</h2>
@@ -95,20 +85,22 @@ const MobileTools = ({ onLogout }) => {
                 These are the last 5 passwords you generated. Access them if needed.
               </p>
               <ul className="list-disc list-inside text-gray-700">
-                {recentPasswords.map((pwd, index) => (
-                  <li key={index} className="font-mono text-sm">{pwd}</li>
+                {recentPasswords.map((pwd, idx) => (
+                  <li key={idx} className="font-mono text-sm">{pwd}</li>
                 ))}
               </ul>
             </div>
           )}
 
-          <div className="border-t border-gray-200 my-6"></div>
+          <div className="border-t border-gray-200 my-6" />
 
+          {/* Password Strength Checker Section */}
           <div className="bg-white p-4 shadow-md rounded-lg border border-gray-200">
             <h2 className="font-semibold text-lg mb-2">Password Strength Checker</h2>
             <p className="text-gray-600 mb-4 text-sm">
               Test your password's strength below. A strong password should be at least 12 characters long and contain all types of characters.
             </p>
+
             <input
               type="password"
               className="border px-3 py-2 w-full rounded text-sm mb-2"
@@ -120,12 +112,14 @@ const MobileTools = ({ onLogout }) => {
               }}
             />
 
+            {/* Password Strength Info */}
             <ul className="mt-4 text-sm text-gray-600">
               <li><strong className="text-red-500">Weak:</strong> Less than 6 characters, only letters or numbers.</li>
               <li><strong className="text-yellow-500">Medium:</strong> At least 8 characters, includes upper/lowercase and numbers.</li>
               <li><strong className="text-green-500">Strong:</strong> 12+ chars with upper/lowercase, numbers, and symbols.</li>
             </ul>
 
+            {/* Strength Result */}
             {strength && (
               <div className="mt-4">
                 <p className={`text-lg font-semibold ${
@@ -135,6 +129,7 @@ const MobileTools = ({ onLogout }) => {
                 }`}>
                   Strength: {strength}
                 </p>
+
                 <div className="h-2 w-full bg-gray-300 rounded mt-1">
                   <div className={`h-2 rounded ${
                     strength === "Weak" ? "bg-red-500 w-1/4" :
