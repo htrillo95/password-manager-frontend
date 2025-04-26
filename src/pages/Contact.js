@@ -106,7 +106,7 @@ const Contact = () => {
           <div className="info-card">
             <h2>Heads Up</h2>
             <p>
-              This isn’t a real business (but yes the email works). RiverLock is a demo app made for learning and portfolio purposes.
+              This isn’t a real business (but yes the email works).
             </p>
           </div>
         </div>

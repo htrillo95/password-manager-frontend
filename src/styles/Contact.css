@@ -31,7 +31,7 @@
   /* Main Contact Section */
   .contact-container {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     max-width: 1200px;
     width: 100%;
     background: #ffffff;
@@ -151,5 +151,22 @@
     .contact-form-section,
     .contact-info-section {
       padding: 2rem 1rem;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .contact-container {
+      position: relative;
+    }
+  
+    .contact-container::before {
+      content: "";
+      position: absolute;
+      top: 2rem;
+      bottom: 2rem;
+      left: 50%;
+      width: 1px;
+      background: #d1d5db; /* Light gray */
+      transform: translateX(-50%);
     }
   }

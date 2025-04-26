@@ -5,11 +5,11 @@ const Vision = () => {
   return (
     <div className="vision-container">
       <header className="vision-header">
-        <h1>Vision</h1>
-        <p>
-          RiverLock started with a simple goal in mind: build something secure and useful from the ground up.
-        </p>
-      </header>
+  <h1>Vision</h1>
+  <p>A small project with a real goal: learn by building.</p>
+</header>
+
+<hr className="vision-divider" />
 
       <section className="vision-content">
         <div className="vision-section">

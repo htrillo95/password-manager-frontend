@@ -4,15 +4,16 @@ import "../styles/Team.css";
 const Team = () => {
   return (
     <div className="team-container">
+      
       {/* Header Section */}
       <div className="team-header">
         <h1>About the Creator</h1>
         <p>
-          RiverLock is a personal project built by a beginner developer,
-          it's an exploration of web development concepts like design,
-          routing, and responsive UI. This project is a step forward in my
-          journey to becoming a web developer.
+          RiverLock is a personal project I built to explore web development concepts like design, routing, and responsive UI.
+          <br /><br />
+          It’s one step forward in my journey to becoming a web developer.
         </p>
+        <div className="divider" />
       </div>
 
       {/* Profile Section */}
@@ -27,28 +28,15 @@ const Team = () => {
           <p className="team-role">Aspiring Full Stack Dev</p>
           <p className="team-bio">
             I’m Hector, learning web development and dev-related concepts. Currently testing the
-            fundamentals of building user friendly and secure web applications.
-            RiverLock is a fun way show off my efforts to grow as a developer by putting
-            some skills into practice. This demo project is part of my
-            portfolio and represents where I am in my learning journey.
+            fundamentals of building user-friendly and secure web applications.
+            <br /><br />
+            RiverLock is a fun way to show off my efforts to grow by putting
+            some skills into practice. It’s part of my portfolio and reflects where I am in my learning journey.
           </p>
         </div>
       </div>
 
-      {/* Mission Section */}
-      <div className="team-mission">
-        <h2>About RiverLock</h2>
-        <p>
-          RiverLock is a demo project used for secure password
-          management solutions. This is not a finished product, but a way to
-          practice building secure and appealing web applications.
-        </p>
-        <p>
-          <strong>Note:</strong> This project is built
-          for learning purposes. The "team" behind it is just me, figuring things
-          out as I go.
-        </p>
-      </div>
+      <div className="divider" />
 
       {/* Values Section */}
       <div className="team-values">

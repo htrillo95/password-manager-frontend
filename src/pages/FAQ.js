@@ -9,27 +9,27 @@ const FAQ = () => {
     {
       question: "What is RiverLock?",
       answer:
-        "RiverLock is a demo project that shows a password manager built for portfolio purposes. It is a prototype and is not meant for real password storage.",
+        "RiverLock is a personal project that shows how a working password manager could be built. It’s a real app, designed for learning and growth.",
     },
     {
       question: "How secure is RiverLock?",
       answer:
-        "RiverLock uses AES 256 encryption to protect your data. This encryption standard is trusted by banks and government agencies for its strong security.",
+        "Passwords are encrypted using AES-256, one of the strongest encryption standards available. It's built with real protection methods you'd find in serious apps.",
     },
     {
       question: "Can I use this app for real passwords?",
       answer:
-        "No, this app is a demo. It is not designed for storing actual passwords securely.",
+        "While RiverLock uses real encryption, it’s a personal project and not meant to replace dedicated password managers",
     },
     {
       question: "Is there a mobile version of RiverLock?",
       answer:
-        "At this time, RiverLock is available only as a web application. A mobile version may be developed in the future, but it is not available now.",
+        "RiverLock works on mobile through your browser. A full mobile app isn't available (yet), but the site is responsive and built to work across devices",
     },
     {
-      question: "How do I change my password?",
+      question: "Can I update the passwords I store in RiverLock?",
       answer:
-        "You can change your password by going to the settings page and selecting Change Password. The process is simple and straightforward.",
+        "Yes. Once you’re logged in, you can update the passwords for any accounts you’ve saved inside your vault.",
     },
     {
       question: "Can I connect RiverLock to other services?",
@@ -39,7 +39,7 @@ const FAQ = () => {
     {
       question: "What happens if I forget my master password?",
       answer:
-        "For security reasons, we do not store your master password. Please keep it safe because if you lose it, there is no way to recover it.",
+        "RiverLock doesn’t store or recover your master password for security reasons. If you lose it, your vault can’t be accessed. Make sure to keep it safe."
     },
   ];
 
@@ -57,6 +57,7 @@ const FAQ = () => {
       >
         Frequently Asked Questions
       </motion.h1>
+      <div className="faq-divider"></div>
 
       <div className="faq-items">
         {faqs.map((faq, index) => (
