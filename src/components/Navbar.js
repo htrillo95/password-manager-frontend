@@ -71,7 +71,7 @@ const Navbar = () => {
         <Link to="/">RiverLock</Link>
       </div>
 
-      {/* Hamburger Button */}
+      {/* Hamburger Button (Only visible in mobile) */}
       <button
         ref={hamburgerRef} // ✅ Added ref here
         className={`hamburger-menu ${mobileMenuOpen ? "open" : ""}`}
