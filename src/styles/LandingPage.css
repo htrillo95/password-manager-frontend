@@ -283,7 +283,8 @@ footer {
 
 @media (max-width: 768px) {
   .illustration {
-    transform: translate(-40px, -85px)  scale(.99);
+    transform: translate(-40px, -80px)  scale(.99);
 
   }
 }
+
