@@ -173,7 +173,7 @@
   z-index: 1001;
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
 }
 
 /* Show animation when menu is open */

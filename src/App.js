@@ -25,6 +25,7 @@ import Settings from "./components/Settings";
 import MobileSettings from "./components/MobileSettings";
 import MobileSidebar from "./components/MobileSidebar";
 import Navbar from "./components/Navbar";
+import ChatWidget from "./components/ChatWidget";
 
 // Styles
 import './styles/Mobile.css';
@@ -80,24 +81,20 @@ function App() {
     navigate("/");
   };
 
-  // Sidebar toggle
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  // Page transition variants
-  const pageVariants = {
-    initial: { opacity: 0, y: 50 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -50 },
   };
 
   return (
     <AppProvider>
       <>
         <ScrollToTop />
-        {/* Show Navbar on public pages only */}
+
+        {/* Show Navbar only on public pages */}
         {!["/dashboard", "/tools", "/settings", "/pre-landing"].includes(location.pathname) && <Navbar />}
+
+        {/* Show ChatWidget on all non-dashboard pages */}
+        {!["/dashboard", "/tools", "/settings"].includes(location.pathname) && <ChatWidget />}
 
         <AnimatePresence mode="wait" initial={false}>
           <Routes key={location.pathname} location={location}>
@@ -121,14 +118,12 @@ function App() {
                 {/* Protected Routes */}
                 {isMobile ? (
                   <>
-                    {/* Mobile Dashboard */}
                     <Route path="/dashboard" element={<PageWrapper><MobileDashboard username={loggedInUser} onLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /></PageWrapper>} />
                     <Route path="/tools" element={<PageWrapper><MobileTools onLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /></PageWrapper>} />
                     <Route path="/settings" element={<PageWrapper><MobileSettings username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchUserAccounts} onLogout={handleLogout} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /></PageWrapper>} />
                   </>
                 ) : (
                   <>
-                    {/* Desktop Dashboard */}
                     <Route path="/dashboard" element={<PageWrapper><Dashboard username={loggedInUser} onLogout={handleLogout} /></PageWrapper>} />
                     <Route path="/tools" element={<PageWrapper><Tools onLogout={handleLogout} /></PageWrapper>} />
                     <Route path="/settings" element={<PageWrapper><Settings username={loggedInUser} setUsername={setLoggedInUser} fetchAccounts={fetchUserAccounts} onLogout={handleLogout} /></PageWrapper>} />
