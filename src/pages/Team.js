@@ -27,8 +27,8 @@ const Team = () => {
           <h3>Hector Trillo</h3>
           <p className="team-role">Web Developer</p>
           <p className="team-bio">
-            I’m Hector, learning web development and dev-related concepts. Currently testing the
-            fundamentals of building user-friendly and secure web applications.
+            I’m Hector, learning web development and dev related concepts. Currently testing the
+            fundamentals of building user friendly and secure web applications.
             <br /><br />
             RiverLock is a fun way to show off my efforts to grow by putting
             some skills into practice. It’s part of my portfolio and reflects where I am in my learning journey.
