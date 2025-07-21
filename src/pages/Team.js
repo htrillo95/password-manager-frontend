@@ -25,7 +25,7 @@ const Team = () => {
         />
         <div className="team-info">
           <h3>Hector Trillo</h3>
-          <p className="team-role">Aspiring Full Stack Dev</p>
+          <p className="team-role">Web Developer</p>
           <p className="team-bio">
             I’m Hector, learning web development and dev-related concepts. Currently testing the
             fundamentals of building user-friendly and secure web applications.
