@@ -5,7 +5,7 @@ const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
-      text: "Hi! I'm RiverBot 🛟. What would you like to know?",
+      text: "Hi! I'm RiverBot. What would you like to know?",
       sender: "bot",
       options: [
         "What is RiverLock?",
@@ -84,7 +84,7 @@ const ChatWidget = () => {
           <div className="bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col">
             {/* header */}
             <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-              <h3 className="font-semibold">RiverBot 🛟</h3>
+              <h3 className="font-semibold">RiverBot</h3>
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-white text-xl leading-none focus:outline-none"
