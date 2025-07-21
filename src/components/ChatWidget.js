@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const ChatWidget = () => {
   /* ---------- state ---------- */
@@ -19,20 +19,28 @@ const ChatWidget = () => {
     },
   ]);
 
+  // --- auto-scroll ref ---
+  const messagesEndRef = useRef(null);
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   /* ---------- knowledge base ---------- */
   const responseMap = {
     "What is RiverLock?":
-      "RiverLock is a personal portfolio project that mimics a password manager. It's not a real service—just a full-stack demo.",
+      "RiverLock is a personal portfolio project that mimics a password manager. It's not a real service, just a full stack demo.",
     "Is this secure?":
-      "It follows secure best-practices like hashing, but it isn’t meant for real passwords. Treat it as a demo only.",
+      "It follows secure best practices like hashing, but it isn’t meant for real passwords. Treat it as a demo only.",
     "How do I get started?":
-      "Swipe to enter, then register or log in. Add a few demo accounts to explore the vault and export features.",
+      "First register or log in if you already have an account. Add a few demo accounts to explore the vault and export features.",
     "Who built this?":
-      "RiverLock was created by Hector T. using React, Node, and PostgreSQL to showcase full-stack skills.",
+      "RiverLock was created by Hector T. using React, Node, and PostgreSQL to showcase full stack skills.",
     "What are the features?":
-      "Key features: add accounts, search, password-visibility toggle, CSV export, mobile-friendly layout.",
+      "Key features: add accounts, search, password visibility toggle, CSV export, mobile friendly layout.",
     "Is this a real password manager?":
-      "Nope—it's strictly a showcase of code & UX skills, not a production-grade password manager.",
+      "Nope,it's strictly a showcase of code & UX skills, not a production grade password manager.",
     "Can I see the code?":
       "Absolutely! The project is open source. Ask Hector for the GitHub link if you’d like to dig in.",
   };
@@ -120,6 +128,8 @@ const ChatWidget = () => {
                   )}
                 </div>
               ))}
+              {/* auto-scroll anchor */}
+              <div ref={messagesEndRef} />
             </div>
           </div>
         </div>
