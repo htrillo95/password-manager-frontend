@@ -94,7 +94,7 @@ function App() {
         {!["/dashboard", "/tools", "/settings", "/pre-landing"].includes(location.pathname) && <Navbar />}
 
         {/* Show ChatWidget on all non-dashboard pages */}
-        {!["/dashboard", "/tools", "/settings"].includes(location.pathname) && <ChatWidget />}
+        {!["/dashboard", "/tools", "/settings","/pre-landing"].includes(location.pathname) && <ChatWidget />}
 
         <AnimatePresence mode="wait" initial={false}>
           <Routes key={location.pathname} location={location}>
